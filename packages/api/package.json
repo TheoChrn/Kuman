@@ -1,0 +1,41 @@
+{
+  "name": "@kuman/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@kuman/db": "workspace:*",
+    "@kuman/validators": "workspace:*",
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "lucia": "^3.2.2",
+    "superjson": "^2.2.2",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@kuman/eslint-config": "workspace:*",
+    "@kuman/prettier-config": "workspace:*",
+    "@kuman/tsconfig": "workspace:*",
+    "@types/node": "^22.5.4",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@kuman/prettier-config"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@kuman/shared",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache dist node_modules",
+    "dev": "tsc",
+   "format": "pnpm --filter @kuman/prettier-config run format",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "devDependencies": {
+    "@kuman/eslint-config": "workspace:*",
+    "@kuman/prettier-config": "workspace:*",
+    "@kuman/tsconfig": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@kuman/prettier-config"
+}
