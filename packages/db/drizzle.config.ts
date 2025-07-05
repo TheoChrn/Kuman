@@ -1,5 +1,7 @@
 import { type Config } from "drizzle-kit";
 
+console.log(process.env.POSTGRES_URL);
+
 export default {
   dialect: "postgresql",
   dbCredentials: {
