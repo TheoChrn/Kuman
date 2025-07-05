@@ -1,21 +1,21 @@
 import { pgTable , timestamp, text} from "drizzle-orm/pg-core";
-import { userTable } from "../user/schema";
+import { users } from "../user/schema";
 import { relations } from "drizzle-orm";
 
-export const sessionTable = pgTable("session", {
+export const session = pgTable("session", {
 	id: text("id").primaryKey(),
 	userId: text("user_id")
 		.notNull()
-		.references(() => userTable.id),
+		.references(() => users.id),
 	expiresAt: timestamp("expires_at", {
 		withTimezone: true,
 		mode: "date"
 	}).notNull()
 });
 
-export const sessionsRelations = relations(sessionTable, ({ one }) => ({
-  user: one(userTable, {
-    fields: [sessionTable.userId],
-    references: [userTable.id],
+export const sessionsRelations = relations(session, ({ one }) => ({
+  user: one(users, {
+    fields: [session.userId],
+    references: [users.id],
   }),
 }));

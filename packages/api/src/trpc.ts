@@ -6,12 +6,12 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import { initTRPC } from "@trpc/server";
+import { validateBearerTokens, validateSessionCookies } from "@/auth/session";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
-// import type { Auth } from "@kuman/auth";
-// import { db } from "@kuman/db";
+import { db } from "@kuman/db/client";
 
 /**
  * 1. CONTEXT
@@ -26,11 +26,19 @@ import { z, ZodError } from "zod/v4";
  * @see https://trpc.io/docs/server/context
  */
 
-export const createTRPCContext = async (_: { headers: Headers }) => {
-///// Retourner la session
+export const createTRPCContext = async (opts: { headers: Headers }) => {
+  const bearerToken = opts.headers.get("Authorization");
+  const session = bearerToken
+    ? await validateBearerTokens(bearerToken)
+    : await validateSessionCookies(opts.headers);
 
+  console.log(">>> tRPC Request by ", session?.user?.id);
+
+  return {
+    session,
+    db,
+  };
 };
-
 /**
  * 2. INITIALIZATION
  *
@@ -52,12 +60,6 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 });
 
 /**
- * Create a server-side caller
- * @see https://trpc.io/docs/server/server-side-calls
- */
-export const createCallerFactory = t.createCallerFactory;
-
-/**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
  *
  * These are the pieces you use to build your tRPC API. You should import these
@@ -76,22 +78,6 @@ export const createTRPCRouter = t.router;
  * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
  * network latency that would occur in production but not in local development.
  */
-// const timingMiddleware = t.middleware(async ({ next, path }) => {
-//   const start = Date.now();
-
-//   if (t._config.isDev) {
-//     // artificial delay in dev 100-500ms
-//     const waitMs = Math.floor(Math.random() * 400) + 100;
-//     await new Promise((resolve) => setTimeout(resolve, waitMs));
-//   }
-
-//   const result = await next();
-
-//   const end = Date.now();
-//   console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
-
-//   return result;
-// });
 
 /**
  * Public (unauthed) procedure
@@ -110,15 +96,14 @@ export const publicProcedure = t.procedure;
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure
-  // .use(({ ctx, next }) => {
-  //   if (!ctx.session?.user) {
-  //     throw new TRPCError({ code: "UNAUTHORIZED" });
-  //   }
-  //   return next({
-  //     ctx: {
-  //       // infers the `session` as non-nullable
-  //       session: { ...ctx.session, user: ctx.session.user },
-  //     },
-  //   });
-  // });
+export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
