@@ -6,12 +6,14 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
-import { validateBearerTokens, validateSessionCookies } from "@/auth/session";
+
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
 import { db } from "@kuman/db/client";
+
+import { validateBearerTokens, validateSessionCookies } from "./auth";
 
 /**
  * 1. CONTEXT
@@ -32,13 +34,12 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     ? await validateBearerTokens(bearerToken)
     : await validateSessionCookies(opts.headers);
 
-  console.log(">>> tRPC Request by ", session?.user?.id);
-
   return {
     session,
     db,
   };
 };
+
 /**
  * 2. INITIALIZATION
  *
