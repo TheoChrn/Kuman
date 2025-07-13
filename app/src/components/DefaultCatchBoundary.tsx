@@ -8,7 +8,6 @@ import {
 import type { ErrorComponentProps } from "@tanstack/react-router";
 
 export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
-  console.log(import.meta.env.VITE_BASE_URL);
   const router = useRouter();
   const isRoot = useMatch({
     strict: false,

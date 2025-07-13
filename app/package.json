@@ -4,8 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "vite build && tsc --noEmit",
     "dev": "vite dev",
+    "build": "vite build && tsc --noEmit",
     "start": "vite start"
   },
   "dependencies": {
@@ -23,8 +23,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "redaxios": "^0.5.1",
-    "superjson": "^2.2.2",
-    "tailwind-merge": "^2.6.0"
+    "superjson": "^2.2.2"
   },
   "devDependencies": {
     "@kuman/tsconfig": "workspace:*",

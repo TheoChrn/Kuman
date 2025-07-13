@@ -12,7 +12,7 @@ import * as React from "react";
 import type { QueryClient } from "@tanstack/react-query";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
-import appCss from "~/styles/app.css?url";
+import appCss from "~/styles/global.scss?url";
 import { seo } from "~/utils/seo";
 import { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { AppRouter } from "@kuman/api";
