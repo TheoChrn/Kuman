@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm -r run build",
+    "build": "pnpm -r --filter \"...!app\" run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "pnpm -r run clean",
     "db:push": "pnpm --filter @kuman/db run push",

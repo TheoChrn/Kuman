@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@kuman/tsconfig": "workspace:*",
-    "@types/node": "^22.5.4",
+    "@types/node": "^22.15.30",
     "typescript": "catalog:"
   },
   "prettier": "@kuman/prettier-config"
