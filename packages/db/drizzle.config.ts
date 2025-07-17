@@ -3,10 +3,10 @@ import { fileURLToPath } from "url";
 import type { Config } from "drizzle-kit";
 import { config } from "dotenv";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = dirname(_filename);
 
-config({ path: resolve(__dirname, "../../../.env") });
+config({ path: resolve(_dirname, "../../../.env") });
 
 if (!process.env.POSTGRES_URL) {
   throw new Error("Missing POSTGRES_URL");
