@@ -1,3 +1,5 @@
+@use "./variables.scss" as *;
+
 /* Reset SCSS minimal et efficace */
 *,
 *::before,
@@ -11,6 +13,7 @@ html,
 body {
   height: 100%;
   width: 100%;
+  color: $foreground;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

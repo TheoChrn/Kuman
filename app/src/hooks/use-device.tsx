@@ -1,0 +1,25 @@
+import { useEffect, useState } from "react";
+
+const devices = ["mobile", "tablet", "desktop"] as const;
+type Devices = typeof devices;
+type Device = Devices[number];
+
+export function useDevice() {
+  const [device, setDevice] = useState<Device>("desktop");
+
+  useEffect(() => {
+    const onResize = () => {
+      setDevice(
+        window.innerWidth < 768
+          ? "mobile"
+          : window.innerWidth < 1024
+          ? "tablet"
+          : "desktop"
+      );
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return { device };
+}

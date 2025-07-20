@@ -6,7 +6,7 @@ import { config } from "dotenv";
 const _filename = fileURLToPath(import.meta.url);
 const _dirname = dirname(_filename);
 
-config({ path: resolve(_dirname, "../../../.env") });
+config({ path: resolve(_dirname, "../../.env") });
 
 if (!process.env.POSTGRES_URL) {
   throw new Error("Missing POSTGRES_URL");

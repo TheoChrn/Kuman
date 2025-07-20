@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
   component: Home,
   loader: async ({ context: { trpc, queryClient } }) => {
     await queryClient.ensureQueryData(
-      trpc.imageUrlBucketExample.queryOptions()
+      trpc.test.imageUrlBucketExample.queryOptions()
     );
   },
 });
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   const trpc = useTRPC();
   const { data: bidon } = useSuspenseQuery(
-    trpc.imageUrlBucketExample.queryOptions()
+    trpc.test.imageUrlBucketExample.queryOptions()
   );
 
   return (

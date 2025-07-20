@@ -4,7 +4,7 @@ import { Lucia } from "lucia";
 import { db, schema } from "@kuman/db";
 
 export const lucia = new Lucia(
-  new DrizzlePostgreSQLAdapter(db, schema.session, schema.users),
+  new DrizzlePostgreSQLAdapter(db, schema.sessions, schema.users),
   {
     sessionCookie: {
       expires: false,
