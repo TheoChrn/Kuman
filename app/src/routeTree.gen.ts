@@ -12,6 +12,7 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChapterNumberPageRouteImport } from './routes/$chapterNumber.$page'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -19,6 +20,11 @@ const rootServerRouteImport = createServerRootRoute()
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChapterNumberPageRoute = ChapterNumberPageRouteImport.update({
+  id: '/$chapterNumber/$page',
+  path: '/$chapterNumber/$page',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
@@ -29,24 +35,28 @@ const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$chapterNumber/$page': typeof ChapterNumberPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$chapterNumber/$page': typeof ChapterNumberPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$chapterNumber/$page': typeof ChapterNumberPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/$chapterNumber/$page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/$chapterNumber/$page'
+  id: '__root__' | '/' | '/$chapterNumber/$page'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChapterNumberPageRoute: typeof ChapterNumberPageRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
@@ -79,6 +89,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$chapterNumber/$page': {
+      id: '/$chapterNumber/$page'
+      path: '/$chapterNumber/$page'
+      fullPath: '/$chapterNumber/$page'
+      preLoaderRoute: typeof ChapterNumberPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 declare module '@tanstack/react-start/server' {
@@ -95,6 +112,7 @@ declare module '@tanstack/react-start/server' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChapterNumberPageRoute: ChapterNumberPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -11,9 +11,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
+import { validateBearerTokens, validateSessionCookies } from "@kuman/db";
 import { db } from "@kuman/db/client";
-
-import { validateBearerTokens, validateSessionCookies } from "./auth";
 
 /**
  * 1. CONTEXT

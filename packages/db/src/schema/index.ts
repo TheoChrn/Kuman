@@ -1,7 +1,9 @@
-import * as session from "./sessions";
-import * as user from "./users/schema";
+import * as chapters from "./chapters";
+import * as sessions from "./sessions";
+import * as users from "./users";
 
 export const schema = {
-  ...session,
-  ...user,
+  ...sessions,
+  ...users,
+  ...chapters,
 };

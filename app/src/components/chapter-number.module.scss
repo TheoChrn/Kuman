@@ -1,0 +1,27 @@
+@use "../styles/mixins.scss" as *;
+@use "../styles/variables.scss" as *;
+
+.chapter-images-container {
+  background-color: $neutral;
+  height: 100svh;
+  scroll-snap-type: both mandatory;
+  gap: 2rem;
+
+  &-scroll-x {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    direction: rtl;
+  }
+  &-scroll-y {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .chapter-images-container {
+    height: calc(100svh - 64px);
+  }
+}
