@@ -1,5 +1,6 @@
-import { db, generateUserId, schema } from "@kuman/db";
-
+import { db } from "../client";
+import { generateUserId } from "../generate-ids";
+import { schema } from "../schema";
 import { lucia } from "./lucia";
 
 async function createUser({

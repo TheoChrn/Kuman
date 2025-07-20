@@ -1,5 +1,4 @@
 import * as Ariakit from "@ariakit/react";
-import styles from "./select.module.scss";
 
 interface SelectProps {
   children: React.ReactNode;
@@ -26,4 +25,10 @@ export function Select({
       </Ariakit.SelectPopover>
     </Ariakit.SelectProvider>
   );
+}
+
+interface SelectItemProps extends Ariakit.SelectItemProps {}
+
+export function SelectItem(props: SelectItemProps) {
+  return <Ariakit.SelectItem {...props} accessibleWhenDisabled={true} />;
 }

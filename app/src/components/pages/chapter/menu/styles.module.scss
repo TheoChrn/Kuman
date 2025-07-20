@@ -1,3 +1,7 @@
+@use "../../../../styles/mixins.scss" as *;
+@use "../../../../styles/variables.scss" as *;
+@use "../../../ui/select.scss" as *;
+
 .content {
   width: 100%;
   position: fixed;
@@ -18,37 +22,6 @@
       width: 100%;
       accent-color: $primary;
       direction: rtl;
-    }
-  }
-
-  .select {
-    &-page {
-      @extend .select;
-      max-width: 12rem;
-    }
-    &-chapter {
-      @extend .select;
-      max-width: 36rem;
-    }
-
-    &[aria-expanded="true"] {
-      @extend .select-expanded;
-    }
-
-    &-popover-page {
-      @extend .select-popover;
-    }
-    &-popover-chapters {
-      @extend .select-popover;
-    }
-
-    &-item {
-      display: block;
-      padding: 0.5rem 0.25rem;
-      width: 100%;
-      &:hover {
-        background-color: $hover;
-      }
     }
   }
 
@@ -80,7 +53,7 @@
       text-transform: capitalize;
       transition: color 200ms;
       border: solid 1px $stroke;
-      border-radius: 8px;
+      border-radius: calc(4px);
       padding: 1rem;
 
       &:hover {
@@ -109,7 +82,37 @@
   }
 }
 
-.trigger {
+.popover {
+  background-color: $background;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.select {
+  @extend %select;
+  &[aria-expanded="true"] {
+    @extend %select-expanded;
+  }
+}
+
+.select-page {
+  max-width: 12rem;
+}
+
+.select-popover {
+  @extend %select-popover;
+}
+
+.select-item {
+  display: block;
+  padding: 0.5rem 0.25rem;
+  width: 100%;
+  &:hover {
+    background-color: $hover;
+  }
+}
+
+.dialog-trigger {
   position: fixed;
   z-index: 1;
   top: 0.5rem;
@@ -142,9 +145,19 @@
 @media screen and (min-width: 1024px) {
   .content {
     @include flex-between;
+    position: static;
 
     & > :not(:last-child) {
       margin: 0;
     }
+
+    & > :last-child {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+
+  .select-chapter {
+    max-width: 36rem;
   }
 }

@@ -2,8 +2,8 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
 import { asc, eq, schema, sql } from "@kuman/db";
+import { supabase } from "@kuman/db/supabase";
 
-import { supabase } from "../supabase";
 import { publicProcedure } from "../trpc";
 
 export const chapterRouter = {
@@ -15,7 +15,7 @@ export const chapterRouter = {
       );
     }),
   get: publicProcedure
-    .input(z.object({ chapterNumber: z.coerce.number() }))
+    .input(z.object({ chapterNumber: z.number() }))
     .query(async ({ input, ctx }) => {
       const { data: list } = await supabase.storage
         .from("assets")

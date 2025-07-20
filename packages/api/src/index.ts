@@ -22,4 +22,3 @@ type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 export { appRouter, createTRPCContext };
 export type { AppRouter, RouterInputs, RouterOutputs };
-export { lucia } from "./auth";

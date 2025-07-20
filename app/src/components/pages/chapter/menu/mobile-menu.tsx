@@ -1,18 +1,29 @@
 import * as Ariakit from "@ariakit/react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa6";
-import { Select } from "~/components/ui/select";
+import { DesktopMenuProps } from "~/components/pages/chapter/menu/desktop-menu";
+import { ReadingMode } from "~/components/pages/chapter/menu/reading-mode";
+import { Select, SelectItem } from "~/components/ui/select";
 import styles from "./styles.module.scss";
-import { RouterOutputs } from "@kuman/api";
 
-interface MobileMenuProps {
-  chapter: RouterOutputs["chapters"]["get"]
-  chapterList: RouterOutputs["chapters"]["getAll"]
+export interface MobileMenuProps extends DesktopMenuProps {
+  scrollToPage: (pageIndex: number) => void;
 }
-export default function MobileMenu(props: ) {
+export default function MobileMenu(props: MobileMenuProps) {
+  const navigate = useNavigate();
+  const [sliderValue, setSliderValue] = useState(props.currentPage);
+
+  useEffect(() => {
+    setSliderValue(props.currentPage);
+  }, [props.currentPage]);
+
   return (
     <Ariakit.DialogProvider>
-      <Ariakit.DialogDisclosure id="dialog-trigger" className={styles.btn}>
+      <Ariakit.DialogDisclosure
+        id="dialog-trigger"
+        className={styles["dialog-trigger"]}
+      >
         <Ariakit.VisuallyHidden>Ouvrir le menu</Ariakit.VisuallyHidden>
         <FaBars size={24} className={styles.burger} />
         <FaPlus size={24} className={styles.close} />
@@ -30,23 +41,29 @@ export default function MobileMenu(props: ) {
         </Link>
         <Select
           selectProviderProps={{
-            value: `Chapitre ${String(chapter.number).padStart(3, "0")} - ${
-              chapter.name
-            }`,
+            value: `Chapitre ${String(props.chapter.number).padStart(
+              3,
+              "0"
+            )} - ${props.chapter.name}`,
           }}
-          selectProps={{ className: styles.select }}
+          selectProps={{
+            className: `${styles["select"]} ${styles["select-chapter"]}`,
+          }}
           selectPopoverProps={{
             className: styles["select-popover"],
             sameWidth: true,
+            modal: true,
           }}
         >
-          {chapterList.map((chapter) => (
-            <Ariakit.SelectItem
+          {props.chapterList.map((chapter) => (
+            <SelectItem
               key={chapter.number}
               className={styles["select-item"]}
+              disabled={props.currentChapter === chapter.number}
               render={
                 <Link
                   to="/$chapterNumber/$page"
+                  preload="intent"
                   params={{
                     chapterNumber: String(chapter.number),
                     page: "1",
@@ -57,74 +74,38 @@ export default function MobileMenu(props: ) {
               {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
                 chapter.name
               }`}
-            </Ariakit.SelectItem>
+            </SelectItem>
           ))}
         </Select>
 
         <div className={styles.range}>
-          {chapter.pages?.length}
+          {props.chapter.pages?.length}
           <input
             type="range"
-            max={chapter.pages?.length}
+            max={props.chapter.pages?.length}
             min={1}
             value={sliderValue}
             onPointerUp={(e) => {
               const value = (e.target as HTMLInputElement).valueAsNumber;
               navigate({
                 to: "/$chapterNumber/$page",
-                params: { chapterNumber, page: String(value) },
+                params: {
+                  chapterNumber: String(props.currentChapter),
+                  page: String(value),
+                },
                 replace: true,
               });
-              blockOvserver.current = false;
             }}
             onChange={(e) => {
-              console.log("onChange");
-              blockOvserver.current = true;
               const value = e.target.valueAsNumber;
-              handleSliderChange(value);
-            }}
-            onKeyUp={(e) => {
-              const value = (e.target as HTMLInputElement).valueAsNumber;
-
-              if (value === 1 || value === chapter.pageCount) return;
-
-              if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-                navigate({
-                  to: "/$chapterNumber/$page",
-                  params: { chapterNumber, page: String(value) },
-                  replace: true,
-                });
-                blockOvserver.current = false;
-              }
+              setSliderValue(value);
+              props.scrollToPage(value - 1);
             }}
           />
 
           {sliderValue}
         </div>
-        <Ariakit.RadioProvider>
-          <Ariakit.RadioGroup className={styles["radio-group"]}>
-            <Ariakit.VisuallyHidden>
-              <Ariakit.GroupLabel>Options de lectures</Ariakit.GroupLabel>
-            </Ariakit.VisuallyHidden>
-            {readingModes.map((option) => {
-              const ReadingMode = readingModeMapping[option];
-              return (
-                <label key={option} className={styles["reading-mode-label"]}>
-                  <Ariakit.VisuallyHidden>
-                    <Ariakit.Radio
-                      value={option}
-                      checked={option === readingMode}
-                      onChange={(e) =>
-                        appActions.setReadingMode(e.target.value as ReadingMode)
-                      }
-                    />
-                  </Ariakit.VisuallyHidden>
-                  <ReadingMode />
-                </label>
-              );
-            })}
-          </Ariakit.RadioGroup>
-        </Ariakit.RadioProvider>
+        <ReadingMode />
       </Ariakit.Dialog>
     </Ariakit.DialogProvider>
   );

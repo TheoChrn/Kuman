@@ -1,6 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 
-import { supabase } from "../supabase";
+import { supabase } from "@kuman/db/supabase";
+
 import { publicProcedure } from "../trpc";
 
 export const testRouter = {

@@ -4,7 +4,7 @@ import styles from "~/components/chapter-image.module.scss";
 interface ChapterImageProps extends ComponentPropsWithRef<"div"> {
   src: string;
   alt: string;
-  chapterNumber: string;
+  chapterNumber: number;
   index: number;
 }
 export function ChapterImage({ src, alt, ref }: ChapterImageProps) {

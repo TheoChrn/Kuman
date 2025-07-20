@@ -5,7 +5,7 @@ type Devices = typeof devices;
 type Device = Devices[number];
 
 export function useDevice() {
-  const [device, setDevice] = useState<Device>("desktop");
+  const [device, setDevice] = useState<Device | null>(null);
 
   useEffect(() => {
     const onResize = () => {
@@ -17,6 +17,7 @@ export function useDevice() {
           : "desktop"
       );
     };
+    onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);

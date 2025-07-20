@@ -43,6 +43,13 @@
       "when": 1752862266894,
       "tag": "0005_simple_falcon",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1753044297475,
+      "tag": "0006_late_doctor_spectrum",
+      "breakpoints": true
     }
   ]
 }

@@ -8,7 +8,7 @@ interface AppState {
 }
 
 export const appStore = new Store<AppState>({
-  preferences: { readingMode: "horizontal" },
+  preferences: { readingMode: "scroll" },
 });
 
 export const appActions = {
