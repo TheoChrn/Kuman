@@ -1,4 +1,0 @@
-const tsrStartManifest = () => ({ "routes": { "__root__": { "filePath": "/Users/theocheron/ecole/projet-fin-d-annee/kuman/app/src/routes/__root.tsx", "children": ["/", "/$chapterNumber/$page"], "preloads": ["/assets/main-DXiYLDQ0.js"], "assets": [] }, "/": { "filePath": "/Users/theocheron/ecole/projet-fin-d-annee/kuman/app/src/routes/index.tsx", "assets": [], "preloads": ["/assets/index-Ca3ZzOLn.js", "/assets/useSuspenseQuery-BZNYNdQK.js"] }, "/$chapterNumber/$page": { "filePath": "/Users/theocheron/ecole/projet-fin-d-annee/kuman/app/src/routes/$chapterNumber.$page.tsx", "assets": [{ "tag": "link", "attrs": { "rel": "stylesheet", "href": "/assets/_chapterNumber-Clq35t--.css", "type": "text/css" } }], "preloads": ["/assets/_chapterNumber._page-CYQ4_Jeu.js", "/assets/useSuspenseQuery-BZNYNdQK.js"] } }, "clientEntry": "/assets/main-DXiYLDQ0.js" });
-
-export { tsrStartManifest };
-//# sourceMappingURL=_tanstack-start-manifest_v-DNvzdPlh.mjs.map

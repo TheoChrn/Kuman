@@ -1,10 +1,13 @@
 import { AppRouter } from "@kuman/api";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider
+} from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
-import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import SuperJSON from "superjson";
 import { TRPCProvider } from "~/trpc/react";
@@ -24,6 +27,14 @@ const getRequestHeaders = createServerFn({ method: "GET" }).handler(
   }
 );
 
+function getUrl() {
+  const base = (() => {
+    if (typeof window !== "undefined") return "";
+    return `${import.meta.env.VITE_BASE_URL || "http://localhost:3000"}`;
+  })();
+  return base + "/api/trpc";
+}
+
 export function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,14 +46,9 @@ export function createRouter() {
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
-      loggerLink({
-        enabled: (op) =>
-          process.env.NODE_ENV === "development" ||
-          (op.direction === "down" && op.result instanceof Error),
-      }),
       httpBatchLink({
         transformer: SuperJSON,
-        url: import.meta.env.VITE_BASE_URL + "/api/trpc",
+        url: getUrl(),
         async headers() {
           return await getRequestHeaders();
         },

@@ -2,7 +2,7 @@ import process from 'node:process';globalThis._importMeta_=globalThis._importMet
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createFileRoute, lazyRouteComponent, redirect, notFound, createRootRouteWithContext, Outlet, HeadContent, Scripts, RouterProvider, Link, useRouter, useMatch, rootRouteId as rootRouteId$1, ErrorComponent, createRouter as createRouter$1 } from '@tanstack/react-router';
 import { routerWithQueryClient } from '@tanstack/react-router-with-query';
-import { createTRPCClient, loggerLink, httpBatchLink } from '@trpc/client';
+import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { createTRPCContext as createTRPCContext$1, createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
 import SuperJSON from 'superjson';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -24,7 +24,7 @@ import require$$0$4 from 'events';
 import require$$3$1 from 'net';
 import require$$4$2 from 'tls';
 import require$$0$3 from 'buffer';
-import { initTRPC, TRPCError } from '@trpc/server';
+import { initTRPC } from '@trpc/server';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { defineHandlerCallback, renderRouterToStream } from '@tanstack/react-router/ssr/server';
@@ -3243,7 +3243,7 @@ async function loadVirtualModule(id) {
     case VIRTUAL_MODULES.routeTree:
       return await Promise.resolve().then(() => routeTree_gen);
     case VIRTUAL_MODULES.startManifest:
-      return await import('./_tanstack-start-manifest_v-DNvzdPlh.mjs');
+      return await import('./_tanstack-start-manifest_v-CBIaUHtN.mjs');
     case VIRTUAL_MODULES.serverFnManifest:
       return await import('./_tanstack-start-server-fn-manifest_v-Dt2n6y0O.mjs');
     default:
@@ -11294,9 +11294,7 @@ function drizzle(...params) {
 })(drizzle || (drizzle = {}));
 const pool = new Pool$1({
   connectionString: process.env.POSTGRES_URL,
-  ssl: {
-    rejectUnauthorized: false
-  } 
+  ssl: false
 });
 const db = drizzle(pool, {
   schema,
@@ -25536,12 +25534,12 @@ const createClient = (supabaseUrl, supabaseKey, options) => {
 const __filename = fileURLToPath(globalThis._importMeta_.url);
 const __dirname = dirname(__filename);
 mainExports.config({ path: resolve(__dirname, "../../../.env") });
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE) {
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
   throw new Error("Missing SUPABASE_URL");
 }
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE
+  process.env.SUPABASE_ANON_KEY
 );
 const createTRPCContext = async (opts) => {
   const bearerToken = opts.headers.get("Authorization");
@@ -25564,14 +25562,10 @@ const t = initTRPC.context().create({
 const createTRPCRouter = t.router;
 const publicProcedure = t.procedure;
 t.procedure.use(({ ctx, next }) => {
-  var _a2;
-  if (!((_a2 = ctx.session) == null ? void 0 : _a2.user)) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
   return next({
     ctx: {
       // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user }
+      // session: { ...ctx.session, user: ctx.session.user },
     }
   });
 });
@@ -25630,9 +25624,7 @@ function handler({
 }
 const ServerRoute = createServerFileRoute().methods({
   GET: handler,
-  POST: handler,
-  PATCH: handler,
-  DELETE: handler
+  POST: handler
 });
 const rootServerRouteImport = createServerRootRoute();
 const IndexRoute = Route$1.update({
@@ -25674,6 +25666,12 @@ const getRequestHeaders = createServerFn({
   const headers = new Headers(request.headers);
   return Object.fromEntries(headers);
 });
+function getUrl() {
+  const base = (() => {
+    return `${"http://localhost:3000"}`;
+  })();
+  return base + "/api/trpc";
+}
 function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -25689,11 +25687,9 @@ function createRouter() {
     }
   });
   const trpcClient = createTRPCClient({
-    links: [loggerLink({
-      enabled: (op) => op.direction === "down" && op.result instanceof Error
-    }), httpBatchLink({
+    links: [httpBatchLink({
       transformer: SuperJSON,
-      url: "http://localhost:3000/api/trpc",
+      url: getUrl(),
       async headers() {
         return await getRequestHeaders();
       }

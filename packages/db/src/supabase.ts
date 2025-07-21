@@ -8,11 +8,11 @@ const __dirname = dirname(__filename);
 
 config({ path: resolve(__dirname, "../../../.env") });
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE) {
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
   throw new Error("Missing SUPABASE_URL");
 }
 
 export const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE,
+  process.env.SUPABASE_ANON_KEY,
 );

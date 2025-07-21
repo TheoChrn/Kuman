@@ -14,6 +14,4 @@ function handler({ request }: { request: Request }) {
 export const ServerRoute = createServerFileRoute("/api/trpc/$").methods({
   GET: handler,
   POST: handler,
-  PATCH: handler,
-  DELETE: handler,
 });

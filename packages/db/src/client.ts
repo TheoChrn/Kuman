@@ -6,12 +6,7 @@ import { schema } from "./schema";
 
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? {
-          rejectUnauthorized: false,
-        }
-      : false,
+  ssl: false,
 });
 
 export const db: NodePgDatabase<typeof schema> = drizzle(pool, {

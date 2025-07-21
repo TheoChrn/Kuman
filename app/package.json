@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build --mode server && tsc --noEmit",
-    "start": "vite start"
+    "build": "vite build && tsc --noEmit",
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@ariakit/react": "^0.4.17",

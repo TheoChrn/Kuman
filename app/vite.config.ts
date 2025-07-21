@@ -2,7 +2,7 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import path from "path";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
-import react from "@vitejs/plugin-react";
+import viteReact from "@vitejs/plugin-react";
 
 export default defineConfig({
   server: {
@@ -19,6 +19,6 @@ export default defineConfig({
       projects: ["./tsconfig.json"],
     }),
     tanstackStart({ target: "netlify", customViteReactPlugin: true }),
-    react(),
+    viteReact(),
   ],
 });
