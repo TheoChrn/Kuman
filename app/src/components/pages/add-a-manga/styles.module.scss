@@ -1,0 +1,15 @@
+.add-a-manga {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  & form {
+    & > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & input {
+      border: solid 1px red;
+    }
+  }
+}

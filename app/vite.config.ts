@@ -13,6 +13,11 @@ export default defineConfig({
       external: ["pg", "pg-cloudflare", "cloudflare:sockets"],
     },
   },
+  css: {
+    modules: {
+      localsConvention: "dashes",
+    },
+  },
   envDir: path.resolve(__dirname, "../"),
   plugins: [
     tsConfigPaths({
