@@ -13,6 +13,7 @@
     "@kuman/api": "workspace:*",
     "@kuman/db": "workspace:*",
     "@kuman/shared": "workspace:*",
+    "@supabase/supabase-js": "^2.51.0",
     "@tanstack/react-form": "^1.15.0",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-query-devtools": "^5.66.0",

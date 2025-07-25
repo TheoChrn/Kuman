@@ -51,4 +51,18 @@ export const chapterRouter = {
       .from(schema.chapters)
       .orderBy(asc(schema.chapters.number));
   }),
+  getUrls: publicProcedure
+    .input(z.object({ paths: z.array(z.string()) }))
+    .mutation(async ({ ctx, input }) => {
+      const results = await Promise.all(
+        input.paths.map((path) =>
+          ctx.supabase.storage.from("assets").createSignedUploadUrl(path),
+        ),
+      );
+
+      return results.map(({ data, error }) => ({
+        data,
+        error: error?.message ?? null,
+      }));
+    }),
 } satisfies TRPCRouterRecord;
