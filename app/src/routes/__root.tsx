@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 import { AppRouter } from "@kuman/api";
-import { CreateSupabaseClient } from "@kuman/db/supabase";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -20,7 +19,6 @@ import { seo } from "~/utils/seo";
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
-  getSupabase: CreateSupabaseClient;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({

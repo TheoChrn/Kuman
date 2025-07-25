@@ -11,11 +11,7 @@ import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
-import {
-  createSupabaseClient,
-  validateBearerTokens,
-  validateSessionCookies,
-} from "@kuman/db";
+import { createSupabaseClient, validateBearerTokens, validateSessionCookies } from "@kuman/db";
 import { db } from "@kuman/db/client";
 
 /**
@@ -36,7 +32,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = bearerToken
     ? await validateBearerTokens(bearerToken)
     : await validateSessionCookies(opts.headers);
-  const supabase = createSupabaseClient(bearerToken || "");
+  const supabase = createSupabaseClient(bearerToken ?? "");
 
   return {
     session,

@@ -11,7 +11,7 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AddAMangaRouteImport } from './routes/add-a-manga'
+import { Route as AddAMangaRouteImport } from './routes/add-a-chapter'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChapterNumberPageRouteImport } from './routes/$chapterNumber.$page'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'

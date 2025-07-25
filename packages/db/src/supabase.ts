@@ -9,20 +9,19 @@ const __dirname = dirname(__filename);
 
 config({ path: resolve(__dirname, "../../../.env") });
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-  throw new Error("Missing SUPABASE_URL");
+if (!process.env.VITE_SUPABASE_URL || !process.env.VITE_SUPABASE_ANON_KEY) {
+  throw new Error("Missing VITE_SUPABASE_URL");
 }
 
 export function createSupabaseClient(token?: string): SupabaseClient {
   const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
   return createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_ANON_KEY!,
+    process.env.VITE_SUPABASE_URL!,
+    process.env.VITE_SUPABASE_ANON_KEY!,
     {
       global: { headers },
     },
   );
 }
 
-export type CreateSupabaseClient = typeof createSupabaseClient;
 export type { SupabaseClient };

@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useTRPC } from "~/trpc/react";
 import styles from "~/components/pages/add-a-manga/styles.module.scss";
+import { supabase } from "~/utils/supabase.client";
 
 export const Route = createFileRoute("/add-a-manga")({
   component: RouteComponent,
@@ -10,42 +11,46 @@ export const Route = createFileRoute("/add-a-manga")({
 
 function RouteComponent() {
   const trpc = useTRPC();
-  const createChapterMutation = useMutation(
-    trpc.mangas.create.mutationOptions({
-      onMutate: (variables) => console.log(variables),
-    })
-  );
 
-  // const { supabase } = Route.useRouteContext();
+  const getUrlsMutation = useMutation(trpc.chapters.getUrls.mutationOptions());
 
   const form = useForm({
     defaultValues: {
       name: "",
-      nChapters: "",
       slug: "",
-      chapters: [] as File[],
+      chapterNumber: "",
+      tomeNumber: "",
+      images: [] as File[],
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      const paths = value.images.map(
+        (file) =>
+          `mangas/${value.slug}/tome-1/chapter-${value.images.length}/${file.name}`
+      );
 
-      // const files = value.chapters.map((file) => ({
-      //   path: `mangas/${value.slug}/tome-1/chapter-${value.nChapters}/${file.}`,
-      // }));
+      const res = await getUrlsMutation.mutateAsync({ paths });
 
-      // await Promise.all([
-      //   await supabase.storage
-      //     .from("assets")
-      //     .upload("manga/avatar1.png", avatarFile, {
-      //       cacheControl: "3600",
-      //       upsert: false,
-      //     }),
-      // ]);
+      const map = value.images.map((file, index) =>
+        supabase.storage
+          .from("assets")
+          .uploadToSignedUrl(
+            res[index]!.data!.path,
+            res[index]!.data!.token,
+            file,
+            {
+              cacheControl: "15778800",
+              upsert: false,
+            }
+          )
+      );
 
-      createChapterMutation.mutate(value);
+      const ress = await Promise.all(map);
+
+      console.log(ress);
+
+      // createChapterMutation.mutate(value);
     },
   });
-
-  console.log(createChapterMutation.error);
 
   return (
     <div className={styles["add-a-manga"]}>
@@ -63,27 +68,6 @@ function RouteComponent() {
               return (
                 <>
                   <label htmlFor={field.name}>Name</label>
-                  <input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                  {field.state.meta.isTouched && !field.state.meta.isValid ? (
-                    <em>{field.state.meta.errors.join(",")}</em>
-                  ) : null}
-                  {field.state.meta.isValidating ? "Validating..." : null}
-                </>
-              );
-            }}
-          />
-          <form.Field
-            name="nChapters"
-            children={(field) => {
-              return (
-                <>
-                  <label htmlFor={field.name}>nChapters</label>
                   <input
                     id={field.name}
                     name={field.name}
@@ -122,7 +106,7 @@ function RouteComponent() {
           />
           <form.Field
             mode="array"
-            name="chapters"
+            name="images"
             children={(field) => {
               return (
                 <>

@@ -62,7 +62,7 @@ export function createRouter() {
   const router = routerWithQueryClient(
     createTanStackRouter({
       routeTree,
-      context: { trpc, queryClient, getSupabase: createSupabaseClient },
+      context: { trpc, queryClient },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
