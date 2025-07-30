@@ -2,7 +2,6 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
 import { asc, eq, schema, sql } from "@kuman/db";
-import { supabase } from "@kuman/db/supabase";
 
 import { publicProcedure } from "../trpc";
 
@@ -17,7 +16,7 @@ export const chapterRouter = {
   get: publicProcedure
     .input(z.object({ chapterNumber: z.number() }))
     .query(async ({ input, ctx }) => {
-      const { data: list } = await supabase.storage
+      const { data: list } = await ctx.supabase.storage
         .from("assets")
         .list(
           `mangas/shingeki-no-kyojin/tome-1/chapter-${input.chapterNumber}`,
@@ -28,7 +27,7 @@ export const chapterRouter = {
           `mangas/shingeki-no-kyojin/tome-1/chapter-${input.chapterNumber}/${l.name}`,
       );
 
-      const { data } = await supabase.storage
+      const { data } = await ctx.supabase.storage
         .from("assets")
         .createSignedUrls(images ?? [], 60)
         .then((rows) => ({

@@ -12,6 +12,8 @@
     "@ariakit/react": "^0.4.17",
     "@kuman/api": "workspace:*",
     "@kuman/db": "workspace:*",
+    "@kuman/shared": "workspace:*",
+    "@tanstack/react-form": "^1.15.0",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-query-devtools": "^5.66.0",
     "@tanstack/react-router": "^1.128.8",

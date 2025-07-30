@@ -1,0 +1,38 @@
+@use "../../../../styles//variables.scss" as *;
+@use "./select.scss" as *;
+
+.select {
+  @extend %select;
+
+  &[aria-expanded="true"] {
+    @extend %select-expanded;
+  }
+
+  &:focus-within {
+    border: solid 1px $primary;
+  }
+}
+
+.select-popover {
+  @extend %select-popover;
+
+  &[data-open="true"] {
+    border: solid 1px $primary;
+    border-top: 0;
+  }
+
+  & .select-item {
+    @extend %select-item;
+
+    &:hover,
+    &:nth-child(odd):hover,
+    &:nth-child(odd)[data-active-item="true"],
+    &[data-active-item="true"] {
+      @extend %select-item-hover;
+    }
+
+    &:nth-child(odd) {
+      background-color: $background;
+    }
+  }
+}

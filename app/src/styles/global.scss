@@ -47,6 +47,20 @@ select {
   outline: none;
 }
 
+* {
+  outline-color: $primary;
+}
+
+input[type="number"] {
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;

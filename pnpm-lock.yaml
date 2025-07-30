@@ -22,8 +22,8 @@ catalogs:
       specifier: ^5.8.3
       version: 5.8.3
     zod:
-      specifier: ^3.25.55
-      version: 3.25.55
+      specifier: ^4.0.0
+      version: 4.0.10
 
 importers:
 
@@ -44,6 +44,12 @@ importers:
       '@kuman/db':
         specifier: workspace:*
         version: link:../packages/db
+      '@kuman/shared':
+        specifier: workspace:*
+        version: link:../packages/shared
+      '@tanstack/react-form':
+        specifier: ^1.15.0
+        version: 1.15.0(@tanstack/react-start@1.128.8(@netlify/blobs@9.1.2)(@tanstack/react-router@1.128.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@vitejs/plugin-react@4.7.0(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)))(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tanstack/react-query':
         specifier: ^5.66.0
         version: 5.81.5(react@19.1.0)
@@ -97,7 +103,7 @@ importers:
         version: 2.2.2
       zod:
         specifier: 'catalog:'
-        version: 3.25.55
+        version: 4.0.10
     devDependencies:
       '@kuman/tsconfig':
         specifier: workspace:*
@@ -146,7 +152,7 @@ importers:
         version: 2.2.2
       zod:
         specifier: 'catalog:'
-        version: 3.25.55
+        version: 4.0.10
     devDependencies:
       '@kuman/eslint-config':
         specifier: workspace:*
@@ -154,6 +160,9 @@ importers:
       '@kuman/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
+      '@kuman/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@kuman/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
@@ -195,7 +204,7 @@ importers:
         version: 2.4.1
       zod:
         specifier: 'catalog:'
-        version: 3.25.55
+        version: 4.0.10
     devDependencies:
       '@kuman/eslint-config':
         specifier: workspace:*
@@ -229,7 +238,14 @@ importers:
         version: 5.8.3
 
   packages/shared:
+    dependencies:
+      zod:
+        specifier: 'catalog:'
+        version: 4.0.10
     devDependencies:
+      '@kuman/db':
+        specifier: workspace:*
+        version: link:../db
       '@kuman/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
@@ -1605,6 +1621,9 @@ packages:
     peerDependencies:
       vite: '>=6.0.0'
 
+  '@tanstack/form-core@1.15.0':
+    resolution: {integrity: sha512-zMNyxb/J/JnFmW4Gzb1TSxaXmwNhvsaF9p3dGRpE93TMGp2ojPKK7V5LZ43ZV7iFTYWTL8NOIU8ZXuf9qZVkmw==}
+
   '@tanstack/history@1.121.34':
     resolution: {integrity: sha512-YL8dGi5ZU+xvtav2boRlw4zrRghkY6hvdcmHhA0RGSJ/CBgzv+cbADW9eYJLx74XMZvIQ1pp6VMbrpXnnM5gHA==}
     engines: {node: '>=12'}
@@ -1614,6 +1633,18 @@ packages:
 
   '@tanstack/query-devtools@5.81.2':
     resolution: {integrity: sha512-jCeJcDCwKfoyyBXjXe9+Lo8aTkavygHHsUHAlxQKKaDeyT0qyQNLKl7+UyqYH2dDF6UN/14873IPBHchcsU+Zg==}
+
+  '@tanstack/react-form@1.15.0':
+    resolution: {integrity: sha512-bAawFDxR1wLn+eXli6MSyS4Nw0vTyHuW3CybjZGtk7NIcYxyaAm9cW/jPUX2j/KMDtjVNg5RMpfmufxDrsNHyA==}
+    peerDependencies:
+      '@tanstack/react-start': ^1.112.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      vinxi: ^0.5.0
+    peerDependenciesMeta:
+      '@tanstack/react-start':
+        optional: true
+      vinxi:
+        optional: true
 
   '@tanstack/react-query-devtools@5.81.5':
     resolution: {integrity: sha512-lCGMu4RX0uGnlrlLeSckBfnW/UV+KMlTBVqa97cwK7Z2ED5JKnZRSjNXwoma6sQBTJrcULvzgx2K6jEPvNUpDw==}
@@ -2409,6 +2440,9 @@ packages:
   decache@4.6.2:
     resolution: {integrity: sha512-2LPqkLeu8XWHU8qNCS3kcF6sCcb5zIzvWaAHYSvPfwhdd7mHuah29NssMzrTYyHN4F5oFy2ko9OBYxegtU0FEw==}
 
+  decode-formdata@0.9.0:
+    resolution: {integrity: sha512-q5uwOjR3Um5YD+ZWPOF/1sGHVW9A5rCrRwITQChRXlmPkxDFBqCm4jNTIVdGHNH9OnR+V9MoZVgRhsFb+ARbUw==}
+
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
@@ -2493,6 +2527,9 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       typescript: ^5.4.4
+
+  devalue@5.1.1:
+    resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
 
   diff@8.0.2:
     resolution: {integrity: sha512-sSuxWU5j5SR9QQji/o2qMvqRNYRDOcBTgsJ/DeCf4iSN4gW+gNMXM7wFIP+fdXZxoNiAnHUTGjCr+TSWXdRDKg==}
@@ -5042,6 +5079,9 @@ packages:
   zod@3.25.55:
     resolution: {integrity: sha512-219huNnkSLQnLsQ3uaRjXsxMrVm5C9W3OOpEVt2k5tvMKuA8nBSu38e0B//a+he9Iq2dvmk2VyYVlHqiHa4YBA==}
 
+  zod@4.0.10:
+    resolution: {integrity: sha512-3vB+UU3/VmLL2lvwcY/4RV2i9z/YU0DTV/tDuYjrwmx5WeJ7hwy+rGEEx8glHp6Yxw7ibRbKSaIFBgReRPe5KA==}
+
 snapshots:
 
   '@ampproject/remapping@2.3.0':
@@ -6217,11 +6257,27 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@tanstack/form-core@1.15.0':
+    dependencies:
+      '@tanstack/store': 0.7.2
+
   '@tanstack/history@1.121.34': {}
 
   '@tanstack/query-core@5.81.5': {}
 
   '@tanstack/query-devtools@5.81.2': {}
+
+  '@tanstack/react-form@1.15.0(@tanstack/react-start@1.128.8(@netlify/blobs@9.1.2)(@tanstack/react-router@1.128.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@vitejs/plugin-react@4.7.0(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)))(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@tanstack/form-core': 1.15.0
+      '@tanstack/react-store': 0.7.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      decode-formdata: 0.9.0
+      devalue: 5.1.1
+      react: 19.1.0
+    optionalDependencies:
+      '@tanstack/react-start': 1.128.8(@netlify/blobs@9.1.2)(@tanstack/react-router@1.128.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@vitejs/plugin-react@4.7.0(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0)))(drizzle-orm@0.44.2(@types/pg@8.15.4)(pg@8.16.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.0))
+    transitivePeerDependencies:
+      - react-dom
 
   '@tanstack/react-query-devtools@5.81.5(@tanstack/react-query@5.81.5(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -7307,6 +7363,8 @@ snapshots:
     dependencies:
       callsite: 1.0.0
 
+  decode-formdata@0.9.0: {}
+
   deep-is@0.1.4: {}
 
   deepmerge@4.3.1: {}
@@ -7392,6 +7450,8 @@ snapshots:
       typescript: 5.8.3
     transitivePeerDependencies:
       - supports-color
+
+  devalue@5.1.1: {}
 
   diff@8.0.2: {}
 
@@ -10220,3 +10280,5 @@ snapshots:
       zod: 3.25.55
 
   zod@3.25.55: {}
+
+  zod@4.0.10: {}

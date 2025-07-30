@@ -8,6 +8,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  optimizeDeps: {
+    include: ["**/*.scss"],
+  },
   build: {
     rollupOptions: {
       external: ["pg", "pg-cloudflare", "cloudflare:sockets"],

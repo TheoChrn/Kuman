@@ -5,6 +5,7 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
+    "noErrorTruncation": true,
     "noEmit": false,
     "outDir": "${configDir}/dist"
   }

@@ -1,15 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  createFileRoute,
-  notFound,
-  redirect
-} from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useRef } from "react";
 import { ChapterImage } from "~/components/chapter-image";
 import styles from "~/components/chapter-number.module.scss";
-import DesktopMenu from "~/components/pages/chapter/menu/desktop-menu";
-import MobileMenu from "~/components/pages/chapter/menu/mobile-menu";
+import DesktopMenu from "~/components/route-components/chapter/menu/desktop-menu";
+import MobileMenu from "~/components/route-components/chapter/menu/mobile-menu";
 import { Scroll } from "~/components/reading-mode/scroll";
 import { SinglePage } from "~/components/reading-mode/single-page";
 import { useDevice } from "~/hooks/use-device";

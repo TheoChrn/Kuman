@@ -19,6 +19,10 @@
     "./supabase": {
       "types": "./dist/supabase.d.ts",
       "default": "./src/supabase.ts"
+    },
+    "./enums": {
+      "types": "./dist/enums/index.d.ts",
+      "default": "./src/enums/index.ts"
     }
   },
   "license": "MIT",

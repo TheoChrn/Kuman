@@ -1,6 +1,6 @@
 {
-  "id": "692f5e7d-05a4-427a-a027-83c41318eaef",
-  "prevId": "f0940b76-7b19-4f7d-b03d-8ee2e4810800",
+  "id": "3ebfa1f2-43e7-49ca-8e22-48d2b0f0b407",
+  "prevId": "b2e4493b-75b0-439f-97d8-b1567d08d8cb",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -12,7 +12,8 @@
           "name": "id",
           "type": "text",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "'chapter_01K13Q9WR6EWC6CHT4NCZJ1KCB'"
         },
         "number": {
           "name": "number",
@@ -37,6 +38,140 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mangas": {
+      "name": "mangas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "japanese_name": {
+          "name": "japanese_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "romaji_name": {
+          "name": "romaji_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alternative_names": {
+          "name": "alternative_names",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "author": {
+          "name": "author",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "synopsis": {
+          "name": "synopsis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cover_url": {
+          "name": "cover_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tome_count": {
+          "name": "tome_count",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genres": {
+          "name": "genres",
+          "type": "genre[]",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "release_date": {
+          "name": "release_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publisher_jp": {
+          "name": "publisher_jp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "publisher_fr": {
+          "name": "publisher_fr",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "mangas_slug_unique": {
+          "name": "mangas_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -118,7 +253,65 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.genre": {
+      "name": "genre",
+      "schema": "public",
+      "values": [
+        "action",
+        "aventure",
+        "comédie",
+        "drame",
+        "fantastique",
+        "horreur",
+        "mystère",
+        "psychologique",
+        "romance",
+        "science-fiction",
+        "slice of life",
+        "sport",
+        "surnaturel",
+        "thriller",
+        "historique",
+        "arts martiaux",
+        "militaire",
+        "mecha",
+        "musique",
+        "policier",
+        "ecchi",
+        "yaoi",
+        "yuri",
+        "isekai",
+        "tranche de vie",
+        "cyberpunk",
+        "space opera",
+        "voyage temporel",
+        "cuisine",
+        "animaux"
+      ]
+    },
+    "public.status": {
+      "name": "status",
+      "schema": "public",
+      "values": [
+        "pause",
+        "ongoing",
+        "completed"
+      ]
+    },
+    "public.type": {
+      "name": "type",
+      "schema": "public",
+      "values": [
+        "shônen",
+        "shôjo",
+        "seinen",
+        "josei",
+        "kodomo",
+        "yonkoma"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},
