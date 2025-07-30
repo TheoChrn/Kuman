@@ -33,6 +33,7 @@
   "devDependencies": {
     "@kuman/eslint-config": "workspace:*",
     "@kuman/prettier-config": "workspace:*",
+    "@kuman/shared": "workspace:*",
     "@kuman/tsconfig": "workspace:*",
     "@types/node": "^22.15.30",
     "eslint": "catalog:",

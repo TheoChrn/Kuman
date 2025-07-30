@@ -4,14 +4,14 @@ import { Link } from "@tanstack/react-router";
 import { RefObject } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { PiGear } from "react-icons/pi";
-import { Select, SelectItem } from "~/components/ui/select";
+import { Select, SelectItem } from "~/components/ui/inputs/select/select";
 import styles from "./styles.module.scss";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "~/trpc/react";
 import {
   readingModeMapping,
   readingModes,
-} from "~/components/pages/chapter/menu/reading-mode";
+} from "~/components/route-components/chapter/menu/reading-mode";
 import { appActions, appStore } from "~/utils/stores/chapter-store";
 import { ReadingMode } from "~/routes/$chapterNumber.$page";
 import { useStore } from "@tanstack/react-store";
@@ -56,8 +56,9 @@ export default function DesktopMenu(props: DesktopMenuProps) {
             key={chapter.number}
             className={styles["select-item"]}
             disabled={props.currentChapter === chapter.number}
-            render={
+            render={(renderProps) => (
               <Link
+                {...renderProps}
                 to="/$chapterNumber/$page"
                 preload="intent"
                 params={{
@@ -65,7 +66,7 @@ export default function DesktopMenu(props: DesktopMenuProps) {
                   page: "1",
                 }}
               />
-            }
+            )}
           >
             {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
               chapter.name
@@ -90,24 +91,23 @@ export default function DesktopMenu(props: DesktopMenuProps) {
         >
           {Array.from({ length: Number(props.chapter.pageCount) }).map(
             (_, index) => (
-              <Ariakit.SelectItem
+              <SelectItem
                 key={index + 1}
-                className={styles["select-item"]}
-                accessibleWhenDisabled={true}
                 disabled={props.currentPage === index + 1}
                 onClick={() => (props.blockObserver.current = true)}
-                render={
+                render={(renderProps) => (
                   <Link
+                    {...renderProps}
                     to="/$chapterNumber/$page"
                     params={{
                       chapterNumber: String(props.currentChapter),
                       page: String(index + 1),
                     }}
                   />
-                }
+                )}
               >
                 {`Page ${String(index + 1).padStart(2, "0")}`}
-              </Ariakit.SelectItem>
+              </SelectItem>
             )
           )}
         </Select>

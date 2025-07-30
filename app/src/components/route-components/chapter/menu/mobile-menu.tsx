@@ -2,9 +2,9 @@ import * as Ariakit from "@ariakit/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa6";
-import { DesktopMenuProps } from "~/components/pages/chapter/menu/desktop-menu";
-import { ReadingMode } from "~/components/pages/chapter/menu/reading-mode";
-import { Select, SelectItem } from "~/components/ui/select";
+import { DesktopMenuProps } from "~/components/route-components/chapter/menu/desktop-menu";
+import { ReadingMode } from "~/components/route-components/chapter/menu/reading-mode";
+import { Select, SelectItem } from "~/components/ui/inputs/select/select";
 import styles from "./styles.module.scss";
 
 export interface MobileMenuProps extends DesktopMenuProps {
@@ -58,9 +58,8 @@ export default function MobileMenu(props: MobileMenuProps) {
           {props.chapterList.map((chapter) => (
             <SelectItem
               key={chapter.number}
-              className={styles["select-item"]}
               disabled={props.currentChapter === chapter.number}
-              render={
+              render={(props) => (
                 <Link
                   to="/$chapterNumber/$page"
                   preload="intent"
@@ -68,8 +67,9 @@ export default function MobileMenu(props: MobileMenuProps) {
                     chapterNumber: String(chapter.number),
                     page: "1",
                   }}
+                  {...props}
                 />
-              }
+              )}
             >
               {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
                 chapter.name

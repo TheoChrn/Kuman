@@ -1,6 +1,6 @@
 @use "../../../../styles/mixins.scss" as *;
 @use "../../../../styles/variables.scss" as *;
-@use "../../../ui/select.scss" as *;
+@use "../../../ui/inputs/select/select.scss" as *;
 
 .content {
   width: 100%;
@@ -88,28 +88,8 @@
   padding: 0.5rem;
 }
 
-.select {
-  @extend %select;
-  &[aria-expanded="true"] {
-    @extend %select-expanded;
-  }
-}
-
 .select-page {
   max-width: 12rem;
-}
-
-.select-popover {
-  @extend %select-popover;
-}
-
-.select-item {
-  display: block;
-  padding: 0.5rem 0.25rem;
-  width: 100%;
-  &:hover {
-    background-color: $hover;
-  }
 }
 
 .dialog-trigger {
