@@ -3,6 +3,7 @@ import { InputHTMLAttributes, useEffect, useRef } from "react";
 import { ErrorMessage } from "~/components/ui/inputs/error-message/error-message";
 import { InputProps } from "~/components/ui/inputs/text";
 import { useFieldContext } from "~/hooks/form-composition";
+import styles from "./styles.module.scss";
 
 interface FileInputProps
   extends InputProps,
@@ -30,26 +31,7 @@ export function FileInput({ label, className, ...props }: FileInputProps) {
   }, []);
 
   return (
-    <label className={className}>
-      <div
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          const file = e.dataTransfer.files[0];
-          if (!file || !isExtensionValid(file.name)) return;
-
-          if (currentUrlRef.current) URL.revokeObjectURL(currentUrlRef.current);
-          currentUrlRef.current = URL.createObjectURL(file);
-          field.handleChange(file);
-        }}
-      >
-        {label}
-      </div>
-
-      {field.state.value instanceof File && (
-        <img src={currentUrlRef.current || undefined} alt="Preview" />
-      )}
-
+    <label className={`${styles["file-input"]} ${className}`}>
       <Ariakit.VisuallyHidden>
         <input
           id={field.name}
@@ -69,9 +51,31 @@ export function FileInput({ label, className, ...props }: FileInputProps) {
           {...props}
         />
       </Ariakit.VisuallyHidden>
+      <div className={styles["drop-zone-container"]}>
+        <div
+          className={styles["drop-zone"]}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (!file || !isExtensionValid(file.name)) return;
 
-      {field.state.meta.isTouched && !field.state.meta.isValid && (
-        <ErrorMessage>{field.state.meta.errors[0]?.message}</ErrorMessage>
+            if (currentUrlRef.current)
+              URL.revokeObjectURL(currentUrlRef.current);
+            currentUrlRef.current = URL.createObjectURL(file);
+            field.handleChange(file);
+          }}
+        >
+          {label}
+        </div>
+
+        {field.state.value instanceof File && (
+          <img src={currentUrlRef.current || undefined} alt="Preview" />
+        )}
+      </div>
+
+      {field.state.meta.errors[0]?.message && (
+        <ErrorMessage>{field.state.meta.errors[0].message}</ErrorMessage>
       )}
     </label>
   );

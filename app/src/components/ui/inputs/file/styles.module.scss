@@ -1,0 +1,28 @@
+@use "../../../../styles/mixins.scss" as *;
+@use "../../../../styles/variables.scss" as *;
+@use "../../../ui/inputs/select/select.scss" as *;
+
+.file-input {
+  & .drop-zone-container {
+    display: flex;
+    gap: 0.5rem;
+    @include space-y-3;
+    & .drop-zone {
+      flex: 1;
+      background-color: $background-100;
+      border: dashed 2px $stroke;
+      text-align: center;
+      min-height: 10rem;
+      border-radius: 8px;
+      gap: 0.25rem;
+      cursor: pointer;
+      @include flex-col-center;
+    }
+
+    & img {
+      object-fit: cover;
+      max-height: 10rem;
+      border-radius: 4px;
+    }
+  }
+}

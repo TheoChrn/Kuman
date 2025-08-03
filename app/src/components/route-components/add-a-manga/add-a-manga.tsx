@@ -9,14 +9,13 @@ import {
   statusValues,
   typeValues,
 } from "@kuman/db/enums";
-import { toSlug } from "@kuman/shared/format";
 import { createMangaForm } from "@kuman/shared/validators";
 import { useMutation } from "@tanstack/react-query";
 import { PiUploadBold } from "react-icons/pi";
 import { SelectItem } from "~/components/ui/inputs/select/select";
 import { useAppForm } from "~/hooks/form-composition";
 import { useTRPC } from "~/trpc/react";
-import { supabase } from "~/utils/supabase-client";
+
 import styles from "./styles.module.scss";
 
 export function RouteComponent() {
@@ -45,24 +44,12 @@ export function RouteComponent() {
       onChange: createMangaForm,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
-      const slug = toSlug(value.romajiTitle);
-      const path = `mangas/${slug}/${value.cover.name}`;
+      const { cover, ...restValue } = value;
+      const formData = new FormData();
+      formData.append("cover", value.cover);
+      formData.append("json", JSON.stringify(restValue));
 
-      let publicUrl: string | null = null;
-
-      const { data } = await supabase.storage
-        .from("covers")
-        .upload(path, value.cover, {
-          cacheControl: "31536000",
-        });
-
-      if (data) {
-        publicUrl = supabase.storage.from("covers").getPublicUrl(data.path)
-          .data.publicUrl;
-      }
-
-      createMutation.mutate({ ...value, coverUrl: publicUrl, slug: slug });
+      createMutation.mutate(formData);
     },
   });
 
@@ -89,7 +76,6 @@ export function RouteComponent() {
                         Cliquez ou glissez une image
                       </>
                     }
-                    className={styles["custom-file-input"]}
                   />
                 );
               }}
@@ -241,6 +227,11 @@ export function RouteComponent() {
                   return (
                     <field.SelectInput
                       label="Éditeur français"
+                      selectPopoverProps={{
+                        modal: true,
+                        portal: true,
+                        preventBodyScroll: true,
+                      }}
                       selectProps={{
                         className: styles["select"],
                         value:
@@ -269,6 +260,10 @@ export function RouteComponent() {
                   return (
                     <field.SelectInput
                       label="Éditeur original"
+                      selectPopoverProps={{
+                        portal: true,
+                        preventBodyScroll: true,
+                      }}
                       selectProps={{
                         className: styles["select"],
                         value:

@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   date,
   pgEnum,
@@ -14,6 +15,7 @@ import {
   publisherJpValues,
 } from "../../enums/mangas/publisher";
 import { generateMangaId } from "../../generate-ids";
+import { volumes } from "../volumes";
 
 export const statusEnum = pgEnum("status", statusValues);
 export const typeEnum = pgEnum("type", typeValues);
@@ -27,7 +29,7 @@ export const mangas = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => generateMangaId()),
-    title: text("title").notNull(),
+    title: text("title"),
     slug: text("slug").notNull(),
     originalTitle: text("original_title").notNull(),
     romajiTitle: text("romaji_title").notNull(),
@@ -47,3 +49,7 @@ export const mangas = pgTable(
   },
   (table) => [unique().on(table.slug)],
 );
+
+export const mangasRelation = relations(mangas, ({ many }) => ({
+  volumes: many(volumes),
+}));

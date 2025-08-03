@@ -1,2 +1,0 @@
-ALTER TABLE "chapters" ALTER COLUMN "id" SET DEFAULT 'chapter_01K163Q5MTDX5J9HN5ZST0KJ3S';--> statement-breakpoint
-ALTER TABLE "mangas" ALTER COLUMN "type" SET DATA TYPE text[] USING ARRAY[type];

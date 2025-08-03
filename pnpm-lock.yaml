@@ -23,7 +23,7 @@ catalogs:
       version: 5.8.3
     zod:
       specifier: ^4.0.0
-      version: 4.0.10
+      version: 4.0.14
 
 importers:
 
@@ -103,7 +103,7 @@ importers:
         version: 2.2.2
       zod:
         specifier: 'catalog:'
-        version: 4.0.10
+        version: 4.0.14
     devDependencies:
       '@kuman/tsconfig':
         specifier: workspace:*
@@ -152,7 +152,7 @@ importers:
         version: 2.2.2
       zod:
         specifier: 'catalog:'
-        version: 4.0.10
+        version: 4.0.14
     devDependencies:
       '@kuman/eslint-config':
         specifier: workspace:*
@@ -204,7 +204,7 @@ importers:
         version: 2.4.1
       zod:
         specifier: 'catalog:'
-        version: 4.0.10
+        version: 4.0.14
     devDependencies:
       '@kuman/eslint-config':
         specifier: workspace:*
@@ -241,7 +241,7 @@ importers:
     dependencies:
       zod:
         specifier: 'catalog:'
-        version: 4.0.10
+        version: 4.0.14
     devDependencies:
       '@kuman/db':
         specifier: workspace:*
@@ -255,6 +255,9 @@ importers:
       '@kuman/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^22.15.30
+        version: 22.15.30
       eslint:
         specifier: 'catalog:'
         version: 9.28.0(jiti@2.4.2)
@@ -5079,8 +5082,8 @@ packages:
   zod@3.25.55:
     resolution: {integrity: sha512-219huNnkSLQnLsQ3uaRjXsxMrVm5C9W3OOpEVt2k5tvMKuA8nBSu38e0B//a+he9Iq2dvmk2VyYVlHqiHa4YBA==}
 
-  zod@4.0.10:
-    resolution: {integrity: sha512-3vB+UU3/VmLL2lvwcY/4RV2i9z/YU0DTV/tDuYjrwmx5WeJ7hwy+rGEEx8glHp6Yxw7ibRbKSaIFBgReRPe5KA==}
+  zod@4.0.14:
+    resolution: {integrity: sha512-nGFJTnJN6cM2v9kXL+SOBq3AtjQby3Mv5ySGFof5UGRHrRioSJ5iG680cYNjE/yWk671nROcpPj4hAS8nyLhSw==}
 
 snapshots:
 
@@ -10281,4 +10284,4 @@ snapshots:
 
   zod@3.25.55: {}
 
-  zod@4.0.10: {}
+  zod@4.0.14: {}

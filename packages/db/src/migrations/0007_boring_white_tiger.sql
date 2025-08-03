@@ -1,2 +1,0 @@
-ALTER TABLE "chapters" ALTER COLUMN "id" SET DEFAULT 'chapter_01K15WS4MYXPQ6QJRYMH94SZJK';--> statement-breakpoint
-ALTER TABLE "mangas" ALTER COLUMN "cover_url" DROP NOT NULL;

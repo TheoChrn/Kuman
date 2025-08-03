@@ -11,6 +11,7 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AddAVolumeRouteImport } from './routes/add-a-volume'
 import { Route as AddAMangaRouteImport } from './routes/add-a-manga'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChapterNumberPageRouteImport } from './routes/$chapterNumber.$page'
@@ -18,6 +19,11 @@ import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.
 
 const rootServerRouteImport = createServerRootRoute()
 
+const AddAVolumeRoute = AddAVolumeRouteImport.update({
+  id: '/add-a-volume',
+  path: '/add-a-volume',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AddAMangaRoute = AddAMangaRouteImport.update({
   id: '/add-a-manga',
   path: '/add-a-manga',
@@ -42,30 +48,39 @@ const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add-a-manga': typeof AddAMangaRoute
+  '/add-a-volume': typeof AddAVolumeRoute
   '/$chapterNumber/$page': typeof ChapterNumberPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-a-manga': typeof AddAMangaRoute
+  '/add-a-volume': typeof AddAVolumeRoute
   '/$chapterNumber/$page': typeof ChapterNumberPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/add-a-manga': typeof AddAMangaRoute
+  '/add-a-volume': typeof AddAVolumeRoute
   '/$chapterNumber/$page': typeof ChapterNumberPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/add-a-manga' | '/$chapterNumber/$page'
+  fullPaths: '/' | '/add-a-manga' | '/add-a-volume' | '/$chapterNumber/$page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/add-a-manga' | '/$chapterNumber/$page'
-  id: '__root__' | '/' | '/add-a-manga' | '/$chapterNumber/$page'
+  to: '/' | '/add-a-manga' | '/add-a-volume' | '/$chapterNumber/$page'
+  id:
+    | '__root__'
+    | '/'
+    | '/add-a-manga'
+    | '/add-a-volume'
+    | '/$chapterNumber/$page'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddAMangaRoute: typeof AddAMangaRoute
+  AddAVolumeRoute: typeof AddAVolumeRoute
   ChapterNumberPageRoute: typeof ChapterNumberPageRoute
 }
 export interface FileServerRoutesByFullPath {
@@ -92,6 +107,13 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/add-a-volume': {
+      id: '/add-a-volume'
+      path: '/add-a-volume'
+      fullPath: '/add-a-volume'
+      preLoaderRoute: typeof AddAVolumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/add-a-manga': {
       id: '/add-a-manga'
       path: '/add-a-manga'
@@ -130,6 +152,7 @@ declare module '@tanstack/react-start/server' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddAMangaRoute: AddAMangaRoute,
+  AddAVolumeRoute: AddAVolumeRoute,
   ChapterNumberPageRoute: ChapterNumberPageRoute,
 }
 export const routeTree = rootRouteImport

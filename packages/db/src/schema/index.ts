@@ -1,3 +1,4 @@
+import * as volumes from ".//volumes";
 import * as chapters from "./chapters";
 import * as mangas from "./mangas";
 import * as sessions from "./sessions";
@@ -8,4 +9,5 @@ export const schema = {
   ...users,
   ...chapters,
   ...mangas,
+  ...volumes,
 };

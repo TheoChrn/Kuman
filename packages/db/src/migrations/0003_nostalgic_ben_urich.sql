@@ -1,0 +1,2 @@
+ALTER TABLE "chapters" ALTER COLUMN "id" SET DEFAULT 'chapter_01K1PBFFHCP7X8HKRPY8GG3KW2';--> statement-breakpoint
+ALTER TABLE "volumes" ADD CONSTRAINT "volumes_manga_slug_volume_number_unique" UNIQUE("manga_slug","volume_number");
