@@ -1,12 +1,12 @@
 import { chapterRouter } from "./router/chapter";
 import { mangaRouter } from "./router/manga";
-import { testRouter } from "./router/test";
+import { volumeRouter } from "./router/volume";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   chapters: chapterRouter,
-  test: testRouter,
   mangas: mangaRouter,
+  volumes: volumeRouter,
 });
 
 export type AppRouter = typeof appRouter;

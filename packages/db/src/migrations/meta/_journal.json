@@ -5,92 +5,29 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1753522355181,
-      "tag": "0000_early_firelord",
+      "when": 1753997014981,
+      "tag": "0000_flimsy_the_leader",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1753544619690,
-      "tag": "0001_certain_captain_midlands",
+      "when": 1753997780829,
+      "tag": "0001_romantic_leader",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1753544684768,
-      "tag": "0002_crazy_gunslinger",
+      "when": 1753998058871,
+      "tag": "0002_yielding_colossus",
       "breakpoints": true
     },
     {
       "idx": 3,
       "version": "7",
-      "when": 1753545380653,
-      "tag": "0003_luxuriant_maria_hill",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1753545510453,
-      "tag": "0004_real_butterfly",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1753548432078,
-      "tag": "0005_third_marvel_apes",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1753618316311,
-      "tag": "0006_fluffy_squirrel_girl",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1753618354878,
-      "tag": "0007_boring_white_tiger",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1753618904842,
-      "tag": "0008_short_liz_osborn",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "7",
-      "when": 1753625429165,
-      "tag": "0009_normal_red_ghost",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "7",
-      "when": 1753625630395,
-      "tag": "0010_lucky_tusk",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "7",
-      "when": 1753625758964,
-      "tag": "0011_sweet_sunspot",
-      "breakpoints": true
-    },
-    {
-      "idx": 12,
-      "version": "7",
-      "when": 1753628313454,
-      "tag": "0012_jittery_black_tom",
+      "when": 1754170637888,
+      "tag": "0003_nostalgic_ben_urich",
       "breakpoints": true
     }
   ]

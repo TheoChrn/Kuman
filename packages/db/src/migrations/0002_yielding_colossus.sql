@@ -1,0 +1,2 @@
+ALTER TABLE "chapters" ALTER COLUMN "id" SET DEFAULT 'chapter_01K1H6WSB0974EGXWWGYD2ZD04';--> statement-breakpoint
+ALTER TABLE "chapters" ALTER COLUMN "volume_id" DROP DEFAULT;

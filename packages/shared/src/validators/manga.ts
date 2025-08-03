@@ -32,7 +32,12 @@ export const createMangaForm = z.object({
   publisherFr: baseInputRequiredTextField(z.enum(publisherFrValues)),
 });
 
-export const createManga = createMangaForm.omit({ cover: true }).extend({
-  coverUrl: z.string().nullable(),
-  slug: z.string().trim().min(1),
-});
+export const createManga = z
+  .instanceof(FormData)
+  .transform((formData) => {
+    const json = formData.get("json")!.toString();
+    const data = JSON.parse(json);
+    const cover = formData.get("cover");
+    return { ...data, cover };
+  })
+  .pipe(createMangaForm);

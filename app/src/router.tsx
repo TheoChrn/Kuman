@@ -1,31 +1,22 @@
 import { AppRouter } from "@kuman/api";
-import {
-  QueryClient,
-  QueryClientProvider
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import {
+  createTRPCClient,
+  httpBatchLink,
+  httpLink,
+  isNonJsonSerializable,
+  splitLink,
+} from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import SuperJSON from "superjson";
+import superjson from "superjson";
 import { TRPCProvider } from "~/trpc/react";
 import { DefaultCatchBoundary } from "./components/default-catch-boundary";
 import { NotFound } from "./components/not-found";
 import { routeTree } from "./routeTree.gen";
-// NOTE: Most of the integration code found here is experimental and will
-// definitely end up in a more streamlined API in the future. This is just
-// to show what's possible with the current APIs.
-
-const getRequestHeaders = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const request = getWebRequest()!;
-    const headers = new Headers(request.headers);
-
-    return Object.fromEntries(headers);
-  }
-);
 
 function getUrl() {
   const base = (() => {
@@ -39,19 +30,32 @@ export function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { staleTime: 30 * 1000 },
-      dehydrate: { serializeData: SuperJSON.serialize },
-      hydrate: { deserializeData: SuperJSON.deserialize },
+      dehydrate: { serializeData: superjson.serialize },
+      hydrate: { deserializeData: superjson.deserialize },
     },
   });
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
-      httpBatchLink({
-        transformer: SuperJSON,
-        url: getUrl(),
-        async headers() {
-          return await getRequestHeaders();
-        },
+      splitLink({
+        condition: (op) => isNonJsonSerializable(op.input),
+        true: httpLink({
+          url: getUrl(),
+          transformer: {
+            input: {
+              serialize: (data: unknown) => data,
+              deserialize: (data: unknown) => data,
+            },
+            output: {
+              serialize: superjson.serialize,
+              deserialize: superjson.deserialize,
+            },
+          },
+        }),
+        false: httpBatchLink({
+          transformer: superjson,
+          url: getUrl(),
+        }),
       }),
     ],
   });
