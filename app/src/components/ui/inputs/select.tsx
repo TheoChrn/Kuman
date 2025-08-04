@@ -6,17 +6,21 @@ export interface SelectInputProps extends SelectProps {
   label?: string;
 }
 
-export function SelectInput({ label, ...props }: SelectInputProps) {
+export function SelectInput({
+  label,
+  selectProviderProps,
+  ...props
+}: SelectInputProps) {
   const field = useFieldContext<string>();
 
   return (
     <label>
       {label}
       <Select
-        {...props}
         selectProviderProps={{
           value: field.state.value,
           setValue: (value: string) => field.handleChange(value),
+          ...selectProviderProps,
         }}
         {...props}
       />

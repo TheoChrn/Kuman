@@ -31,7 +31,6 @@ export function AddAChapterRouteComponent() {
       onChange: createChapterForm,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
       const { images, ...restValue } = value;
       const formData = new FormData();
       images.forEach((image) => formData.append("images", image));
@@ -118,9 +117,10 @@ export function AddAChapterRouteComponent() {
                     selectProps={{
                       disabled: mangas.length === 0,
                       className: styles["select"],
-                      value:
-                        mangas.find((manga) => manga.slug === field.state.value)
-                          ?.title ?? "Selectionnez une série",
+                      fallback: "Selectionnez une série",
+                      value: mangas.find(
+                        (manga) => manga.slug === field.state.value
+                      )?.title,
                     }}
                   >
                     {mangas.map((value) => (
@@ -138,15 +138,16 @@ export function AddAChapterRouteComponent() {
               children={(field) => {
                 return (
                   <field.SelectInput
-                    label="Série"
+                    label="Volume"
                     selectProps={{
                       disabled: !mangaSlug,
                       className: styles["select"],
-                      value: mangaSlug
-                        ? volumes?.find(
-                            (volume) => volume.id === field.state.value
-                          )?.volumeNumber ?? "Selectionnez un volume"
+                      fallback: mangaSlug
+                        ? "Selectionnez un volume"
                         : "Une série doit être sélectionnée",
+                      value: volumes?.find(
+                        (volume) => volume.id === field.state.value
+                      )?.volumeNumber,
                     }}
                   >
                     {volumes?.map((volume) => (

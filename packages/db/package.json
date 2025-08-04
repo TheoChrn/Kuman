@@ -23,6 +23,10 @@
     "./enums": {
       "types": "./dist/enums/index.d.ts",
       "default": "./src/enums/index.ts"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "default": "./src/utils/index.ts"
     }
   },
   "license": "MIT",

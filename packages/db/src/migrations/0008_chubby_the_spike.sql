@@ -1,0 +1,1 @@
+ALTER TABLE "mangas" ALTER COLUMN "title" SET NOT NULL;
