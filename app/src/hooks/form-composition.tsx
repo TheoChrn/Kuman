@@ -1,5 +1,6 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { FileInput } from "~/components/ui/inputs/file/file";
+import { MultiFileInput } from "~/components/ui/inputs/multi-file/multi-file";
 import { MultiSelectInput } from "~/components/ui/inputs/multi-select";
 import { SelectInput } from "~/components/ui/inputs/select";
 import { TextInput } from "~/components/ui/inputs/text";
@@ -15,6 +16,7 @@ export const { useAppForm } = createFormHook({
   fieldComponents: {
     TextInput,
     FileInput,
+    MultiFileInput,
     TextareaInput,
     SelectInput,
     MultiSelectInput,

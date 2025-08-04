@@ -1,7 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod/v4";
 
-import { schema } from "@kuman/db";
+import { eq, schema } from "@kuman/db";
 import { createVolume } from "@kuman/shared/validators";
 
 import { publicProcedure } from "../trpc";
@@ -46,5 +47,17 @@ export const volumeRouter = {
           message: "Ce volume est déjà enregistré",
         });
       }
+    }),
+
+  getAllBySerie: publicProcedure
+    .input(z.object({ mangaSlug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db
+        .select({
+          volumeNumber: schema.volumes.volumeNumber,
+          id: schema.volumes.id,
+        })
+        .from(schema.volumes)
+        .where(eq(schema.volumes.mangaSlug, input.mangaSlug));
     }),
 } satisfies TRPCRouterRecord;

@@ -2,7 +2,7 @@
 @use "../../../styles/variables.scss" as *;
 @use "../../ui/inputs/select/select.scss" as *;
 
-.add-a-volume {
+.add-a-chapter {
   padding: 1.5rem;
   & form {
     max-width: 1024px;
@@ -67,6 +67,10 @@
       & textarea {
         min-height: 10rem;
         resize: none;
+      }
+
+      & .select:disabled {
+        opacity: 0.5;
       }
 
       & .render-multi-selection {

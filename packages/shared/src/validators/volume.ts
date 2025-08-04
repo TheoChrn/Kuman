@@ -16,8 +16,8 @@ export const createVolumeForm = z.object({
   pageCount: baseInputNumberField(),
   chapterCount: baseInputNumberField(),
   summary: baseInputRequiredTextField(),
-  cover: z.instanceof(File).nullable(),
-  mangaSlug: z.string().min(1),
+  cover: z.file().nullable(),
+  mangaSlug: baseInputRequiredTextField(),
 });
 
 export const createVolume = z

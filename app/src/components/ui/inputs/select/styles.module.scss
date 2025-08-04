@@ -4,8 +4,16 @@
 .select {
   @extend %select;
 
+  &-arrow {
+    transition-duration: 200ms;
+  }
+
   &[aria-expanded="true"] {
     @extend %select-expanded;
+
+    & .select-arrow {
+      transform: rotate(180deg);
+    }
   }
 
   &:focus-within {
