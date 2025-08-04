@@ -38,3 +38,6 @@ dist/
 
 # turbo
 .turbo
+
+.tanstack
+.netlify

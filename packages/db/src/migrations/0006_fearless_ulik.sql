@@ -1,0 +1,2 @@
+ALTER TABLE "chapters" ALTER COLUMN "id" SET DEFAULT 'chapter_01K1T9H1DB1NB10RSPF76HX8CD';--> statement-breakpoint
+ALTER TABLE "chapters" ADD CONSTRAINT "chapters_number_volume_id_unique" UNIQUE("number","volume_id");

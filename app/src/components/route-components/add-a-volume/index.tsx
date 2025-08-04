@@ -53,7 +53,7 @@ export function AddATomeRouteComponent() {
             form.handleSubmit();
           }}
         >
-          <Ariakit.Heading>Ajouter une nouvelle série</Ariakit.Heading>
+          <Ariakit.Heading>Ajouter un nouveau volume</Ariakit.Heading>
           <div className={`${styles["container"]}`}>
             <form.AppField
               name="cover"

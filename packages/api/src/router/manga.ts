@@ -64,6 +64,7 @@ export const mangaRouter = {
       .select({
         slug: schema.mangas.slug,
         title: schema.mangas.title,
+        id: schema.mangas.id,
       })
       .from(schema.mangas);
   }),

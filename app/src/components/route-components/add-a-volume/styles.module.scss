@@ -14,8 +14,6 @@
     }
 
     & .container {
-      margin: auto;
-      gap: 1rem;
       @include space-y-6;
 
       & .custom-file-input {

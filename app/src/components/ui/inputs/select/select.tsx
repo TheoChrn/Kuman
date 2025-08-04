@@ -27,7 +27,7 @@ export function Select({
         className={`${styles["select"]} ${selectClassName}`}
       >
         {renderSelection ?? restSelectProps.value}
-        <Ariakit.SelectArrow />
+        <Ariakit.SelectArrow className={styles["select-arrow"]} />
       </Ariakit.Select>
       <Ariakit.SelectPopover
         {...restPopoverProps}
