@@ -87,9 +87,8 @@ export function AddATomeRouteComponent() {
                       selectProps={{
                         disabled: mangas.length === 0,
                         className: styles["select"],
-                        value:
-                          slugToTitle[field.state.value] ||
-                          "Selectionnez un statut",
+                        fallback: "Selectionnez une série",
+                        value: slugToTitle[field.state.value],
                       }}
                     >
                       {mangas.map((value) => (

@@ -15,7 +15,7 @@ import { Route as AddAVolumeRouteImport } from './routes/add-a-volume'
 import { Route as AddAMangaRouteImport } from './routes/add-a-manga'
 import { Route as AddAChapterRouteImport } from './routes/add-a-chapter'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ChapterNumberPageRouteImport } from './routes/$chapterNumber.$page'
+import { Route as SerieChapterNumberPageRouteImport } from './routes/$serie.$chapterNumber.$page'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -40,9 +40,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ChapterNumberPageRoute = ChapterNumberPageRouteImport.update({
-  id: '/$chapterNumber/$page',
-  path: '/$chapterNumber/$page',
+const SerieChapterNumberPageRoute = SerieChapterNumberPageRouteImport.update({
+  id: '/$serie/$chapterNumber/$page',
+  path: '/$serie/$chapterNumber/$page',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
@@ -56,14 +56,14 @@ export interface FileRoutesByFullPath {
   '/add-a-chapter': typeof AddAChapterRoute
   '/add-a-manga': typeof AddAMangaRoute
   '/add-a-volume': typeof AddAVolumeRoute
-  '/$chapterNumber/$page': typeof ChapterNumberPageRoute
+  '/$serie/$chapterNumber/$page': typeof SerieChapterNumberPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-a-chapter': typeof AddAChapterRoute
   '/add-a-manga': typeof AddAMangaRoute
   '/add-a-volume': typeof AddAVolumeRoute
-  '/$chapterNumber/$page': typeof ChapterNumberPageRoute
+  '/$serie/$chapterNumber/$page': typeof SerieChapterNumberPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,7 +71,7 @@ export interface FileRoutesById {
   '/add-a-chapter': typeof AddAChapterRoute
   '/add-a-manga': typeof AddAMangaRoute
   '/add-a-volume': typeof AddAVolumeRoute
-  '/$chapterNumber/$page': typeof ChapterNumberPageRoute
+  '/$serie/$chapterNumber/$page': typeof SerieChapterNumberPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,21 +80,21 @@ export interface FileRouteTypes {
     | '/add-a-chapter'
     | '/add-a-manga'
     | '/add-a-volume'
-    | '/$chapterNumber/$page'
+    | '/$serie/$chapterNumber/$page'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/add-a-chapter'
     | '/add-a-manga'
     | '/add-a-volume'
-    | '/$chapterNumber/$page'
+    | '/$serie/$chapterNumber/$page'
   id:
     | '__root__'
     | '/'
     | '/add-a-chapter'
     | '/add-a-manga'
     | '/add-a-volume'
-    | '/$chapterNumber/$page'
+    | '/$serie/$chapterNumber/$page'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -102,7 +102,7 @@ export interface RootRouteChildren {
   AddAChapterRoute: typeof AddAChapterRoute
   AddAMangaRoute: typeof AddAMangaRoute
   AddAVolumeRoute: typeof AddAVolumeRoute
-  ChapterNumberPageRoute: typeof ChapterNumberPageRoute
+  SerieChapterNumberPageRoute: typeof SerieChapterNumberPageRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
@@ -156,11 +156,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$chapterNumber/$page': {
-      id: '/$chapterNumber/$page'
-      path: '/$chapterNumber/$page'
-      fullPath: '/$chapterNumber/$page'
-      preLoaderRoute: typeof ChapterNumberPageRouteImport
+    '/$serie/$chapterNumber/$page': {
+      id: '/$serie/$chapterNumber/$page'
+      path: '/$serie/$chapterNumber/$page'
+      fullPath: '/$serie/$chapterNumber/$page'
+      preLoaderRoute: typeof SerieChapterNumberPageRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -182,7 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   AddAChapterRoute: AddAChapterRoute,
   AddAMangaRoute: AddAMangaRoute,
   AddAVolumeRoute: AddAVolumeRoute,
-  ChapterNumberPageRoute: ChapterNumberPageRoute,
+  SerieChapterNumberPageRoute: SerieChapterNumberPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

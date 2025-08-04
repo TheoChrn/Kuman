@@ -146,10 +146,11 @@ export function RouteComponent() {
                       label="Statut"
                       selectProps={{
                         className: styles["select"],
+                        fallback: "Selectionnez le statut",
                         value:
                           statusLabelFrench[
                             field.state.value as keyof typeof statusLabelFrench
-                          ] || "Selectionnez un statut",
+                          ],
                       }}
                     >
                       {statusValues.map((value) => (
@@ -173,7 +174,7 @@ export function RouteComponent() {
                       label="Type"
                       selectProps={{
                         className: styles["select"],
-                        value: field.state.value || "Selectionnez le type",
+                        fallback: "Selectionnez le type",
                       }}
                     >
                       {typeValues.map((value) => (
@@ -234,11 +235,12 @@ export function RouteComponent() {
                       }}
                       selectProps={{
                         className: styles["select"],
+                        fallback: "Selectionnez un éditeur français",
                         value:
                           publisherFrLabelFrench[
                             field.state
                               .value as keyof typeof publisherFrLabelFrench
-                          ] || "Selectionnez un éditeur français",
+                          ],
                       }}
                     >
                       {publisherFrValues.map((value) => (
@@ -266,11 +268,12 @@ export function RouteComponent() {
                       }}
                       selectProps={{
                         className: styles["select"],
+                        fallback: "Selectionnez un éditeur original",
                         value:
                           publisherJpLabelFrench[
                             field.state
                               .value as keyof typeof publisherJpLabelFrench
-                          ] || "Selectionnez un éditeur original",
+                          ],
                       }}
                     >
                       {publisherJpValues.map((value) => (

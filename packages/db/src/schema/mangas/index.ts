@@ -29,7 +29,7 @@ export const mangas = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => generateMangaId()),
-    title: text("title"),
+    title: text("title").notNull(),
     slug: text("slug").notNull(),
     originalTitle: text("original_title").notNull(),
     romajiTitle: text("romaji_title").notNull(),

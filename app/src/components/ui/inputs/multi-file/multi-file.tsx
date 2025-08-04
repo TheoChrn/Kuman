@@ -82,8 +82,6 @@ export function MultiFileInput({
                 URL.createObjectURL(file)
               );
 
-              console.log(currentUrlRef.current);
-
               field.handleChange(validFiles);
             }}
           >

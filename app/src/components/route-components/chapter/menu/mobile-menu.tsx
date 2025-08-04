@@ -52,29 +52,42 @@ export default function MobileMenu(props: MobileMenuProps) {
           selectPopoverProps={{
             className: styles["select-popover"],
             sameWidth: true,
-            modal: true,
+            portal: true,
+            preventBodyScroll: true,
           }}
         >
-          {props.chapterList.map((chapter) => (
-            <SelectItem
-              key={chapter.number}
-              disabled={props.currentChapter === chapter.number}
-              render={(props) => (
-                <Link
-                  to="/$chapterNumber/$page"
-                  preload="intent"
-                  params={{
-                    chapterNumber: String(chapter.number),
-                    page: "1",
-                  }}
-                  {...props}
-                />
-              )}
-            >
-              {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
-                chapter.name
-              }`}
-            </SelectItem>
+          {props.chapterList.map((list) => (
+            <Ariakit.SelectGroup>
+              <Ariakit.SelectGroupLabel
+                className={styles["select-group-label"]}
+              >
+                Volume - {list.volumeNumber}
+              </Ariakit.SelectGroupLabel>
+              {list.chapters.map((chapter) => (
+                <SelectItem
+                  key={chapter.number}
+                  className={styles["select-item"]}
+                  disabled={props.currentChapter === chapter.number}
+                  hideOnClick
+                  render={(renderProps) => (
+                    <Link
+                      {...renderProps}
+                      to="/$serie/$chapterNumber/$page"
+                      preload="intent"
+                      params={{
+                        serie: props.serie,
+                        chapterNumber: String(chapter.number),
+                        page: "1",
+                      }}
+                    />
+                  )}
+                >
+                  {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
+                    chapter.name
+                  }`}
+                </SelectItem>
+              ))}
+            </Ariakit.SelectGroup>
           ))}
         </Select>
 
@@ -88,8 +101,9 @@ export default function MobileMenu(props: MobileMenuProps) {
             onPointerUp={(e) => {
               const value = (e.target as HTMLInputElement).valueAsNumber;
               navigate({
-                to: "/$chapterNumber/$page",
+                to: "/$serie/$chapterNumber/$page",
                 params: {
+                  serie: props.serie,
                   chapterNumber: String(props.currentChapter),
                   page: String(value),
                 },

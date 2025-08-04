@@ -8,24 +8,30 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod/v4";
 
-import { asc, eq, generateChapterId, schema } from "@kuman/db";
+import {
+  and,
+  asc,
+  eq,
+  generateChapterId,
+  jsonAgg,
+  schema,
+  sql,
+} from "@kuman/db";
 import { createChapter } from "@kuman/shared/validators";
 
 import { publicProcedure } from "../trpc";
 
 export const chapterRouter = {
   get: publicProcedure
-    .input(z.object({ chapterNumber: z.number() }))
+    .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
     .query(async ({ input, ctx }) => {
       const { data: list } = await ctx.supabase.storage
         .from("assets")
-        .list(
-          `mangas/shingeki-no-kyojin/tome-1/chapter-${input.chapterNumber}`,
-        );
+        .list(`mangas/${input.serie}/tome-1/chapter-${input.chapterNumber}`);
 
       const images = list?.map(
         (l) =>
-          `mangas/shingeki-no-kyojin/tome-1/chapter-${input.chapterNumber}/${l.name}`,
+          `mangas/${input.serie}/tome-1/chapter-${input.chapterNumber}/${l.name}`,
       );
 
       const { data } = await ctx.supabase.storage
@@ -37,29 +43,51 @@ export const chapterRouter = {
         }));
 
       return ctx.db
-        .select()
+        .select({
+          name: schema.chapters.name,
+          number: schema.chapters.number,
+          pageCount: schema.chapters.pageCount,
+        })
         .from(schema.chapters)
-        .where(eq(schema.chapters.number, input.chapterNumber))
+        .leftJoin(schema.volumes, eq(schema.volumes.mangaSlug, input.serie))
+        .where(
+          and(
+            eq(schema.chapters.number, input.chapterNumber),
+            eq(schema.chapters.volumeId, schema.volumes.id),
+          ),
+        )
         .then((rows) => ({ ...rows[0], pages: data }));
     }),
 
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    return ctx.db
-      .select({
-        name: schema.chapters.name,
-        number: schema.chapters.number,
-      })
-      .from(schema.chapters)
-      .orderBy(asc(schema.chapters.number));
-  }),
+  getAll: publicProcedure
+    .input(z.object({ serie: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const res = await ctx.db
+        .select({
+          volumeNumber: schema.volumes.volumeNumber,
+          chapters: jsonAgg({
+            name: schema.chapters.name,
+            number: schema.chapters.number,
+            pageCount: schema.chapters.pageCount,
+          }).as("chapters"),
+        })
+        .from(schema.volumes)
+        .leftJoin(
+          schema.chapters,
+          eq(schema.chapters.volumeId, schema.volumes.id),
+        )
+        .where(eq(schema.volumes.mangaSlug, input.serie))
+        .groupBy(schema.volumes.id);
+
+
+      return res;
+    }),
 
   create: publicProcedure
     .input(createChapter)
     .mutation(async ({ ctx, input }) => {
       const { images, mangaSlug, volumeNumber, chapterNumber, ...restInput } =
         input;
-
-      const existingChapter = await ctx.db.select().from(schema.chapters);
 
       const insert = await ctx.db
         .insert(schema.chapters)

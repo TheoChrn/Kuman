@@ -2,16 +2,26 @@
 @use "../../../../styles/variables.scss" as *;
 @use "../../../ui/inputs/select/select.scss" as *;
 
+.select-group-label {
+  padding: 0.5rem;
+}
+
+.select-item {
+  padding: 0.5rem 1rem;
+}
+
 .content {
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: $background;
+  background-color: $neutral;
+  color: $neutral-foreground;
   padding: 0.5rem;
+  @include space-y-3;
 
-  & > :not(:last-child) {
-    @include space-y-3;
+  & .select {
+    color: $foreground;
   }
 
   .range {
@@ -27,9 +37,6 @@
 
   .back {
     display: block;
-    position: relative;
-    top: 0;
-    left: 0;
     padding: 0.5rem;
     width: fit-content;
   }
@@ -82,12 +89,6 @@
   }
 }
 
-.popover {
-  background-color: $background;
-  border-radius: 8px;
-  padding: 0.5rem;
-}
-
 .select-page {
   max-width: 12rem;
 }
@@ -109,7 +110,6 @@
 
   &[aria-expanded="true"] {
     background-color: transparent;
-    color: $foreground;
     transform: rotateZ(45deg);
 
     .burger {
@@ -128,7 +128,7 @@
     position: static;
 
     & > :not(:last-child) {
-      margin: 0;
+      margin-block-end: 0;
     }
 
     & > :last-child {

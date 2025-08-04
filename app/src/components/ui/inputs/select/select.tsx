@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 export interface SelectProps {
   children?: React.ReactNode;
   selectProviderProps?: Ariakit.SelectProviderProps;
-  selectProps?: Ariakit.SelectProps;
+  selectProps?: Ariakit.SelectProps & { fallback?: string };
   selectPopoverProps?: Ariakit.SelectPopoverProps;
   renderSelection?: React.ReactNode;
 }
@@ -26,7 +26,10 @@ export function Select({
         {...restSelectProps}
         className={`${styles["select"]} ${selectClassName}`}
       >
-        {renderSelection ?? restSelectProps.value}
+        {renderSelection ??
+          (selectProps?.value || (
+            <Ariakit.SelectValue fallback={restSelectProps.fallback} />
+          ))}
         <Ariakit.SelectArrow className={styles["select-arrow"]} />
       </Ariakit.Select>
       <Ariakit.SelectPopover

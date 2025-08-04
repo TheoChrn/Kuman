@@ -23,40 +23,35 @@ export const readingModes = ["scroll", "singlePage"] as const;
 type ReadingModes = typeof readingModes;
 export type ReadingMode = ReadingModes[number];
 
-export const Route = createFileRoute("/$chapterNumber/$page")({
+export const Route = createFileRoute("/$serie/$chapterNumber/$page")({
   pendingComponent: () => {
     return <div>Charge</div>;
   },
   component: RouteComponent,
+  beforeLoad: async ({ params: { chapterNumber } }) => {
+    if (chapterNumber.startsWith(".") || chapterNumber === "well-known") {
+      throw redirect({ to: "/", replace: true });
+    }
+    const num = Number(chapterNumber);
+    if (isNaN(num) || num < 1) {
+      throw notFound();
+    }
+  },
   loader: async ({
     context: { trpc, queryClient },
-    params: { chapterNumber },
+    params: { chapterNumber, serie },
   }) => {
     const [chapter] = await Promise.all([
       queryClient.ensureQueryData(
-        trpc.chapters.get.queryOptions({ chapterNumber: Number(chapterNumber) })
+        trpc.chapters.get.queryOptions({
+          chapterNumber: Number(chapterNumber),
+          serie,
+        })
       ),
-      queryClient.ensureQueryData(trpc.chapters.getAll.queryOptions()),
+      queryClient.ensureQueryData(trpc.chapters.getAll.queryOptions({ serie })),
     ]);
 
     if (!chapter) throw new Error("This chapter doesn't exists");
-  },
-  params: {
-    parse: (params) => {
-      if (
-        params.chapterNumber.startsWith(".") ||
-        params.chapterNumber === "well-known"
-      ) {
-        throw redirect({ to: "/", replace: true });
-      }
-
-      const num = Number(params.chapterNumber);
-      if (isNaN(num) || num < 1) {
-        throw notFound();
-      }
-
-      return params;
-    },
   },
 });
 
@@ -65,15 +60,16 @@ function RouteComponent() {
   const { device } = useDevice();
   const params = Route.useParams();
 
-  const [chapterNumber, page] = [
+  const [chapterNumber, page, serie] = [
     Number(params.chapterNumber),
     Number(params.page),
+    params.serie,
   ];
   const { data: chapter } = useSuspenseQuery(
-    trpc.chapters.get.queryOptions({ chapterNumber })
+    trpc.chapters.get.queryOptions({ chapterNumber, serie })
   );
   const { data: chapterList } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions()
+    trpc.chapters.getAll.queryOptions({ serie })
   );
 
   const readingMode = useStore(
@@ -85,6 +81,7 @@ function RouteComponent() {
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const { blockObserver, scrollToPage } = useChapterNavigation({
+    serie,
     chapterNumber,
     page,
     pageRefs,
@@ -96,6 +93,7 @@ function RouteComponent() {
       {device ? (
         device !== "desktop" ? (
           <MobileMenu
+            serie={serie}
             chapter={chapter}
             chapterList={chapterList}
             currentChapter={chapterNumber}
@@ -108,6 +106,7 @@ function RouteComponent() {
           />
         ) : (
           <DesktopMenu
+            serie={serie}
             chapter={chapter}
             chapterList={chapterList}
             currentChapter={chapterNumber}
