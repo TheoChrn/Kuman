@@ -4,18 +4,10 @@ import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/")({
   component: Home,
-  loader: async ({ context: { trpc, queryClient } }) => {
-    await queryClient.ensureQueryData(
-      trpc.test.imageUrlBucketExample.queryOptions()
-    );
-  },
 });
 
 function Home() {
   const trpc = useTRPC();
-  const { data: bidon } = useSuspenseQuery(
-    trpc.test.imageUrlBucketExample.queryOptions()
-  );
 
   return (
     <div className="p-2">

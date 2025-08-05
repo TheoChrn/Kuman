@@ -10,12 +10,12 @@ import {
   readingModes,
 } from "~/components/route-components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
-import { ReadingMode } from "~/routes/$serie.$chapterNumber.$page";
+import { ReadingMode } from "~/routes/$serieSlug.$chapterNumber.$page";
 import { appActions, appStore } from "~/utils/stores/chapter-store";
 import styles from "./styles.module.scss";
 
 export interface DesktopMenuProps {
-  serie: string;
+  serieSlug: string;
   chapter: RouterOutputs["chapters"]["get"];
   chapterList: RouterOutputs["chapters"]["getAll"];
   currentPage: number;
@@ -63,10 +63,10 @@ export default function DesktopMenu(props: DesktopMenuProps) {
                 render={(renderProps) => (
                   <Link
                     {...renderProps}
-                    to="/$serie/$chapterNumber/$page"
+                    to="/$serieSlug/$chapterNumber/$page"
                     preload="intent"
                     params={{
-                      serie: props.serie,
+                      serieSlug: props.serieSlug,
                       chapterNumber: String(chapter.number),
                       page: "1",
                     }}
@@ -107,9 +107,9 @@ export default function DesktopMenu(props: DesktopMenuProps) {
                 render={(renderProps) => (
                   <Link
                     {...renderProps}
-                    to="/$serie/$chapterNumber/$page"
+                    to="/$serieSlug/$chapterNumber/$page"
                     params={{
-                      serie: props.serie,
+                      serieSlug: props.serieSlug,
                       chapterNumber: String(props.currentChapter),
                       page: String(index + 1),
                     }}

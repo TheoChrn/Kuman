@@ -72,10 +72,10 @@ export default function MobileMenu(props: MobileMenuProps) {
                   render={(renderProps) => (
                     <Link
                       {...renderProps}
-                      to="/$serie/$chapterNumber/$page"
+                      to="/$serieSlug/$chapterNumber/$page"
                       preload="intent"
                       params={{
-                        serie: props.serie,
+                        serieSlug: props.serieSlug,
                         chapterNumber: String(chapter.number),
                         page: "1",
                       }}
@@ -101,9 +101,9 @@ export default function MobileMenu(props: MobileMenuProps) {
             onPointerUp={(e) => {
               const value = (e.target as HTMLInputElement).valueAsNumber;
               navigate({
-                to: "/$serie/$chapterNumber/$page",
+                to: "/$serieSlug/$chapterNumber/$page",
                 params: {
-                  serie: props.serie,
+                  serieSlug: props.serieSlug,
                   chapterNumber: String(props.currentChapter),
                   page: String(value),
                 },

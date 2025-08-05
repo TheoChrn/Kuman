@@ -1,4 +1,8 @@
 @use "./variables.scss" as *;
+@use "./components/button.scss" as *;
+@use "./components/tag.scss" as *;
+@use "./components/footer.scss" as *;
+@use "./page/serie.scss" as *;
 
 /* Reset SCSS minimal et efficace */
 *,

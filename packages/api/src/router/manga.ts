@@ -1,5 +1,6 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
+import z from "zod";
 
 import type {
   Genre,
@@ -8,7 +9,7 @@ import type {
   Status,
   Type,
 } from "@kuman/db/enums";
-import { schema } from "@kuman/db";
+import { eq, schema } from "@kuman/db";
 import { toSlug } from "@kuman/shared/format";
 import { createManga } from "@kuman/shared/validators";
 
@@ -68,4 +69,29 @@ export const mangaRouter = {
       })
       .from(schema.mangas);
   }),
+  get: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db
+        .select({
+          slug: schema.mangas.slug,
+          title: schema.mangas.title,
+          originalTitle: schema.mangas.originalTitle,
+          romajiTitle: schema.mangas.romajiTitle,
+          alternativeTitles: schema.mangas.alternativeTitles,
+          author: schema.mangas.author,
+          synopsis: schema.mangas.synopsis,
+          coverUrl: schema.mangas.coverUrl,
+          tomeCount: schema.mangas.tomeCount,
+          status: schema.mangas.status,
+          type: schema.mangas.type,
+          genres: schema.mangas.genres,
+          releaseDate: schema.mangas.releaseDate,
+          publisherJp: schema.mangas.publisherJp,
+          publisherFr: schema.mangas.publisherFr,
+        })
+        .from(schema.mangas)
+        .where(eq(schema.mangas.slug, input.slug))
+        .then((rows) => rows[0]!);
+    }),
 } satisfies TRPCRouterRecord;

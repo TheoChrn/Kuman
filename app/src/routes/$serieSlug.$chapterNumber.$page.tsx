@@ -23,7 +23,7 @@ export const readingModes = ["scroll", "singlePage"] as const;
 type ReadingModes = typeof readingModes;
 export type ReadingMode = ReadingModes[number];
 
-export const Route = createFileRoute("/$serie/$chapterNumber/$page")({
+export const Route = createFileRoute("/$serieSlug/$chapterNumber/$page")({
   pendingComponent: () => {
     return <div>Charge</div>;
   },
@@ -39,16 +39,18 @@ export const Route = createFileRoute("/$serie/$chapterNumber/$page")({
   },
   loader: async ({
     context: { trpc, queryClient },
-    params: { chapterNumber, serie },
+    params: { chapterNumber, serieSlug },
   }) => {
     const [chapter] = await Promise.all([
       queryClient.ensureQueryData(
         trpc.chapters.get.queryOptions({
           chapterNumber: Number(chapterNumber),
-          serie,
+          serie: serieSlug,
         })
       ),
-      queryClient.ensureQueryData(trpc.chapters.getAll.queryOptions({ serie })),
+      queryClient.ensureQueryData(
+        trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+      ),
     ]);
 
     if (!chapter) throw new Error("This chapter doesn't exists");
@@ -60,16 +62,16 @@ function RouteComponent() {
   const { device } = useDevice();
   const params = Route.useParams();
 
-  const [chapterNumber, page, serie] = [
+  const [chapterNumber, page, serieSlug] = [
     Number(params.chapterNumber),
     Number(params.page),
-    params.serie,
+    params.serieSlug,
   ];
   const { data: chapter } = useSuspenseQuery(
-    trpc.chapters.get.queryOptions({ chapterNumber, serie })
+    trpc.chapters.get.queryOptions({ chapterNumber, serie: serieSlug })
   );
   const { data: chapterList } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions({ serie })
+    trpc.chapters.getAll.queryOptions({ serie: serieSlug })
   );
 
   const readingMode = useStore(
@@ -81,7 +83,7 @@ function RouteComponent() {
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const { blockObserver, scrollToPage } = useChapterNavigation({
-    serie,
+    serieSlug,
     chapterNumber,
     page,
     pageRefs,
@@ -93,7 +95,7 @@ function RouteComponent() {
       {device ? (
         device !== "desktop" ? (
           <MobileMenu
-            serie={serie}
+            serieSlug={serieSlug}
             chapter={chapter}
             chapterList={chapterList}
             currentChapter={chapterNumber}
@@ -106,7 +108,7 @@ function RouteComponent() {
           />
         ) : (
           <DesktopMenu
-            serie={serie}
+            serieSlug={serieSlug}
             chapter={chapter}
             chapterList={chapterList}
             currentChapter={chapterNumber}

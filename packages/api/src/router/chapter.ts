@@ -25,27 +25,11 @@ export const chapterRouter = {
   get: publicProcedure
     .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
     .query(async ({ input, ctx }) => {
-      const { data: list } = await ctx.supabase.storage
-        .from("assets")
-        .list(`mangas/${input.serie}/tome-1/chapter-${input.chapterNumber}`);
-
-      const images = list?.map(
-        (l) =>
-          `mangas/${input.serie}/tome-1/chapter-${input.chapterNumber}/${l.name}`,
-      );
-
-      const { data } = await ctx.supabase.storage
-        .from("assets")
-        .createSignedUrls(images ?? [], 60)
-        .then((rows) => ({
-          ...rows,
-          data: rows.data?.map(({ path, ...row }) => row),
-        }));
-
-      return ctx.db
+      const chapter = await ctx.db
         .select({
           name: schema.chapters.name,
           number: schema.chapters.number,
+          volumeNumber: schema.volumes.volumeNumber,
           pageCount: schema.chapters.pageCount,
         })
         .from(schema.chapters)
@@ -56,7 +40,28 @@ export const chapterRouter = {
             eq(schema.chapters.volumeId, schema.volumes.id),
           ),
         )
-        .then((rows) => ({ ...rows[0], pages: data }));
+        .then((rows) => ({ ...rows[0] }));
+
+      const { data: list } = await ctx.supabase.storage
+        .from("assets")
+        .list(
+          `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}`,
+        );
+
+      const images = list?.map(
+        (l) =>
+          `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}/${l.name}`,
+      );
+
+      const { data } = await ctx.supabase.storage
+        .from("assets")
+        .createSignedUrls(images ?? [], 60)
+        .then((rows) => ({
+          ...rows,
+          data: rows.data?.map(({ path, ...row }) => row),
+        }));
+
+      return { ...chapter, pages: data };
     }),
 
   getAll: publicProcedure
@@ -65,6 +70,9 @@ export const chapterRouter = {
       const res = await ctx.db
         .select({
           volumeNumber: schema.volumes.volumeNumber,
+          title: schema.volumes.title,
+          coverImageUrl: schema.volumes.coverImageUrl,
+          summary: schema.volumes.summary,
           chapters: jsonAgg({
             name: schema.chapters.name,
             number: schema.chapters.number,
@@ -78,7 +86,6 @@ export const chapterRouter = {
         )
         .where(eq(schema.volumes.mangaSlug, input.serie))
         .groupBy(schema.volumes.id);
-
 
       return res;
     }),

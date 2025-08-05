@@ -1,0 +1,8 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+.tag {
+  padding: 0.5rem;
+  background-color: $background-100;
+  border-radius: 4px;
+}
