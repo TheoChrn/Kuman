@@ -1,5 +1,5 @@
 import { Store } from "@tanstack/react-store";
-import { ReadingMode } from "~/routes/$serie.$chapterNumber.$page";
+import { ReadingMode } from "~/routes/$serieSlug.$chapterNumber.$page";
 
 interface AppState {
   preferences: {

@@ -2,13 +2,13 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 export function useChapterNavigation({
-  serie,
+  serieSlug,
   chapterNumber,
   page,
   pageRefs,
   readingMode,
 }: {
-  serie: string;
+  serieSlug: string;
   chapterNumber: number;
   page: number;
   pageRefs: React.RefObject<(HTMLDivElement | null)[]>;
@@ -54,9 +54,9 @@ export function useChapterNavigation({
 
           if (index + 1 !== page) {
             navigate({
-              to: "/$serie/$chapterNumber/$page",
+              to: "/$serieSlug/$chapterNumber/$page",
               params: {
-                serie,
+                serieSlug,
                 chapterNumber: String(chapterNumber),
                 page: String(index + 1),
               },

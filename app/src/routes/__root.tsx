@@ -14,6 +14,7 @@ import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
 import appCss from "~/styles/global.scss?url";
+import "~/styles/global.scss";
 import { seo } from "~/utils/seo";
 
 export interface RouterAppContext {
@@ -38,9 +39,6 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       }),
     ],
     links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "preload", href: appCss, as: "style" },
-
       {
         rel: "apple-touch-icon",
         sizes: "180x180",

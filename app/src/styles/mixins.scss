@@ -10,6 +10,13 @@
   align-items: center;
 }
 
+@mixin line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 @mixin flex-col {
   display: flex;
   flex-direction: column;
@@ -26,13 +33,37 @@
   justify-content: center;
 }
 
+@mixin space-y-1 {
+  & > :not(:last-child) {
+    margin-block-end: 0.25rem;
+  }
+}
+
+@mixin space-y-2 {
+  & > :not(:last-child) {
+    margin-block-end: 0.5rem;
+  }
+}
+
 @mixin space-y-3 {
   & > :not(:last-child) {
     margin-block-end: 0.75rem;
   }
 }
+
+@mixin space-y-4 {
+  & > :not(:last-child) {
+    margin-block-end: 1rem;
+  }
+}
+
 @mixin space-y-6 {
   & > :not(:last-child) {
     margin-block-end: 1.5rem;
+  }
+}
+@mixin space-y-8 {
+  & > :not(:last-child) {
+    margin-block-end: 2rem;
   }
 }

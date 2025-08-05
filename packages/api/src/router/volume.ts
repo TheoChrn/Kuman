@@ -35,6 +35,7 @@ export const volumeRouter = {
         .insert(schema.volumes)
         .values({
           ...restInput,
+          title: input.title,
           coverImageUrl: publicUrl,
         })
         .onConflictDoNothing()

@@ -8,6 +8,7 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
@@ -15,11 +16,20 @@ import { Route as AddAVolumeRouteImport } from './routes/add-a-volume'
 import { Route as AddAMangaRouteImport } from './routes/add-a-manga'
 import { Route as AddAChapterRouteImport } from './routes/add-a-chapter'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SerieChapterNumberPageRouteImport } from './routes/$serie.$chapterNumber.$page'
+import { Route as SerieSlugLayoutRouteImport } from './routes/$serieSlug/_layout'
+import { Route as SerieSlugLayoutVolumesRouteImport } from './routes/$serieSlug/_layout.volumes'
+import { Route as SerieSlugLayoutFicheRouteImport } from './routes/$serieSlug/_layout.fiche'
+import { Route as SerieSlugChapterNumberPageRouteImport } from './routes/$serieSlug.$chapterNumber.$page'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'
 
+const SerieSlugRouteImport = createFileRoute('/$serieSlug')()
 const rootServerRouteImport = createServerRootRoute()
 
+const SerieSlugRoute = SerieSlugRouteImport.update({
+  id: '/$serieSlug',
+  path: '/$serieSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AddAVolumeRoute = AddAVolumeRouteImport.update({
   id: '/add-a-volume',
   path: '/add-a-volume',
@@ -40,11 +50,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SerieChapterNumberPageRoute = SerieChapterNumberPageRouteImport.update({
-  id: '/$serie/$chapterNumber/$page',
-  path: '/$serie/$chapterNumber/$page',
-  getParentRoute: () => rootRouteImport,
+const SerieSlugLayoutRoute = SerieSlugLayoutRouteImport.update({
+  id: '/_layout',
+  getParentRoute: () => SerieSlugRoute,
 } as any)
+const SerieSlugLayoutVolumesRoute = SerieSlugLayoutVolumesRouteImport.update({
+  id: '/volumes',
+  path: '/volumes',
+  getParentRoute: () => SerieSlugLayoutRoute,
+} as any)
+const SerieSlugLayoutFicheRoute = SerieSlugLayoutFicheRouteImport.update({
+  id: '/fiche',
+  path: '/fiche',
+  getParentRoute: () => SerieSlugLayoutRoute,
+} as any)
+const SerieSlugChapterNumberPageRoute =
+  SerieSlugChapterNumberPageRouteImport.update({
+    id: '/$chapterNumber/$page',
+    path: '/$chapterNumber/$page',
+    getParentRoute: () => SerieSlugRoute,
+  } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
@@ -56,14 +81,20 @@ export interface FileRoutesByFullPath {
   '/add-a-chapter': typeof AddAChapterRoute
   '/add-a-manga': typeof AddAMangaRoute
   '/add-a-volume': typeof AddAVolumeRoute
-  '/$serie/$chapterNumber/$page': typeof SerieChapterNumberPageRoute
+  '/$serieSlug': typeof SerieSlugLayoutRouteWithChildren
+  '/$serieSlug/$chapterNumber/$page': typeof SerieSlugChapterNumberPageRoute
+  '/$serieSlug/fiche': typeof SerieSlugLayoutFicheRoute
+  '/$serieSlug/volumes': typeof SerieSlugLayoutVolumesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-a-chapter': typeof AddAChapterRoute
   '/add-a-manga': typeof AddAMangaRoute
   '/add-a-volume': typeof AddAVolumeRoute
-  '/$serie/$chapterNumber/$page': typeof SerieChapterNumberPageRoute
+  '/$serieSlug': typeof SerieSlugLayoutRouteWithChildren
+  '/$serieSlug/$chapterNumber/$page': typeof SerieSlugChapterNumberPageRoute
+  '/$serieSlug/fiche': typeof SerieSlugLayoutFicheRoute
+  '/$serieSlug/volumes': typeof SerieSlugLayoutVolumesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,7 +102,11 @@ export interface FileRoutesById {
   '/add-a-chapter': typeof AddAChapterRoute
   '/add-a-manga': typeof AddAMangaRoute
   '/add-a-volume': typeof AddAVolumeRoute
-  '/$serie/$chapterNumber/$page': typeof SerieChapterNumberPageRoute
+  '/$serieSlug': typeof SerieSlugRouteWithChildren
+  '/$serieSlug/_layout': typeof SerieSlugLayoutRouteWithChildren
+  '/$serieSlug/$chapterNumber/$page': typeof SerieSlugChapterNumberPageRoute
+  '/$serieSlug/_layout/fiche': typeof SerieSlugLayoutFicheRoute
+  '/$serieSlug/_layout/volumes': typeof SerieSlugLayoutVolumesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,21 +115,31 @@ export interface FileRouteTypes {
     | '/add-a-chapter'
     | '/add-a-manga'
     | '/add-a-volume'
-    | '/$serie/$chapterNumber/$page'
+    | '/$serieSlug'
+    | '/$serieSlug/$chapterNumber/$page'
+    | '/$serieSlug/fiche'
+    | '/$serieSlug/volumes'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/add-a-chapter'
     | '/add-a-manga'
     | '/add-a-volume'
-    | '/$serie/$chapterNumber/$page'
+    | '/$serieSlug'
+    | '/$serieSlug/$chapterNumber/$page'
+    | '/$serieSlug/fiche'
+    | '/$serieSlug/volumes'
   id:
     | '__root__'
     | '/'
     | '/add-a-chapter'
     | '/add-a-manga'
     | '/add-a-volume'
-    | '/$serie/$chapterNumber/$page'
+    | '/$serieSlug'
+    | '/$serieSlug/_layout'
+    | '/$serieSlug/$chapterNumber/$page'
+    | '/$serieSlug/_layout/fiche'
+    | '/$serieSlug/_layout/volumes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -102,7 +147,7 @@ export interface RootRouteChildren {
   AddAChapterRoute: typeof AddAChapterRoute
   AddAMangaRoute: typeof AddAMangaRoute
   AddAVolumeRoute: typeof AddAVolumeRoute
-  SerieChapterNumberPageRoute: typeof SerieChapterNumberPageRoute
+  SerieSlugRoute: typeof SerieSlugRouteWithChildren
 }
 export interface FileServerRoutesByFullPath {
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
@@ -128,6 +173,13 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/$serieSlug': {
+      id: '/$serieSlug'
+      path: '/$serieSlug'
+      fullPath: '/$serieSlug'
+      preLoaderRoute: typeof SerieSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/add-a-volume': {
       id: '/add-a-volume'
       path: '/add-a-volume'
@@ -156,12 +208,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$serie/$chapterNumber/$page': {
-      id: '/$serie/$chapterNumber/$page'
-      path: '/$serie/$chapterNumber/$page'
-      fullPath: '/$serie/$chapterNumber/$page'
-      preLoaderRoute: typeof SerieChapterNumberPageRouteImport
-      parentRoute: typeof rootRouteImport
+    '/$serieSlug/_layout': {
+      id: '/$serieSlug/_layout'
+      path: '/$serieSlug'
+      fullPath: '/$serieSlug'
+      preLoaderRoute: typeof SerieSlugLayoutRouteImport
+      parentRoute: typeof SerieSlugRoute
+    }
+    '/$serieSlug/_layout/volumes': {
+      id: '/$serieSlug/_layout/volumes'
+      path: '/volumes'
+      fullPath: '/$serieSlug/volumes'
+      preLoaderRoute: typeof SerieSlugLayoutVolumesRouteImport
+      parentRoute: typeof SerieSlugLayoutRoute
+    }
+    '/$serieSlug/_layout/fiche': {
+      id: '/$serieSlug/_layout/fiche'
+      path: '/fiche'
+      fullPath: '/$serieSlug/fiche'
+      preLoaderRoute: typeof SerieSlugLayoutFicheRouteImport
+      parentRoute: typeof SerieSlugLayoutRoute
+    }
+    '/$serieSlug/$chapterNumber/$page': {
+      id: '/$serieSlug/$chapterNumber/$page'
+      path: '/$chapterNumber/$page'
+      fullPath: '/$serieSlug/$chapterNumber/$page'
+      preLoaderRoute: typeof SerieSlugChapterNumberPageRouteImport
+      parentRoute: typeof SerieSlugRoute
     }
   }
 }
@@ -177,12 +250,40 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface SerieSlugLayoutRouteChildren {
+  SerieSlugLayoutFicheRoute: typeof SerieSlugLayoutFicheRoute
+  SerieSlugLayoutVolumesRoute: typeof SerieSlugLayoutVolumesRoute
+}
+
+const SerieSlugLayoutRouteChildren: SerieSlugLayoutRouteChildren = {
+  SerieSlugLayoutFicheRoute: SerieSlugLayoutFicheRoute,
+  SerieSlugLayoutVolumesRoute: SerieSlugLayoutVolumesRoute,
+}
+
+const SerieSlugLayoutRouteWithChildren = SerieSlugLayoutRoute._addFileChildren(
+  SerieSlugLayoutRouteChildren,
+)
+
+interface SerieSlugRouteChildren {
+  SerieSlugLayoutRoute: typeof SerieSlugLayoutRouteWithChildren
+  SerieSlugChapterNumberPageRoute: typeof SerieSlugChapterNumberPageRoute
+}
+
+const SerieSlugRouteChildren: SerieSlugRouteChildren = {
+  SerieSlugLayoutRoute: SerieSlugLayoutRouteWithChildren,
+  SerieSlugChapterNumberPageRoute: SerieSlugChapterNumberPageRoute,
+}
+
+const SerieSlugRouteWithChildren = SerieSlugRoute._addFileChildren(
+  SerieSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddAChapterRoute: AddAChapterRoute,
   AddAMangaRoute: AddAMangaRoute,
   AddAVolumeRoute: AddAVolumeRoute,
-  SerieChapterNumberPageRoute: SerieChapterNumberPageRoute,
+  SerieSlugRoute: SerieSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
