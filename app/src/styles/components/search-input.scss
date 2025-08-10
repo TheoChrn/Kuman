@@ -1,0 +1,19 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+.search-input {
+  @include flex-between;
+  width: 100%;
+
+  & label {
+    @include flex-center;
+    border: solid 1px $primary;
+    border-radius: 1000px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    gap: 1rem;
+    & input {
+      width: 100%;
+    }
+  }
+}

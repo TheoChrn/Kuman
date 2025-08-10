@@ -4,10 +4,6 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    },
     "./validators": {
       "types": "./dist/validators.d.ts",
       "default": "./src/validators.ts"

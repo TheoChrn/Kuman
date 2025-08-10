@@ -1,24 +1,17 @@
 import * as Ariakit from "@ariakit/react";
 import { statusLabelFrench } from "@kuman/db/enums";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import {
-  createFileRoute,
-  Link,
-  Outlet,
-  redirect,
-} from "@tanstack/react-router";
-import {
-  PiInstagramLogo,
   PiInstagramLogoBold,
-  PiTiktokLogo,
   PiTiktokLogoBold,
-  PiX,
-  PiXLogo,
   PiXLogoBold,
 } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/$serieSlug/_layout")({
+export const Route = createFileRoute(
+  "/_navigationPathlessLayout/$serieSlug/_layout"
+)({
   loader: async ({ context: { trpc, queryClient }, params: { serieSlug } }) => {
     const [serie] = await Promise.all([
       queryClient.ensureQueryData(
@@ -42,8 +35,8 @@ function RouteComponent() {
   );
 
   return (
-    <Ariakit.HeadingLevel>
-      <div>
+    <div id="serie">
+      <Ariakit.HeadingLevel>
         <header>
           <div>
             <img
@@ -126,7 +119,7 @@ function RouteComponent() {
             </section>
           </Ariakit.HeadingLevel>
         </footer>
-      </div>
-    </Ariakit.HeadingLevel>
+      </Ariakit.HeadingLevel>
+    </div>
   );
 }

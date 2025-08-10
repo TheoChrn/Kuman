@@ -4,7 +4,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiCaretDown } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/$serieSlug/_layout/volumes")({
+export const Route = createFileRoute("/_navigationPathlessLayout/$serieSlug/_layout/volumes")({
   component: RouteComponent,
 });
 

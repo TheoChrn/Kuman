@@ -41,3 +41,8 @@ export const createManga = z
     return { ...data, cover };
   })
   .pipe(createMangaForm);
+
+export const searchParamsSchema = z.object({
+  types: z.array(z.enum(typeValues)).optional(),
+  genres: z.array(z.enum(genreValues)).optional(),
+});

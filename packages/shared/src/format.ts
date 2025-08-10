@@ -7,3 +7,10 @@ export function toSlug(input: string): string {
     .replace(/^-+|-+$/g, "") // trim tirets
     .replace(/-{2,}/g, "-"); // tirets consécutifs
 }
+
+export function normalize(input: string): string {
+  return input
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}

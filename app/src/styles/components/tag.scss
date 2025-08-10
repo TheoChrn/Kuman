@@ -2,7 +2,205 @@
 @use "../variables.scss" as *;
 
 .tag {
-  padding: 0.5rem;
+  padding: 0.25rem 0.375rem;
+  font-size: 0.875rem;
   background-color: $background-100;
-  border-radius: 4px;
+  border-radius: 1000px;
+  border: solid 1px $stroke;
+  display: flex;
+  gap: 0.25rem;
+  width: fit-content;
+  text-transform: capitalize;
+
+  &-shônen {
+    border: solid 1px hsl(220, 80%, 50%);
+    color: hsl(220, 80%, 50%);
+    background-color: hsla(220, 80%, 50%, 10%);
+  }
+  &-shôjo {
+    border: solid 1px hsl(330, 70%, 70%);
+    color: hsl(330, 70%, 70%);
+    background-color: hsla(330, 70%, 70%, 10%);
+  }
+  &-seinen {
+    border: solid 1px hsl(30, 90%, 50%);
+    color: hsl(30, 90%, 50%);
+    background-color: hsla(30, 90%, 60%, 10%);
+  }
+  &-josei {
+    border: solid 1px hsl(340, 30%, 50%);
+    color: hsl(340, 30%, 50%);
+    background-color: hsl(340, 30%, 50%, 10%);
+  }
+  &-kodomo {
+    border: solid 1px hsl(45, 100%, 60%);
+    color: hsl(45, 100%, 60%);
+    background-color: hsl(45, 100%, 60%, 10%);
+  }
+
+  &-action {
+    border: solid 1px hsl(0, 80%, 50%);
+    background-color: hsla(0, 80%, 50%, 0.1);
+    color: hsl(0, 80%, 50%);
+  }
+  &-aventure {
+    border: solid 1px hsl(30, 70%, 50%);
+    background-color: hsla(30, 70%, 50%, 0.1);
+    color: hsl(30, 70%, 50%);
+  }
+  &-comédie {
+    border: solid 1px hsl(45, 90%, 55%);
+    background-color: hsla(45, 90%, 55%, 0.1);
+    color: hsl(45, 90%, 55%);
+  }
+  &-drame {
+    border: solid 1px hsl(300, 30%, 40%);
+    background-color: hsla(300, 30%, 40%, 0.1);
+    color: hsl(300, 30%, 40%);
+  }
+  &-fantastique {
+    border: solid 1px hsl(270, 60%, 60%);
+    background-color: hsla(270, 60%, 60%, 0.1);
+    color: hsl(270, 60%, 60%);
+  }
+  &-horreur {
+    border: solid 1px hsl(350, 70%, 40%);
+    background-color: hsla(350, 70%, 40%, 0.1);
+    color: hsl(350, 70%, 40%);
+  }
+  &-mystère {
+    border: solid 1px hsl(210, 60%, 40%);
+    background-color: hsla(210, 60%, 40%, 0.1);
+    color: hsl(210, 60%, 40%);
+  }
+  &-psychologique {
+    border: solid 1px hsl(250, 40%, 50%);
+    background-color: hsla(250, 40%, 50%, 0.1);
+    color: hsl(250, 40%, 50%);
+  }
+  &-romance {
+    border: solid 1px hsl(340, 70%, 60%);
+    background-color: hsla(340, 70%, 60%, 0.1);
+    color: hsl(340, 70%, 60%);
+  }
+  &-science-fiction {
+    border: solid 1px hsl(200, 80%, 60%);
+    background-color: hsla(200, 80%, 60%, 0.1);
+    color: hsl(200, 80%, 60%);
+  }
+  &-slice-of-life {
+    border: solid 1px hsl(95, 40%, 50%);
+    background-color: hsla(95, 40%, 50%, 0.1);
+    color: hsl(95, 40%, 50%);
+  }
+  &-sport {
+    border: solid 1px hsl(120, 60%, 50%);
+    background-color: hsla(120, 60%, 50%, 0.1);
+    color: hsl(120, 60%, 50%);
+  }
+  &-surnaturel {
+    border: solid 1px hsl(280, 80%, 65%);
+    background-color: hsla(280, 80%, 65%, 0.1);
+    color: hsl(280, 80%, 65%);
+  }
+  &-thriller {
+    border: solid 1px hsl(10, 80%, 50%);
+    background-color: hsla(10, 80%, 50%, 0.1);
+    color: hsl(10, 80%, 50%);
+  }
+  &-historique {
+    border: solid 1px hsl(35, 60%, 40%);
+    background-color: hsla(35, 60%, 40%, 0.1);
+    color: hsl(35, 60%, 40%);
+  }
+  &-arts-martiaux {
+    border: solid 1px hsl(20, 90%, 45%);
+    background-color: hsla(20, 90%, 45%, 0.1);
+    color: hsl(20, 90%, 45%);
+  }
+  &-militaire {
+    border: solid 1px hsl(110, 30%, 40%);
+    background-color: hsla(110, 30%, 40%, 0.1);
+    color: hsl(110, 30%, 40%);
+  }
+  &-mecha {
+    border: solid 1px hsl(240, 60%, 50%);
+    background-color: hsla(240, 60%, 50%, 0.1);
+    color: hsl(240, 60%, 50%);
+  }
+  &-musique {
+    border: solid 1px hsl(300, 70%, 50%);
+    background-color: hsla(300, 70%, 50%, 0.1);
+    color: hsl(300, 70%, 50%);
+  }
+  &-policier {
+    border: solid 1px hsl(210, 70%, 50%);
+    background-color: hsla(210, 70%, 50%, 0.1);
+    color: hsl(210, 70%, 50%);
+  }
+  &-ecchi {
+    border: solid 1px hsl(340, 80%, 60%);
+    background-color: hsla(340, 80%, 60%, 0.1);
+    color: hsl(340, 80%, 60%);
+  }
+  &-yaoi {
+    border: solid 1px hsl(220, 60%, 50%);
+    background-color: hsla(220, 60%, 50%, 0.1);
+    color: hsl(220, 60%, 50%);
+  }
+  &-yuri {
+    border: solid 1px hsl(310, 60%, 50%);
+    background-color: hsla(310, 60%, 50%, 0.1);
+    color: hsl(310, 60%, 50%);
+  }
+  &-isekai {
+    border: solid 1px hsl(180, 60%, 50%);
+    background-color: hsla(180, 60%, 50%, 0.1);
+    color: hsl(180, 60%, 50%);
+  }
+  &-tranche-de-vie {
+    border: solid 1px hsl(95, 50%, 45%);
+    background-color: hsla(95, 50%, 45%, 0.1);
+    color: hsl(95, 50%, 45%);
+  }
+  &-cyberpunk {
+    border: solid 1px hsl(265, 100%, 60%);
+    background-color: hsla(265, 100%, 60%, 0.1);
+    color: hsl(265, 100%, 60%);
+  }
+  &-space-opera {
+    border: solid 1px hsl(200, 100%, 60%);
+    background-color: hsla(200, 100%, 60%, 0.1);
+    color: hsl(200, 100%, 60%);
+  }
+  &-voyage-temporel {
+    border: solid 1px hsl(160, 70%, 50%);
+    background-color: hsla(160, 70%, 50%, 0.1);
+    color: hsl(160, 70%, 50%);
+  }
+  &-cuisine {
+    border: solid 1px hsl(25, 80%, 55%);
+    background-color: hsla(25, 80%, 55%, 0.1);
+    color: hsl(25, 80%, 55%);
+  }
+  &-animaux {
+    border: solid 1px hsl(100, 50%, 50%);
+    background-color: hsla(100, 50%, 50%, 0.1);
+    color: hsl(100, 50%, 50%);
+  }
+  &-pause {
+    border: solid 1px hsl(39, 100%, 50%);
+    background-color: hsla(39, 100%, 50%, 0.1);
+    color: hsl(39, 100%, 50%);
+  }
+  &-completed {
+    border: solid 1px hsl(134, 61%, 41%);
+    background-color: hsla(134, 61%, 41%, 0.1);
+    color: hsl(134, 61%, 41%);
+  }
+  &-ongoing {
+    border: solid 1px hsl(211, 100%, 50%);
+    background-color: hsla(211, 100%, 50%, 0.1);
+    color: hsl(211, 100%, 50%);
+  }
 }
