@@ -45,5 +45,4 @@ export const createManga = z
 export const searchParamsSchema = z.object({
   types: z.array(z.enum(typeValues)).optional(),
   genres: z.array(z.enum(genreValues)).optional(),
-  search: z.string().optional(),
 });

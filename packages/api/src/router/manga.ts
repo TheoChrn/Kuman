@@ -1,18 +1,9 @@
-import { normalize } from "path";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
-import z from "zod";
+import { normalize } from "path";
+import z from "zod/v4";
 
-import type {
-  Genre,
-  PublisherFr,
-  PublisherJp,
-  Status,
-  Type,
-} from "@kuman/db/enums";
 import {
-  arrayContained,
-  arrayContains,
   arrayContainsPartial,
   arrayOverlaps,
   eq,
@@ -20,9 +11,14 @@ import {
   inArray,
   or,
   schema,
-  sql,
+  sql
 } from "@kuman/db";
-import { genreValues } from "@kuman/db/enums";
+import type {
+  PublisherFr,
+  PublisherJp,
+  Status,
+  Type
+} from "@kuman/db/enums";
 import { toSlug } from "@kuman/shared/format";
 import { createManga, searchParamsSchema } from "@kuman/shared/validators";
 
@@ -74,7 +70,9 @@ export const mangaRouter = {
     }),
 
   getAll: publicProcedure
-    .input(searchParamsSchema.optional())
+    .input(
+      searchParamsSchema.extend({ search: z.string().optional() }).optional(),
+    )
     .query(async ({ ctx, input }) => {
       const select = {
         id: schema.mangas.id,

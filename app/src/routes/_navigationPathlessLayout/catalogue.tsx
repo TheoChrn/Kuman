@@ -13,17 +13,17 @@ import { typeIcons } from "~/utils/icons/typeIcons";
 
 export const Route = createFileRoute("/_navigationPathlessLayout/catalogue")({
   component: RouteComponent,
-  loaderDeps: ({ search: { genres, search, types } }) => ({
+  loaderDeps: ({ search: { genres, types } }) => ({
     genres,
-    search,
+
     types,
   }),
   loader: async ({
     context: { queryClient, trpc },
-    deps: { genres, search, types },
+    deps: { genres, types },
   }) => {
     await queryClient.prefetchQuery(
-      trpc.mangas.getAll.queryOptions({ genres, search, types })
+      trpc.mangas.getAll.queryOptions({ genres, types })
     );
   },
   validateSearch: searchParamsSchema,
