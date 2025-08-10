@@ -1,0 +1,227 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#catalogue {
+  header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.5rem;
+
+    &:has(.menu-burger[aria-expanded="true"]) {
+      background-color: $background;
+    }
+
+    & .menu-burger {
+      margin-left: auto;
+      background-color: $primary;
+      color: $neutral-foreground;
+      border-radius: 100%;
+      padding: 0.5rem;
+      transition: transform 200ms;
+
+      &:not([aria-expanded="true"]) ~ .search-input {
+        display: none;
+      }
+
+      .close {
+        display: none;
+      }
+
+      &[aria-expanded="true"] {
+        background-color: transparent;
+        color: $foreground;
+        transform: rotateZ(45deg);
+
+        .burger {
+          display: none;
+        }
+
+        .close {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .content {
+    width: 100vw;
+    background-color: $background;
+    color: $foreground;
+    max-height: calc(100svh - 137px);
+    overflow: auto;
+    padding: 1rem;
+    padding-top: 0;
+    @include space-y-6;
+    @include shadow;
+
+    h2 {
+      font-size: 1.25rem;
+    }
+    h3 {
+      font-size: 1.125rem;
+    }
+
+    label,
+    .quick-filters-genres-heading,
+    .quick-filters-types-heading,
+    .quick-filters-heading {
+      position: sticky;
+      z-index: 2;
+    }
+
+    & > label {
+      background-color: $background;
+      padding: 0.5rem;
+      padding-top: 1rem;
+      top: 0;
+      display: block;
+    }
+
+    .see-more,
+    .reset {
+      color: $primary;
+    }
+
+    .search-results {
+      @include space-y-6;
+      & > a {
+        display: flex;
+        gap: 0.5rem;
+
+        & > img {
+          aspect-ratio: 2/3;
+          border-radius: 4px;
+          max-height: 175px;
+        }
+
+        & img + div {
+          @include space-y-2;
+          overflow: auto;
+          margin: auto 0;
+
+          & h4 {
+            font-weight: 500;
+            color: $foreground-100;
+            font-size: 0.875rem;
+          }
+
+          & .tag {
+            font-size: 0.75rem;
+          }
+
+          & ul {
+            display: flex;
+            overflow: auto;
+            gap: 0.5rem;
+
+            & li {
+              & svg {
+                flex-shrink: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .quick-filters {
+      &-heading {
+        @include flex-between;
+        top: 0;
+        background-color: $background;
+        & a {
+          font-size: 0.875rem;
+        }
+      }
+
+      &-heading + div {
+        .quick-filters-genres {
+          &-heading {
+            top: 27px;
+            background-color: $background;
+            padding-top: 1.5rem;
+            padding-bottom: 0.5rem;
+            @include flex-between;
+
+            & button {
+              font-size: 0.875rem;
+            }
+          }
+          &-list {
+            flex-wrap: wrap;
+            @include justify-start;
+            gap: 0.5rem;
+
+            &:has(.tag-active) > .tag:not(.tag-active) {
+              opacity: 0.5;
+              position: relative;
+            }
+          }
+        }
+        .quick-filters-types {
+          @include space-y-2;
+          &-heading {
+            top: 27px;
+            background-color: $background;
+            padding-top: 1.5rem;
+            padding-bottom: 0.5rem;
+            @include flex-between;
+          }
+          &-list {
+            flex-wrap: wrap;
+            @include justify-start;
+            gap: 0.5rem;
+
+            &:has(.tag-active) > .tag:not(.tag-active) {
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .catalogue {
+    min-height: calc(100svh - 65px);
+
+    & ul {
+      @include flex-center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .mangas {
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 200px);
+      justify-content: center;
+      gap: 2rem;
+
+      & > a {
+        @include space-y-2;
+        flex: 0 0 100%;
+
+        & img {
+          border-radius: 4px;
+        }
+
+        & > div {
+          @include space-y-2;
+
+          & h2 {
+            font-size: 1.125rem;
+          }
+
+          & span {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
-import { DrizzleError, InferColumnsDataTypes, SQL, sql } from "drizzle-orm";
-import { PgColumn } from "drizzle-orm/pg-core";
+import type { Column, InferColumnsDataTypes, SQL } from "drizzle-orm";
+import type { PgArray, PgColumn } from "drizzle-orm/pg-core";
+import { DrizzleError, sql } from "drizzle-orm";
 
 type InferMixedTypes<T extends Record<string, PgColumn | SQL<any>>> = {
   [K in keyof T]: T[K] extends PgColumn
@@ -47,4 +48,14 @@ export function jsonAgg<T extends Record<string, PgColumn | SQL<string>>>(
       '[]'
     )
   `;
+}
+
+export function arrayContainsPartial<T extends string>(
+  column: Column | PgArray<any, any>,
+  searchTerm: T,
+): SQL<boolean> {
+  return sql<boolean>`EXISTS (
+    SELECT 1 FROM unnest(${column}) as item 
+    WHERE item ILIKE ${"%" + searchTerm + "%"}
+  )`;
 }

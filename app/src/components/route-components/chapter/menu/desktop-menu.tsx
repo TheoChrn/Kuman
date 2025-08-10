@@ -29,7 +29,11 @@ export default function DesktopMenu(props: DesktopMenuProps) {
   );
   return (
     <div className={styles["content"]}>
-      <Link to="/" className={styles.back}>
+      <Link
+        to="/$serieSlug/volumes"
+        params={{ serieSlug: props.serieSlug }}
+        className={styles.back}
+      >
         <FaArrowLeft size={32} />
         <Ariakit.VisuallyHidden>Retour</Ariakit.VisuallyHidden>
       </Link>

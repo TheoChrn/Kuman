@@ -35,7 +35,11 @@ export default function MobileMenu(props: MobileMenuProps) {
         }}
         className={styles["content"]}
       >
-        <Link to="/" className={styles.back}>
+        <Link
+          to="/$serieSlug/volumes"
+          params={{ serieSlug: props.serieSlug }}
+          className={styles.back}
+        >
           <FaArrowLeft size={24} />
           <Ariakit.VisuallyHidden>Retour</Ariakit.VisuallyHidden>
         </Link>

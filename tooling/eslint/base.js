@@ -1,12 +1,11 @@
-
 /// <reference types="./types.d.ts" />
 
 import * as path from "node:path";
-import eslint from "@eslint/js";
+import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
+import eslint from "@eslint/js";
 import importPlugin from "eslint-plugin-import";
 import tseslint from "typescript-eslint";
-import { fileURLToPath } from "node:url";
 
 /**
  * All packages that leverage t3-env should use this rule
@@ -35,18 +34,19 @@ export const restrictEnvAccess = tseslint.config(
         },
       ],
     },
-  }
+  },
 );
 
 export default tseslint.config(
   // Ignore files not tracked by VCS and any config files
-  includeIgnoreFile(path.join(path.dirname(fileURLToPath(import.meta.url)), "../../.gitignore")),
+  includeIgnoreFile(
+    path.join(path.dirname(fileURLToPath(import.meta.url)), "../../.gitignore"),
+  ),
   { ignores: ["**/*.config.*"] },
   {
     files: ["**/*.js", "**/*.ts", "**/*.tsx"],
     plugins: {
       import: importPlugin,
-
     },
     extends: [
       eslint.configs.recommended,
@@ -55,7 +55,6 @@ export default tseslint.config(
       ...tseslint.configs.stylisticTypeChecked,
     ],
     rules: {
-    
       "@typescript-eslint/no-unused-vars": [
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
@@ -88,5 +87,5 @@ export default tseslint.config(
   {
     linterOptions: { reportUnusedDisableDirectives: true },
     languageOptions: { parserOptions: { projectService: true } },
-  }
+  },
 );

@@ -1,3 +1,4 @@
+import { normalize } from "path";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import z from "zod";
@@ -9,9 +10,21 @@ import type {
   Status,
   Type,
 } from "@kuman/db/enums";
-import { eq, schema } from "@kuman/db";
+import {
+  arrayContained,
+  arrayContains,
+  arrayContainsPartial,
+  arrayOverlaps,
+  eq,
+  ilike,
+  inArray,
+  or,
+  schema,
+  sql,
+} from "@kuman/db";
+import { genreValues } from "@kuman/db/enums";
 import { toSlug } from "@kuman/shared/format";
-import { createManga } from "@kuman/shared/validators";
+import { createManga, searchParamsSchema } from "@kuman/shared/validators";
 
 import { publicProcedure } from "../trpc";
 
@@ -60,15 +73,60 @@ export const mangaRouter = {
       }
     }),
 
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    return ctx.db
-      .select({
+  getAll: publicProcedure
+    .input(searchParamsSchema.optional())
+    .query(async ({ ctx, input }) => {
+      const select = {
+        id: schema.mangas.id,
         slug: schema.mangas.slug,
         title: schema.mangas.title,
-        id: schema.mangas.id,
-      })
-      .from(schema.mangas);
-  }),
+        genres: schema.mangas.genres,
+        type: schema.mangas.type,
+        status: schema.mangas.status,
+        author: schema.mangas.author,
+        coverUrl: schema.mangas.coverUrl,
+      };
+
+      if (!input) {
+        return ctx.db.select(select).from(schema.mangas);
+      }
+
+      return ctx.db
+        .select(select)
+        .from(schema.mangas)
+        .where(
+          or(
+            input.genres
+              ? arrayOverlaps(schema.mangas.genres, input.genres)
+              : undefined,
+            input.search
+              ? or(
+                  ilike(
+                    sql<string>`lower(unaccent(${schema.mangas.title}))`,
+                    `%${normalize(input.search)}%`,
+                  ),
+                  ilike(
+                    sql<string>`lower(unaccent(${schema.mangas.originalTitle}))`,
+                    `%${normalize(input.search)}%`,
+                  ),
+                  ilike(
+                    sql<string>`lower(unaccent(${schema.mangas.romajiTitle}))`,
+                    `%${normalize(input.search)}%`,
+                  ),
+                  ilike(
+                    sql<string>`lower(unaccent(${schema.mangas.slug}))`,
+                    `%${normalize(input.search)}%`,
+                  ),
+                  arrayContainsPartial(
+                    schema.mangas.alternativeTitles,
+                    input.search,
+                  ),
+                )
+              : undefined,
+            input.types ? inArray(schema.mangas.type, input.types) : undefined,
+          ),
+        );
+    }),
   get: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
