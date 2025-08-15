@@ -2,8 +2,8 @@ import { AppRouter } from "@kuman/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getHeaders } from "@tanstack/react-start/server";
 import {
   createTRPCClient,
   httpBatchLink,
@@ -17,6 +17,8 @@ import { TRPCProvider } from "~/trpc/react";
 import { DefaultCatchBoundary } from "./components/default-catch-boundary";
 import { NotFound } from "./components/not-found";
 import { routeTree } from "./routeTree.gen";
+
+const getIncomingHeaders = createIsomorphicFn().server(() => getHeaders());
 
 function getUrl() {
   const base = (() => {
@@ -40,6 +42,13 @@ export function createRouter() {
       splitLink({
         condition: (op) => isNonJsonSerializable(op.input),
         true: httpLink({
+          headers: getIncomingHeaders(),
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
           url: getUrl(),
           transformer: {
             input: {
@@ -53,8 +62,15 @@ export function createRouter() {
           },
         }),
         false: httpBatchLink({
+          headers: getIncomingHeaders(),
           transformer: superjson,
           url: getUrl(),
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
         }),
       }),
     ],
@@ -68,7 +84,7 @@ export function createRouter() {
   const router = routerWithQueryClient(
     createTanStackRouter({
       routeTree,
-      context: { trpc, queryClient },
+      context: { trpc, queryClient, isAuth: false },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,

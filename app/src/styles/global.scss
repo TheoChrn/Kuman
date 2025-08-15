@@ -4,8 +4,12 @@
 @use "./components/footer.scss" as *;
 @use "./components/mobile-nav.scss" as *;
 @use "./components/search-input.scss" as *;
+@use "./components/error-block.scss" as *;
+@use "./components/input.scss" as *;
 @use "./page/serie.scss" as *;
 @use "./page/catalogue.scss" as *;
+@use "./page/register.scss" as *;
+@use "./page/login.scss" as *;
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rufina:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rufina:wght@400;700&display=swap");
@@ -15,7 +19,9 @@
 * {
   font-family: "Nunito Sans", sans-serif;
   font-optical-sizing: auto;
-  font-variation-settings: "wdth" 100, "YTLC" 500;
+  font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
 }
 h1,
 h2,
@@ -25,7 +31,9 @@ h5,
 h6 {
   font-family: "Poppins", sans-serif;
   font-optical-sizing: auto;
-  font-variation-settings: "wdth" 100, "YTLC" 500;
+  font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
 }
 
 *,

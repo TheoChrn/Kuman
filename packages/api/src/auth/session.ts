@@ -1,6 +1,7 @@
-import { db } from "../client";
-import { generateUserId } from "../generate-ids";
-import { schema } from "../schema";
+import { db } from "@kuman/db/client";
+
+import { generateUserId } from "../../../db/src/generate-ids";
+import { schema } from "../../../db/src/schema";
 import { lucia } from "./lucia";
 
 async function createUser({
@@ -9,9 +10,7 @@ async function createUser({
 }: {
   userId: string;
   userInfo: {
-    firstName?: string;
-    lastName?: string;
-    userName?: string;
+    userName: string;
     email: string;
     password: string;
   };
@@ -19,8 +18,6 @@ async function createUser({
   await db.insert(schema.users).values({
     id: userId,
     userName: userInfo.userName,
-    firstName: userInfo.firstName,
-    lastName: userInfo.lastName,
     email: userInfo.email,
     password: userInfo.password,
   });
@@ -29,38 +26,31 @@ async function createUser({
 }
 
 export async function createSession({
+  userId,
   userInfo,
 }: {
+  userId?: string;
   userInfo: {
-    firstName?: string;
-    lastName?: string;
-    userName?: string;
+    userName: string;
     email: string;
     password: string;
   };
 }) {
-  const existingUserByEmail = await db.query.users.findFirst({
-    columns: {
-      id: true,
-    },
-    where: (user, { eq }) => eq(user.email, userInfo.email),
-  });
-
-  if (!existingUserByEmail) {
-    const userId = generateUserId();
+  if (!userId) {
+    const generatedUserId = generateUserId();
 
     await createUser({
-      userId,
+      userId: generatedUserId,
       userInfo,
     });
 
     return {
-      session: await lucia.createSession(userId, {}),
+      session: await lucia.createSession(generatedUserId, {}),
     };
   }
 
   return {
-    session: await lucia.createSession(existingUserByEmail.id, {}),
+    session: await lucia.createSession(userId, {}),
   };
 }
 
@@ -89,13 +79,3 @@ export async function validateSessionCookies(headers: Headers) {
 
 export type Session = Awaited<ReturnType<typeof validateSessionCookies>>;
 
-export async function validateBearerTokens(bearerToken: string) {
-  const sessionId = lucia.readBearerToken(bearerToken);
-  if (!sessionId) return null;
-  const { user } = await lucia.validateSession(sessionId);
-
-  return {
-    sessionId: sessionId,
-    user,
-  };
-}

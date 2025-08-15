@@ -13,13 +13,13 @@ import { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
-import appCss from "~/styles/global.scss?url";
 import "~/styles/global.scss";
 import { seo } from "~/utils/seo";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
+  isAuth: boolean;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -67,6 +67,16 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       </RootDocument>
     );
   },
+  beforeLoad: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData(
+      context.trpc.user.getCurrentUser.queryOptions()
+    );
+
+    context.isAuth = !!user;
+
+    return { isAuth: context.isAuth };
+  },
+  loader: ({ context }) => ({ isAuth: context.isAuth }),
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
 });

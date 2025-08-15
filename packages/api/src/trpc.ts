@@ -7,13 +7,15 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
-import { validateBearerTokens, validateSessionCookies } from "@kuman/db";
 import { db } from "@kuman/db/client";
 import { createSupabaseClient } from "@kuman/db/supabase";
+
+import type { Session } from "./auth/session";
+import { validateSessionCookies } from "./auth/session";
 
 /**
  * 1. CONTEXT
@@ -28,18 +30,22 @@ import { createSupabaseClient } from "@kuman/db/supabase";
  * @see https://trpc.io/docs/server/context
  */
 
-export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const bearerToken = opts.headers.get("Authorization");
-  const session = bearerToken
-    ? await validateBearerTokens(bearerToken)
-    : await validateSessionCookies(opts.headers);
-
-  const supabase = createSupabaseClient(bearerToken ?? "");
+export const createTRPCContext = async ({
+  req,
+  resHeaders,
+}: {
+  req: Request;
+  resHeaders: Headers;
+}) => {
+  const session: Session = await validateSessionCookies(req.headers);
+  const supabase = createSupabaseClient("");
 
   return {
     session,
     db,
     supabase,
+    req: req.headers,
+    resHeaders,
   };
 };
 
@@ -103,13 +109,12 @@ export const publicProcedure = t.procedure;
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  // if (!ctx.session?.user) {
-  //   throw new TRPCError({ code: "UNAUTHORIZED" });
-  // }
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
   return next({
     ctx: {
-      // infers the `session` as non-nullable
-      // session: { ...ctx.session, user: ctx.session.user },
+      session: { ...ctx.session, user: ctx.session.user },
     },
   });
 });

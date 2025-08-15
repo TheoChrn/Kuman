@@ -24,11 +24,13 @@
   },
   "dependencies": {
     "@kuman/db": "workspace:*",
+    "@lucia-auth/adapter-drizzle": "catalog:",
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
+    "argon2": "^0.43.1",
     "dotenv": "^17.0.1",
-    "superjson": "^2.2.2",
-    "zod": "catalog:"
+    "lucia": "catalog:",
+    "superjson": "^2.2.2"
   },
   "devDependencies": {
     "@kuman/eslint-config": "workspace:*",

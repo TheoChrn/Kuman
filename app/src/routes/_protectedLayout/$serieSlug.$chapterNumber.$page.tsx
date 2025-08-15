@@ -23,7 +23,7 @@ export const readingModes = ["scroll", "singlePage"] as const;
 type ReadingModes = typeof readingModes;
 export type ReadingMode = ReadingModes[number];
 
-export const Route = createFileRoute("/$serieSlug/$chapterNumber/$page")({
+export const Route = createFileRoute("/_protectedLayout/$serieSlug/$chapterNumber/$page")({
   pendingComponent: () => {
     return <div>Charge</div>;
   },

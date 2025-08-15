@@ -18,6 +18,7 @@ export function TextInput({ label, ...props }: InputProps) {
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        className="text-input"
         {...props}
       />
       {field.state.meta.isTouched && !field.state.meta.isValid ? (

@@ -1,8 +1,8 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Lucia } from "lucia";
 
-import { db } from "../client";
-import { schema } from "../schema";
+import { schema } from "@kuman/db";
+import { db } from "@kuman/db/client";
 
 export const lucia = new Lucia(
   new DrizzlePostgreSQLAdapter(db, schema.sessions, schema.users),
@@ -15,7 +15,7 @@ export const lucia = new Lucia(
     },
     getUserAttributes: (attributes) => {
       return {
-        username: attributes.username,
+        userName: attributes.userName,
         email: attributes.email,
       };
     },
@@ -26,7 +26,7 @@ declare module "lucia" {
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: {
-      username: string;
+      userName: string;
       email: string;
     };
   }

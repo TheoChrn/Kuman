@@ -1,0 +1,39 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+.text-input,
+.textarea {
+  border: solid 1px $stroke;
+  padding: 0.5rem;
+  background-color: $background-100;
+  border-radius: 8px;
+  width: 100%;
+
+  &:focus {
+    border: solid 1px $primary;
+  }
+}
+
+.textarea {
+  min-height: 10rem;
+  resize: none;
+}
+
+.password-input {
+  & > div {
+    @include flex-between;
+    border: solid 1px $stroke;
+    padding: 0.5rem;
+    background-color: $background-100;
+    border-radius: 8px;
+    width: 100%;
+
+    & input {
+      width: 100%;
+    }
+  }
+
+  &:focus-within > div {
+    border: solid 1px $primary;
+  }
+}
