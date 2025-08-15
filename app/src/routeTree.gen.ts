@@ -12,87 +12,128 @@ import { createFileRoute } from '@tanstack/react-router'
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as NavigationPathlessLayoutRouteRouteImport } from './routes/_navigationPathlessLayout/route'
-import { Route as NavigationPathlessLayoutIndexRouteImport } from './routes/_navigationPathlessLayout/index'
-import { Route as NavigationPathlessLayoutCatalogueRouteImport } from './routes/_navigationPathlessLayout/catalogue'
-import { Route as NavigationPathlessLayoutAddAVolumeRouteImport } from './routes/_navigationPathlessLayout/add-a-volume'
-import { Route as NavigationPathlessLayoutAddAMangaRouteImport } from './routes/_navigationPathlessLayout/add-a-manga'
-import { Route as NavigationPathlessLayoutAddAChapterRouteImport } from './routes/_navigationPathlessLayout/add-a-chapter'
-import { Route as NavigationPathlessLayoutSerieSlugLayoutRouteImport } from './routes/_navigationPathlessLayout/$serieSlug/_layout'
-import { Route as SerieSlugChapterNumberPageRouteImport } from './routes/$serieSlug.$chapterNumber.$page'
-import { Route as NavigationPathlessLayoutSerieSlugLayoutVolumesRouteImport } from './routes/_navigationPathlessLayout/$serieSlug/_layout.volumes'
-import { Route as NavigationPathlessLayoutSerieSlugLayoutFicheRouteImport } from './routes/_navigationPathlessLayout/$serieSlug/_layout.fiche'
+import { Route as ProtectedLayoutRouteRouteImport } from './routes/_protectedLayout/route'
+import { Route as NavigationLayoutRouteRouteImport } from './routes/_navigationLayout/route'
+import { Route as NavigationLayoutIndexRouteImport } from './routes/_navigationLayout/index'
+import { Route as NavigationLayoutCatalogueRouteImport } from './routes/_navigationLayout/catalogue'
+import { Route as NavigationLayoutAuthRouteRouteImport } from './routes/_navigationLayout/auth/route'
+import { Route as NavigationLayoutProtectedLayoutRouteRouteImport } from './routes/_navigationLayout/_protectedLayout/route'
+import { Route as NavigationLayoutAuthRegisterRouteImport } from './routes/_navigationLayout/auth/register'
+import { Route as NavigationLayoutAuthLoginRouteImport } from './routes/_navigationLayout/auth/login'
+import { Route as ProtectedLayoutSerieSlugChapterNumberPageRouteImport } from './routes/_protectedLayout/$serieSlug.$chapterNumber.$page'
+import { Route as NavigationLayoutProtectedLayoutAdminAddAVolumeRouteImport } from './routes/_navigationLayout/_protectedLayout/admin/add-a-volume'
+import { Route as NavigationLayoutProtectedLayoutAdminAddASerieRouteImport } from './routes/_navigationLayout/_protectedLayout/admin/add-a-serie'
+import { Route as NavigationLayoutProtectedLayoutAdminAddAChapterRouteImport } from './routes/_navigationLayout/_protectedLayout/admin/add-a-chapter'
+import { Route as NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteImport } from './routes/_navigationLayout/_protectedLayout/$serieSlug/_layout/route'
+import { Route as NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRouteImport } from './routes/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes'
+import { Route as NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRouteImport } from './routes/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche'
+import { Route as NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRouteImport } from './routes/_navigationLayout/_protectedLayout/$serieSlug/chapter.$chapterNumber.$page'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'
 
-const NavigationPathlessLayoutSerieSlugRouteImport = createFileRoute(
-  '/_navigationPathlessLayout/$serieSlug',
+const NavigationLayoutProtectedLayoutSerieSlugRouteImport = createFileRoute(
+  '/_navigationLayout/_protectedLayout/$serieSlug',
 )()
 const rootServerRouteImport = createServerRootRoute()
 
-const NavigationPathlessLayoutRouteRoute =
-  NavigationPathlessLayoutRouteRouteImport.update({
-    id: '/_navigationPathlessLayout',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const NavigationPathlessLayoutSerieSlugRoute =
-  NavigationPathlessLayoutSerieSlugRouteImport.update({
-    id: '/$serieSlug',
-    path: '/$serieSlug',
-    getParentRoute: () => NavigationPathlessLayoutRouteRoute,
-  } as any)
-const NavigationPathlessLayoutIndexRoute =
-  NavigationPathlessLayoutIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => NavigationPathlessLayoutRouteRoute,
-  } as any)
-const NavigationPathlessLayoutCatalogueRoute =
-  NavigationPathlessLayoutCatalogueRouteImport.update({
+const ProtectedLayoutRouteRoute = ProtectedLayoutRouteRouteImport.update({
+  id: '/_protectedLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NavigationLayoutRouteRoute = NavigationLayoutRouteRouteImport.update({
+  id: '/_navigationLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NavigationLayoutIndexRoute = NavigationLayoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NavigationLayoutRouteRoute,
+} as any)
+const NavigationLayoutCatalogueRoute =
+  NavigationLayoutCatalogueRouteImport.update({
     id: '/catalogue',
     path: '/catalogue',
-    getParentRoute: () => NavigationPathlessLayoutRouteRoute,
+    getParentRoute: () => NavigationLayoutRouteRoute,
   } as any)
-const NavigationPathlessLayoutAddAVolumeRoute =
-  NavigationPathlessLayoutAddAVolumeRouteImport.update({
-    id: '/add-a-volume',
-    path: '/add-a-volume',
-    getParentRoute: () => NavigationPathlessLayoutRouteRoute,
+const NavigationLayoutAuthRouteRoute =
+  NavigationLayoutAuthRouteRouteImport.update({
+    id: '/auth',
+    path: '/auth',
+    getParentRoute: () => NavigationLayoutRouteRoute,
   } as any)
-const NavigationPathlessLayoutAddAMangaRoute =
-  NavigationPathlessLayoutAddAMangaRouteImport.update({
-    id: '/add-a-manga',
-    path: '/add-a-manga',
-    getParentRoute: () => NavigationPathlessLayoutRouteRoute,
+const NavigationLayoutProtectedLayoutRouteRoute =
+  NavigationLayoutProtectedLayoutRouteRouteImport.update({
+    id: '/_protectedLayout',
+    getParentRoute: () => NavigationLayoutRouteRoute,
   } as any)
-const NavigationPathlessLayoutAddAChapterRoute =
-  NavigationPathlessLayoutAddAChapterRouteImport.update({
-    id: '/add-a-chapter',
-    path: '/add-a-chapter',
-    getParentRoute: () => NavigationPathlessLayoutRouteRoute,
+const NavigationLayoutProtectedLayoutSerieSlugRoute =
+  NavigationLayoutProtectedLayoutSerieSlugRouteImport.update({
+    id: '/$serieSlug',
+    path: '/$serieSlug',
+    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
   } as any)
-const NavigationPathlessLayoutSerieSlugLayoutRoute =
-  NavigationPathlessLayoutSerieSlugLayoutRouteImport.update({
-    id: '/_layout',
-    getParentRoute: () => NavigationPathlessLayoutSerieSlugRoute,
+const NavigationLayoutAuthRegisterRoute =
+  NavigationLayoutAuthRegisterRouteImport.update({
+    id: '/register',
+    path: '/register',
+    getParentRoute: () => NavigationLayoutAuthRouteRoute,
   } as any)
-const SerieSlugChapterNumberPageRoute =
-  SerieSlugChapterNumberPageRouteImport.update({
+const NavigationLayoutAuthLoginRoute =
+  NavigationLayoutAuthLoginRouteImport.update({
+    id: '/login',
+    path: '/login',
+    getParentRoute: () => NavigationLayoutAuthRouteRoute,
+  } as any)
+const ProtectedLayoutSerieSlugChapterNumberPageRoute =
+  ProtectedLayoutSerieSlugChapterNumberPageRouteImport.update({
     id: '/$serieSlug/$chapterNumber/$page',
     path: '/$serieSlug/$chapterNumber/$page',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => ProtectedLayoutRouteRoute,
   } as any)
-const NavigationPathlessLayoutSerieSlugLayoutVolumesRoute =
-  NavigationPathlessLayoutSerieSlugLayoutVolumesRouteImport.update({
+const NavigationLayoutProtectedLayoutAdminAddAVolumeRoute =
+  NavigationLayoutProtectedLayoutAdminAddAVolumeRouteImport.update({
+    id: '/admin/add-a-volume',
+    path: '/admin/add-a-volume',
+    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+  } as any)
+const NavigationLayoutProtectedLayoutAdminAddASerieRoute =
+  NavigationLayoutProtectedLayoutAdminAddASerieRouteImport.update({
+    id: '/admin/add-a-serie',
+    path: '/admin/add-a-serie',
+    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+  } as any)
+const NavigationLayoutProtectedLayoutAdminAddAChapterRoute =
+  NavigationLayoutProtectedLayoutAdminAddAChapterRouteImport.update({
+    id: '/admin/add-a-chapter',
+    path: '/admin/add-a-chapter',
+    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+  } as any)
+const NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute =
+  NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteImport.update({
+    id: '/_layout',
+    getParentRoute: () => NavigationLayoutProtectedLayoutSerieSlugRoute,
+  } as any)
+const NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute =
+  NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRouteImport.update({
     id: '/volumes',
     path: '/volumes',
-    getParentRoute: () => NavigationPathlessLayoutSerieSlugLayoutRoute,
+    getParentRoute: () =>
+      NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute,
   } as any)
-const NavigationPathlessLayoutSerieSlugLayoutFicheRoute =
-  NavigationPathlessLayoutSerieSlugLayoutFicheRouteImport.update({
+const NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute =
+  NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRouteImport.update({
     id: '/fiche',
     path: '/fiche',
-    getParentRoute: () => NavigationPathlessLayoutSerieSlugLayoutRoute,
+    getParentRoute: () =>
+      NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute,
   } as any)
+const NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute =
+  NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRouteImport.update(
+    {
+      id: '/chapter/$chapterNumber/$page',
+      path: '/chapter/$chapterNumber/$page',
+      getParentRoute: () => NavigationLayoutProtectedLayoutSerieSlugRoute,
+    } as any,
+  )
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
@@ -100,82 +141,110 @@ const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/add-a-chapter': typeof NavigationPathlessLayoutAddAChapterRoute
-  '/add-a-manga': typeof NavigationPathlessLayoutAddAMangaRoute
-  '/add-a-volume': typeof NavigationPathlessLayoutAddAVolumeRoute
-  '/catalogue': typeof NavigationPathlessLayoutCatalogueRoute
-  '/': typeof NavigationPathlessLayoutIndexRoute
-  '/$serieSlug/$chapterNumber/$page': typeof SerieSlugChapterNumberPageRoute
-  '/$serieSlug': typeof NavigationPathlessLayoutSerieSlugLayoutRouteWithChildren
-  '/$serieSlug/fiche': typeof NavigationPathlessLayoutSerieSlugLayoutFicheRoute
-  '/$serieSlug/volumes': typeof NavigationPathlessLayoutSerieSlugLayoutVolumesRoute
+  '/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
+  '/catalogue': typeof NavigationLayoutCatalogueRoute
+  '/': typeof NavigationLayoutIndexRoute
+  '/auth/login': typeof NavigationLayoutAuthLoginRoute
+  '/auth/register': typeof NavigationLayoutAuthRegisterRoute
+  '/$serieSlug': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteWithChildren
+  '/admin/add-a-chapter': typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
+  '/admin/add-a-serie': typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
+  '/admin/add-a-volume': typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
+  '/$serieSlug/$chapterNumber/$page': typeof ProtectedLayoutSerieSlugChapterNumberPageRoute
+  '/$serieSlug/fiche': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute
+  '/$serieSlug/volumes': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute
+  '/$serieSlug/chapter/$chapterNumber/$page': typeof NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute
 }
 export interface FileRoutesByTo {
-  '/add-a-chapter': typeof NavigationPathlessLayoutAddAChapterRoute
-  '/add-a-manga': typeof NavigationPathlessLayoutAddAMangaRoute
-  '/add-a-volume': typeof NavigationPathlessLayoutAddAVolumeRoute
-  '/catalogue': typeof NavigationPathlessLayoutCatalogueRoute
-  '/': typeof NavigationPathlessLayoutIndexRoute
-  '/$serieSlug/$chapterNumber/$page': typeof SerieSlugChapterNumberPageRoute
-  '/$serieSlug': typeof NavigationPathlessLayoutSerieSlugLayoutRouteWithChildren
-  '/$serieSlug/fiche': typeof NavigationPathlessLayoutSerieSlugLayoutFicheRoute
-  '/$serieSlug/volumes': typeof NavigationPathlessLayoutSerieSlugLayoutVolumesRoute
+  '/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
+  '/catalogue': typeof NavigationLayoutCatalogueRoute
+  '/': typeof NavigationLayoutIndexRoute
+  '/auth/login': typeof NavigationLayoutAuthLoginRoute
+  '/auth/register': typeof NavigationLayoutAuthRegisterRoute
+  '/$serieSlug': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteWithChildren
+  '/admin/add-a-chapter': typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
+  '/admin/add-a-serie': typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
+  '/admin/add-a-volume': typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
+  '/$serieSlug/$chapterNumber/$page': typeof ProtectedLayoutSerieSlugChapterNumberPageRoute
+  '/$serieSlug/fiche': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute
+  '/$serieSlug/volumes': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute
+  '/$serieSlug/chapter/$chapterNumber/$page': typeof NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_navigationPathlessLayout': typeof NavigationPathlessLayoutRouteRouteWithChildren
-  '/_navigationPathlessLayout/add-a-chapter': typeof NavigationPathlessLayoutAddAChapterRoute
-  '/_navigationPathlessLayout/add-a-manga': typeof NavigationPathlessLayoutAddAMangaRoute
-  '/_navigationPathlessLayout/add-a-volume': typeof NavigationPathlessLayoutAddAVolumeRoute
-  '/_navigationPathlessLayout/catalogue': typeof NavigationPathlessLayoutCatalogueRoute
-  '/_navigationPathlessLayout/': typeof NavigationPathlessLayoutIndexRoute
-  '/$serieSlug/$chapterNumber/$page': typeof SerieSlugChapterNumberPageRoute
-  '/_navigationPathlessLayout/$serieSlug': typeof NavigationPathlessLayoutSerieSlugRouteWithChildren
-  '/_navigationPathlessLayout/$serieSlug/_layout': typeof NavigationPathlessLayoutSerieSlugLayoutRouteWithChildren
-  '/_navigationPathlessLayout/$serieSlug/_layout/fiche': typeof NavigationPathlessLayoutSerieSlugLayoutFicheRoute
-  '/_navigationPathlessLayout/$serieSlug/_layout/volumes': typeof NavigationPathlessLayoutSerieSlugLayoutVolumesRoute
+  '/_navigationLayout': typeof NavigationLayoutRouteRouteWithChildren
+  '/_protectedLayout': typeof ProtectedLayoutRouteRouteWithChildren
+  '/_navigationLayout/_protectedLayout': typeof NavigationLayoutProtectedLayoutRouteRouteWithChildren
+  '/_navigationLayout/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
+  '/_navigationLayout/catalogue': typeof NavigationLayoutCatalogueRoute
+  '/_navigationLayout/': typeof NavigationLayoutIndexRoute
+  '/_navigationLayout/auth/login': typeof NavigationLayoutAuthLoginRoute
+  '/_navigationLayout/auth/register': typeof NavigationLayoutAuthRegisterRoute
+  '/_navigationLayout/_protectedLayout/$serieSlug': typeof NavigationLayoutProtectedLayoutSerieSlugRouteWithChildren
+  '/_navigationLayout/_protectedLayout/$serieSlug/_layout': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteWithChildren
+  '/_navigationLayout/_protectedLayout/admin/add-a-chapter': typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
+  '/_navigationLayout/_protectedLayout/admin/add-a-serie': typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
+  '/_navigationLayout/_protectedLayout/admin/add-a-volume': typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
+  '/_protectedLayout/$serieSlug/$chapterNumber/$page': typeof ProtectedLayoutSerieSlugChapterNumberPageRoute
+  '/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute
+  '/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes': typeof NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute
+  '/_navigationLayout/_protectedLayout/$serieSlug/chapter/$chapterNumber/$page': typeof NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/add-a-chapter'
-    | '/add-a-manga'
-    | '/add-a-volume'
+    | '/auth'
     | '/catalogue'
     | '/'
-    | '/$serieSlug/$chapterNumber/$page'
+    | '/auth/login'
+    | '/auth/register'
     | '/$serieSlug'
+    | '/admin/add-a-chapter'
+    | '/admin/add-a-serie'
+    | '/admin/add-a-volume'
+    | '/$serieSlug/$chapterNumber/$page'
     | '/$serieSlug/fiche'
     | '/$serieSlug/volumes'
+    | '/$serieSlug/chapter/$chapterNumber/$page'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/add-a-chapter'
-    | '/add-a-manga'
-    | '/add-a-volume'
+    | '/auth'
     | '/catalogue'
     | '/'
-    | '/$serieSlug/$chapterNumber/$page'
+    | '/auth/login'
+    | '/auth/register'
     | '/$serieSlug'
+    | '/admin/add-a-chapter'
+    | '/admin/add-a-serie'
+    | '/admin/add-a-volume'
+    | '/$serieSlug/$chapterNumber/$page'
     | '/$serieSlug/fiche'
     | '/$serieSlug/volumes'
+    | '/$serieSlug/chapter/$chapterNumber/$page'
   id:
     | '__root__'
-    | '/_navigationPathlessLayout'
-    | '/_navigationPathlessLayout/add-a-chapter'
-    | '/_navigationPathlessLayout/add-a-manga'
-    | '/_navigationPathlessLayout/add-a-volume'
-    | '/_navigationPathlessLayout/catalogue'
-    | '/_navigationPathlessLayout/'
-    | '/$serieSlug/$chapterNumber/$page'
-    | '/_navigationPathlessLayout/$serieSlug'
-    | '/_navigationPathlessLayout/$serieSlug/_layout'
-    | '/_navigationPathlessLayout/$serieSlug/_layout/fiche'
-    | '/_navigationPathlessLayout/$serieSlug/_layout/volumes'
+    | '/_navigationLayout'
+    | '/_protectedLayout'
+    | '/_navigationLayout/_protectedLayout'
+    | '/_navigationLayout/auth'
+    | '/_navigationLayout/catalogue'
+    | '/_navigationLayout/'
+    | '/_navigationLayout/auth/login'
+    | '/_navigationLayout/auth/register'
+    | '/_navigationLayout/_protectedLayout/$serieSlug'
+    | '/_navigationLayout/_protectedLayout/$serieSlug/_layout'
+    | '/_navigationLayout/_protectedLayout/admin/add-a-chapter'
+    | '/_navigationLayout/_protectedLayout/admin/add-a-serie'
+    | '/_navigationLayout/_protectedLayout/admin/add-a-volume'
+    | '/_protectedLayout/$serieSlug/$chapterNumber/$page'
+    | '/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche'
+    | '/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes'
+    | '/_navigationLayout/_protectedLayout/$serieSlug/chapter/$chapterNumber/$page'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  NavigationPathlessLayoutRouteRoute: typeof NavigationPathlessLayoutRouteRouteWithChildren
-  SerieSlugChapterNumberPageRoute: typeof SerieSlugChapterNumberPageRoute
+  NavigationLayoutRouteRoute: typeof NavigationLayoutRouteRouteWithChildren
+  ProtectedLayoutRouteRoute: typeof ProtectedLayoutRouteRouteWithChildren
 }
 export interface FileServerRoutesByFullPath {
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
@@ -201,82 +270,124 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_navigationPathlessLayout': {
-      id: '/_navigationPathlessLayout'
+    '/_protectedLayout': {
+      id: '/_protectedLayout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof NavigationPathlessLayoutRouteRouteImport
+      preLoaderRoute: typeof ProtectedLayoutRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_navigationPathlessLayout/$serieSlug': {
-      id: '/_navigationPathlessLayout/$serieSlug'
-      path: '/$serieSlug'
-      fullPath: '/$serieSlug'
-      preLoaderRoute: typeof NavigationPathlessLayoutSerieSlugRouteImport
-      parentRoute: typeof NavigationPathlessLayoutRouteRoute
+    '/_navigationLayout': {
+      id: '/_navigationLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof NavigationLayoutRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_navigationPathlessLayout/': {
-      id: '/_navigationPathlessLayout/'
+    '/_navigationLayout/': {
+      id: '/_navigationLayout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof NavigationPathlessLayoutIndexRouteImport
-      parentRoute: typeof NavigationPathlessLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutIndexRouteImport
+      parentRoute: typeof NavigationLayoutRouteRoute
     }
-    '/_navigationPathlessLayout/catalogue': {
-      id: '/_navigationPathlessLayout/catalogue'
+    '/_navigationLayout/catalogue': {
+      id: '/_navigationLayout/catalogue'
       path: '/catalogue'
       fullPath: '/catalogue'
-      preLoaderRoute: typeof NavigationPathlessLayoutCatalogueRouteImport
-      parentRoute: typeof NavigationPathlessLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutCatalogueRouteImport
+      parentRoute: typeof NavigationLayoutRouteRoute
     }
-    '/_navigationPathlessLayout/add-a-volume': {
-      id: '/_navigationPathlessLayout/add-a-volume'
-      path: '/add-a-volume'
-      fullPath: '/add-a-volume'
-      preLoaderRoute: typeof NavigationPathlessLayoutAddAVolumeRouteImport
-      parentRoute: typeof NavigationPathlessLayoutRouteRoute
+    '/_navigationLayout/auth': {
+      id: '/_navigationLayout/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof NavigationLayoutAuthRouteRouteImport
+      parentRoute: typeof NavigationLayoutRouteRoute
     }
-    '/_navigationPathlessLayout/add-a-manga': {
-      id: '/_navigationPathlessLayout/add-a-manga'
-      path: '/add-a-manga'
-      fullPath: '/add-a-manga'
-      preLoaderRoute: typeof NavigationPathlessLayoutAddAMangaRouteImport
-      parentRoute: typeof NavigationPathlessLayoutRouteRoute
+    '/_navigationLayout/_protectedLayout': {
+      id: '/_navigationLayout/_protectedLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutRouteRouteImport
+      parentRoute: typeof NavigationLayoutRouteRoute
     }
-    '/_navigationPathlessLayout/add-a-chapter': {
-      id: '/_navigationPathlessLayout/add-a-chapter'
-      path: '/add-a-chapter'
-      fullPath: '/add-a-chapter'
-      preLoaderRoute: typeof NavigationPathlessLayoutAddAChapterRouteImport
-      parentRoute: typeof NavigationPathlessLayoutRouteRoute
-    }
-    '/_navigationPathlessLayout/$serieSlug/_layout': {
-      id: '/_navigationPathlessLayout/$serieSlug/_layout'
+    '/_navigationLayout/_protectedLayout/$serieSlug': {
+      id: '/_navigationLayout/_protectedLayout/$serieSlug'
       path: '/$serieSlug'
       fullPath: '/$serieSlug'
-      preLoaderRoute: typeof NavigationPathlessLayoutSerieSlugLayoutRouteImport
-      parentRoute: typeof NavigationPathlessLayoutSerieSlugRoute
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutSerieSlugRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
     }
-    '/$serieSlug/$chapterNumber/$page': {
-      id: '/$serieSlug/$chapterNumber/$page'
+    '/_navigationLayout/auth/register': {
+      id: '/_navigationLayout/auth/register'
+      path: '/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof NavigationLayoutAuthRegisterRouteImport
+      parentRoute: typeof NavigationLayoutAuthRouteRoute
+    }
+    '/_navigationLayout/auth/login': {
+      id: '/_navigationLayout/auth/login'
+      path: '/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof NavigationLayoutAuthLoginRouteImport
+      parentRoute: typeof NavigationLayoutAuthRouteRoute
+    }
+    '/_protectedLayout/$serieSlug/$chapterNumber/$page': {
+      id: '/_protectedLayout/$serieSlug/$chapterNumber/$page'
       path: '/$serieSlug/$chapterNumber/$page'
       fullPath: '/$serieSlug/$chapterNumber/$page'
-      preLoaderRoute: typeof SerieSlugChapterNumberPageRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ProtectedLayoutSerieSlugChapterNumberPageRouteImport
+      parentRoute: typeof ProtectedLayoutRouteRoute
     }
-    '/_navigationPathlessLayout/$serieSlug/_layout/volumes': {
-      id: '/_navigationPathlessLayout/$serieSlug/_layout/volumes'
+    '/_navigationLayout/_protectedLayout/admin/add-a-volume': {
+      id: '/_navigationLayout/_protectedLayout/admin/add-a-volume'
+      path: '/admin/add-a-volume'
+      fullPath: '/admin/add-a-volume'
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+    }
+    '/_navigationLayout/_protectedLayout/admin/add-a-serie': {
+      id: '/_navigationLayout/_protectedLayout/admin/add-a-serie'
+      path: '/admin/add-a-serie'
+      fullPath: '/admin/add-a-serie'
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutAdminAddASerieRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+    }
+    '/_navigationLayout/_protectedLayout/admin/add-a-chapter': {
+      id: '/_navigationLayout/_protectedLayout/admin/add-a-chapter'
+      path: '/admin/add-a-chapter'
+      fullPath: '/admin/add-a-chapter'
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutAdminAddAChapterRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+    }
+    '/_navigationLayout/_protectedLayout/$serieSlug/_layout': {
+      id: '/_navigationLayout/_protectedLayout/$serieSlug/_layout'
+      path: '/$serieSlug'
+      fullPath: '/$serieSlug'
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutSerieSlugRoute
+    }
+    '/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes': {
+      id: '/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes'
       path: '/volumes'
       fullPath: '/$serieSlug/volumes'
-      preLoaderRoute: typeof NavigationPathlessLayoutSerieSlugLayoutVolumesRouteImport
-      parentRoute: typeof NavigationPathlessLayoutSerieSlugLayoutRoute
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute
     }
-    '/_navigationPathlessLayout/$serieSlug/_layout/fiche': {
-      id: '/_navigationPathlessLayout/$serieSlug/_layout/fiche'
+    '/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche': {
+      id: '/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche'
       path: '/fiche'
       fullPath: '/$serieSlug/fiche'
-      preLoaderRoute: typeof NavigationPathlessLayoutSerieSlugLayoutFicheRouteImport
-      parentRoute: typeof NavigationPathlessLayoutSerieSlugLayoutRoute
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute
+    }
+    '/_navigationLayout/_protectedLayout/$serieSlug/chapter/$chapterNumber/$page': {
+      id: '/_navigationLayout/_protectedLayout/$serieSlug/chapter/$chapterNumber/$page'
+      path: '/chapter/$chapterNumber/$page'
+      fullPath: '/$serieSlug/chapter/$chapterNumber/$page'
+      preLoaderRoute: typeof NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRouteImport
+      parentRoute: typeof NavigationLayoutProtectedLayoutSerieSlugRoute
     }
   }
 }
@@ -292,72 +403,117 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
-interface NavigationPathlessLayoutSerieSlugLayoutRouteChildren {
-  NavigationPathlessLayoutSerieSlugLayoutFicheRoute: typeof NavigationPathlessLayoutSerieSlugLayoutFicheRoute
-  NavigationPathlessLayoutSerieSlugLayoutVolumesRoute: typeof NavigationPathlessLayoutSerieSlugLayoutVolumesRoute
+interface NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteChildren {
+  NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute
+  NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute
 }
 
-const NavigationPathlessLayoutSerieSlugLayoutRouteChildren: NavigationPathlessLayoutSerieSlugLayoutRouteChildren =
+const NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteChildren: NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteChildren =
   {
-    NavigationPathlessLayoutSerieSlugLayoutFicheRoute:
-      NavigationPathlessLayoutSerieSlugLayoutFicheRoute,
-    NavigationPathlessLayoutSerieSlugLayoutVolumesRoute:
-      NavigationPathlessLayoutSerieSlugLayoutVolumesRoute,
+    NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute:
+      NavigationLayoutProtectedLayoutSerieSlugLayoutFicheRoute,
+    NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute:
+      NavigationLayoutProtectedLayoutSerieSlugLayoutVolumesRoute,
   }
 
-const NavigationPathlessLayoutSerieSlugLayoutRouteWithChildren =
-  NavigationPathlessLayoutSerieSlugLayoutRoute._addFileChildren(
-    NavigationPathlessLayoutSerieSlugLayoutRouteChildren,
+const NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteWithChildren =
+  NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute._addFileChildren(
+    NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteChildren,
   )
 
-interface NavigationPathlessLayoutSerieSlugRouteChildren {
-  NavigationPathlessLayoutSerieSlugLayoutRoute: typeof NavigationPathlessLayoutSerieSlugLayoutRouteWithChildren
+interface NavigationLayoutProtectedLayoutSerieSlugRouteChildren {
+  NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute: typeof NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteWithChildren
+  NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute: typeof NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute
 }
 
-const NavigationPathlessLayoutSerieSlugRouteChildren: NavigationPathlessLayoutSerieSlugRouteChildren =
+const NavigationLayoutProtectedLayoutSerieSlugRouteChildren: NavigationLayoutProtectedLayoutSerieSlugRouteChildren =
   {
-    NavigationPathlessLayoutSerieSlugLayoutRoute:
-      NavigationPathlessLayoutSerieSlugLayoutRouteWithChildren,
+    NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRoute:
+      NavigationLayoutProtectedLayoutSerieSlugLayoutRouteRouteWithChildren,
+    NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute:
+      NavigationLayoutProtectedLayoutSerieSlugChapterChapterNumberPageRoute,
   }
 
-const NavigationPathlessLayoutSerieSlugRouteWithChildren =
-  NavigationPathlessLayoutSerieSlugRoute._addFileChildren(
-    NavigationPathlessLayoutSerieSlugRouteChildren,
+const NavigationLayoutProtectedLayoutSerieSlugRouteWithChildren =
+  NavigationLayoutProtectedLayoutSerieSlugRoute._addFileChildren(
+    NavigationLayoutProtectedLayoutSerieSlugRouteChildren,
   )
 
-interface NavigationPathlessLayoutRouteRouteChildren {
-  NavigationPathlessLayoutAddAChapterRoute: typeof NavigationPathlessLayoutAddAChapterRoute
-  NavigationPathlessLayoutAddAMangaRoute: typeof NavigationPathlessLayoutAddAMangaRoute
-  NavigationPathlessLayoutAddAVolumeRoute: typeof NavigationPathlessLayoutAddAVolumeRoute
-  NavigationPathlessLayoutCatalogueRoute: typeof NavigationPathlessLayoutCatalogueRoute
-  NavigationPathlessLayoutIndexRoute: typeof NavigationPathlessLayoutIndexRoute
-  NavigationPathlessLayoutSerieSlugRoute: typeof NavigationPathlessLayoutSerieSlugRouteWithChildren
+interface NavigationLayoutProtectedLayoutRouteRouteChildren {
+  NavigationLayoutProtectedLayoutSerieSlugRoute: typeof NavigationLayoutProtectedLayoutSerieSlugRouteWithChildren
+  NavigationLayoutProtectedLayoutAdminAddAChapterRoute: typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
+  NavigationLayoutProtectedLayoutAdminAddASerieRoute: typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
+  NavigationLayoutProtectedLayoutAdminAddAVolumeRoute: typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
 }
 
-const NavigationPathlessLayoutRouteRouteChildren: NavigationPathlessLayoutRouteRouteChildren =
+const NavigationLayoutProtectedLayoutRouteRouteChildren: NavigationLayoutProtectedLayoutRouteRouteChildren =
   {
-    NavigationPathlessLayoutAddAChapterRoute:
-      NavigationPathlessLayoutAddAChapterRoute,
-    NavigationPathlessLayoutAddAMangaRoute:
-      NavigationPathlessLayoutAddAMangaRoute,
-    NavigationPathlessLayoutAddAVolumeRoute:
-      NavigationPathlessLayoutAddAVolumeRoute,
-    NavigationPathlessLayoutCatalogueRoute:
-      NavigationPathlessLayoutCatalogueRoute,
-    NavigationPathlessLayoutIndexRoute: NavigationPathlessLayoutIndexRoute,
-    NavigationPathlessLayoutSerieSlugRoute:
-      NavigationPathlessLayoutSerieSlugRouteWithChildren,
+    NavigationLayoutProtectedLayoutSerieSlugRoute:
+      NavigationLayoutProtectedLayoutSerieSlugRouteWithChildren,
+    NavigationLayoutProtectedLayoutAdminAddAChapterRoute:
+      NavigationLayoutProtectedLayoutAdminAddAChapterRoute,
+    NavigationLayoutProtectedLayoutAdminAddASerieRoute:
+      NavigationLayoutProtectedLayoutAdminAddASerieRoute,
+    NavigationLayoutProtectedLayoutAdminAddAVolumeRoute:
+      NavigationLayoutProtectedLayoutAdminAddAVolumeRoute,
   }
 
-const NavigationPathlessLayoutRouteRouteWithChildren =
-  NavigationPathlessLayoutRouteRoute._addFileChildren(
-    NavigationPathlessLayoutRouteRouteChildren,
+const NavigationLayoutProtectedLayoutRouteRouteWithChildren =
+  NavigationLayoutProtectedLayoutRouteRoute._addFileChildren(
+    NavigationLayoutProtectedLayoutRouteRouteChildren,
   )
+
+interface NavigationLayoutAuthRouteRouteChildren {
+  NavigationLayoutAuthLoginRoute: typeof NavigationLayoutAuthLoginRoute
+  NavigationLayoutAuthRegisterRoute: typeof NavigationLayoutAuthRegisterRoute
+}
+
+const NavigationLayoutAuthRouteRouteChildren: NavigationLayoutAuthRouteRouteChildren =
+  {
+    NavigationLayoutAuthLoginRoute: NavigationLayoutAuthLoginRoute,
+    NavigationLayoutAuthRegisterRoute: NavigationLayoutAuthRegisterRoute,
+  }
+
+const NavigationLayoutAuthRouteRouteWithChildren =
+  NavigationLayoutAuthRouteRoute._addFileChildren(
+    NavigationLayoutAuthRouteRouteChildren,
+  )
+
+interface NavigationLayoutRouteRouteChildren {
+  NavigationLayoutProtectedLayoutRouteRoute: typeof NavigationLayoutProtectedLayoutRouteRouteWithChildren
+  NavigationLayoutAuthRouteRoute: typeof NavigationLayoutAuthRouteRouteWithChildren
+  NavigationLayoutCatalogueRoute: typeof NavigationLayoutCatalogueRoute
+  NavigationLayoutIndexRoute: typeof NavigationLayoutIndexRoute
+}
+
+const NavigationLayoutRouteRouteChildren: NavigationLayoutRouteRouteChildren = {
+  NavigationLayoutProtectedLayoutRouteRoute:
+    NavigationLayoutProtectedLayoutRouteRouteWithChildren,
+  NavigationLayoutAuthRouteRoute: NavigationLayoutAuthRouteRouteWithChildren,
+  NavigationLayoutCatalogueRoute: NavigationLayoutCatalogueRoute,
+  NavigationLayoutIndexRoute: NavigationLayoutIndexRoute,
+}
+
+const NavigationLayoutRouteRouteWithChildren =
+  NavigationLayoutRouteRoute._addFileChildren(
+    NavigationLayoutRouteRouteChildren,
+  )
+
+interface ProtectedLayoutRouteRouteChildren {
+  ProtectedLayoutSerieSlugChapterNumberPageRoute: typeof ProtectedLayoutSerieSlugChapterNumberPageRoute
+}
+
+const ProtectedLayoutRouteRouteChildren: ProtectedLayoutRouteRouteChildren = {
+  ProtectedLayoutSerieSlugChapterNumberPageRoute:
+    ProtectedLayoutSerieSlugChapterNumberPageRoute,
+}
+
+const ProtectedLayoutRouteRouteWithChildren =
+  ProtectedLayoutRouteRoute._addFileChildren(ProtectedLayoutRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  NavigationPathlessLayoutRouteRoute:
-    NavigationPathlessLayoutRouteRouteWithChildren,
-  SerieSlugChapterNumberPageRoute: SerieSlugChapterNumberPageRoute,
+  NavigationLayoutRouteRoute: NavigationLayoutRouteRouteWithChildren,
+  ProtectedLayoutRouteRoute: ProtectedLayoutRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -32,8 +32,5 @@
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@kuman/prettier-config",
-  "dependencies": {
-    "zod": "catalog:"
-  }
+  "prettier": "@kuman/prettier-config"
 }

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_navigationPathlessLayout/")({
+export const Route = createFileRoute("/_navigationLayout/")({
   component: Home,
 });
 

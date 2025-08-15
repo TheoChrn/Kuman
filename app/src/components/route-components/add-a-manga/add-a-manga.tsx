@@ -10,7 +10,7 @@ import {
   typeValues,
 } from "@kuman/db/enums";
 import { createMangaForm } from "@kuman/shared/validators";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { PiUploadBold } from "react-icons/pi";
 import { SelectItem } from "~/components/ui/inputs/select/select";
 import { useAppForm } from "~/hooks/form-composition";

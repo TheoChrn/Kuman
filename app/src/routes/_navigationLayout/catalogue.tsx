@@ -7,15 +7,13 @@ import { FaBars, FaPlus } from "react-icons/fa6";
 import { Collection } from "~/components/route-components/catalogue/collection";
 import SearchSerie from "~/components/search/search-serie";
 import { Button } from "~/components/ui/buttons/button";
-
 import { genreIcons } from "~/utils/icons/genreIcons";
 import { typeIcons } from "~/utils/icons/typeIcons";
 
-export const Route = createFileRoute("/_navigationPathlessLayout/catalogue")({
+export const Route = createFileRoute("/_navigationLayout/catalogue")({
   component: RouteComponent,
   loaderDeps: ({ search: { genres, types } }) => ({
     genres,
-
     types,
   }),
   loader: async ({

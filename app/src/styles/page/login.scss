@@ -1,0 +1,36 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#login {
+  min-height: calc(100svh - 62px);
+  place-content: center;
+  margin: auto;
+  max-width: 65ch;
+  padding: 1rem;
+  @include space-y-8;
+  & > form {
+    @include space-y-6;
+
+    & > div {
+      @include space-y-3;
+
+      & > label {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    & > button {
+      width: 100%;
+    }
+  }
+  & > p {
+    text-align: center;
+
+    & > a {
+      font-weight: 600;
+      color: $primary;
+      text-decoration: underline;
+    }
+  }
+}

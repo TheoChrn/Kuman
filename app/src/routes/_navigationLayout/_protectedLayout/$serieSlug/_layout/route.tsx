@@ -10,7 +10,7 @@ import {
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_navigationPathlessLayout/$serieSlug/_layout"
+  "/_navigationLayout/_protectedLayout/$serieSlug/_layout"
 )({
   loader: async ({ context: { trpc, queryClient }, params: { serieSlug } }) => {
     const [serie] = await Promise.all([

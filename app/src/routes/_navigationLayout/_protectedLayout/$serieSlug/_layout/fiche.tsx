@@ -8,7 +8,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/_navigationPathlessLayout/$serieSlug/_layout/fiche")({
+export const Route = createFileRoute("/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche")({
   component: RouteComponent,
 });
 
