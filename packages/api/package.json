@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@kuman/db": "workspace:*",
+    "@kuman/shared": "workspace:*",
     "@lucia-auth/adapter-drizzle": "catalog:",
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
@@ -35,7 +36,6 @@
   "devDependencies": {
     "@kuman/eslint-config": "workspace:*",
     "@kuman/prettier-config": "workspace:*",
-    "@kuman/shared": "workspace:*",
     "@kuman/tsconfig": "workspace:*",
     "@types/node": "^22.15.30",
     "eslint": "catalog:",

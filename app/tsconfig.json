@@ -1,11 +1,7 @@
 {
   "extends": "@kuman/tsconfig/internal-package.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "src/components/reading-mode/scroll.tsx",
-    "src/routes/_navigationLayout/_protectedLayout/$serieSlug/chapter.$chapterNumber.$page.tsx"
-  ],
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,

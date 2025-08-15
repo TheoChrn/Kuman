@@ -1,5 +1,5 @@
 import { appRouter, createTRPCContext } from "@kuman/api";
-import { createServerFileRoute, setCookie } from "@tanstack/react-start/server";
+import { createServerFileRoute } from "@tanstack/react-start/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 export async function handler({ request }: { request: Request }) {

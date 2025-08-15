@@ -37,7 +37,6 @@ function RouteComponent() {
             fields: {},
           },
         });
-        // setRegisterError(error.message);
       },
     })
   );
