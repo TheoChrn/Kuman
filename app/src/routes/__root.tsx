@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { AppRouter } from "@kuman/api";
+import { AppRouter, createCaller } from "@kuman/api";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -15,11 +15,13 @@ import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
 import "~/styles/global.scss";
 import { seo } from "~/utils/seo";
+import styleUrl from "~/styles/global.scss?url";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
   isAuth: boolean;
+  caller: ReturnType<typeof createCaller>;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -39,6 +41,10 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       }),
     ],
     links: [
+      {
+        rel: "stylesheet",
+        href: styleUrl,
+      },
       {
         rel: "apple-touch-icon",
         sizes: "180x180",

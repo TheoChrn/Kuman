@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useRef } from "react";
@@ -16,19 +16,23 @@ import { appStore } from "~/utils/stores/chapter-store";
 export const readingModeMapping = {
   scroll: Scroll,
   singlePage: SinglePage,
-  // doublePage: DoublePage,
 };
 
 export const readingModes = ["scroll", "singlePage"] as const;
 type ReadingModes = typeof readingModes;
 export type ReadingMode = ReadingModes[number];
 
-export const Route = createFileRoute("/_protectedLayout/$serieSlug/$chapterNumber/$page")({
+export const Route = createFileRoute(
+  "/$serieSlug/chapter/$chapterNumber/$page"
+)({
   pendingComponent: () => {
     return <div>Charge</div>;
   },
   component: RouteComponent,
-  beforeLoad: async ({ params: { chapterNumber } }) => {
+  beforeLoad: async ({
+    context: { isAuth, queryClient, trpc },
+    params: { chapterNumber, serieSlug },
+  }) => {
     if (chapterNumber.startsWith(".") || chapterNumber === "well-known") {
       throw redirect({ to: "/", replace: true });
     }
@@ -36,6 +40,39 @@ export const Route = createFileRoute("/_protectedLayout/$serieSlug/$chapterNumbe
     if (isNaN(num) || num < 1) {
       throw notFound();
     }
+
+    if (num > 1 && !isAuth) {
+      throw redirect({ to: "/auth/login" });
+    }
+
+    const serieInBookmarks = await queryClient.ensureQueryData(
+      trpc.bookmarks.get.queryOptions({ mangaSlug: serieSlug })
+    );
+
+    console.log(serieInBookmarks);
+
+    if (serieInBookmarks) {
+      redirect({
+        to: "/$serieSlug/chapter/$chapterNumber/$page",
+        params: {
+          chapterNumber: serieInBookmarks.currentChapter.toString(),
+          page: serieInBookmarks.currentPage.toString(),
+          serieSlug,
+        },
+      });
+    } else {
+    }
+  },
+  onLeave: ({
+    context: { caller },
+    params: { chapterNumber, page, serieSlug },
+  }) => {
+    console.log("leave");
+    caller.bookmarks.upsert({
+      currentChapter: Number(chapterNumber),
+      currentPage: Number(page),
+      mangaId: serieSlug,
+    });
   },
   loader: async ({
     context: { trpc, queryClient },

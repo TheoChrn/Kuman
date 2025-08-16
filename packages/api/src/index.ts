@@ -2,7 +2,9 @@ import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 import type { AppRouter } from "./root";
 import { appRouter } from "./root";
-import { createTRPCContext } from "./trpc";
+import { createCallerFactory, createTRPCContext } from "./trpc";
+
+const createCaller = createCallerFactory(appRouter);
 
 /**
  * Inference helpers for input types
@@ -20,5 +22,5 @@ type RouterInputs = inferRouterInputs<AppRouter>;
  **/
 type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-export { appRouter, createTRPCContext };
+export { appRouter, createTRPCContext, createCaller };
 export type { AppRouter, RouterInputs, RouterOutputs };

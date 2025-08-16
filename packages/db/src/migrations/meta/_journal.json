@@ -78,6 +78,20 @@
       "when": 1755192011593,
       "tag": "0010_lowly_timeslip",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1755274505003,
+      "tag": "0011_even_blizzard",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1755295184517,
+      "tag": "0012_strange_the_fury",
+      "breakpoints": true
     }
   ]
 }

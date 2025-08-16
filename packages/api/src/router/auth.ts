@@ -1,10 +1,11 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { getCookie } from "@tanstack/react-start/server";
 import { TRPCError } from "@trpc/server";
 import { hash, verify } from "argon2";
 
 import { eq, schema } from "@kuman/db";
 import { loginFormSchema, registerFormSchema } from "@kuman/shared/validators";
-import { getCookie, } from "@tanstack/react-start/server";
+
 import { lucia } from "../auth/lucia";
 import { createSession } from "../auth/session";
 import { protectedProcedure, publicProcedure } from "../trpc";
@@ -53,8 +54,7 @@ export const authRouter = {
       const cookie = lucia.createSessionCookie(session.id);
 
       ctx.resHeaders.set("Set-Cookie", cookie.serialize());
-      return session.userId
-
+      return session.userId;
     }),
   register: publicProcedure
     .input(registerFormSchema)
@@ -85,25 +85,20 @@ export const authRouter = {
 
       ctx.resHeaders.set("Set-Cookie", cookie.serialize());
 
-      return session.userId
+      return session.userId;
     }),
 
-
   logout: protectedProcedure.mutation(async ({ ctx }) => {
-    const sessionId = getCookie(lucia.sessionCookieName)
+    const sessionId = getCookie(lucia.sessionCookieName);
 
-    if (!sessionId) return
+    if (!sessionId) return;
 
     const { session } = await lucia.validateSession(sessionId);
 
-    if (!session) return
+    if (!session) return;
 
     await lucia.invalidateSession(session.id);
     const sessionCookie = lucia.createBlankSessionCookie();
     ctx.resHeaders.set("Set-Cookie", sessionCookie.serialize());
-
-
-
-  })
-
+  }),
 } satisfies TRPCRouterRecord;

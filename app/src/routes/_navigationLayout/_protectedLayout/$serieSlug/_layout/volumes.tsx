@@ -4,16 +4,16 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiCaretDown } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes")({
+export const Route = createFileRoute(
+  "/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes"
+)({
   component: RouteComponent,
 });
 
 export function RouteComponent() {
   const trpc = useTRPC();
   const { serieSlug } = Route.useParams();
-  const { data: manga } = useSuspenseQuery(
-    trpc.mangas.get.queryOptions({ slug: serieSlug })
-  );
+
   const { data: volumes } = useSuspenseQuery(
     trpc.chapters.getAll.queryOptions({ serie: serieSlug })
   );
@@ -46,7 +46,9 @@ export function RouteComponent() {
                       {volume.chapters.length ? (
                         <span className="chapter-range">
                           Chapitres {volume.chapters[0]!.number} à{" "}
-                          {volume.chapters[volume.chapters.length - 1]!.number}{" "}
+                          {
+                            volume.chapters[volume.chapters.length - 1]!.number
+                          }{" "}
                         </span>
                       ) : null}
                     </div>
@@ -62,7 +64,7 @@ export function RouteComponent() {
                           ? volume.chapters.map((chapter) => (
                               <li key={chapter.number}>
                                 <Link
-                                  to="/$serieSlug/$chapterNumber/$page"
+                                  to="/$serieSlug/chapter/$chapterNumber/$page"
                                   params={{
                                     chapterNumber: String(chapter.number),
                                     page: "1",

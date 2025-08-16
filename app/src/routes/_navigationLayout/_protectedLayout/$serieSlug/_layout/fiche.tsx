@@ -1,8 +1,7 @@
 import * as Ariakit from "@ariakit/react";
 import {
   publisherFrLabelFrench,
-  publisherJpLabelFrench,
-  statusLabelFrench,
+  publisherJpLabelFrench
 } from "@kuman/db/enums";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";

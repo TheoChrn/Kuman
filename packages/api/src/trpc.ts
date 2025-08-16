@@ -84,6 +84,8 @@ const t = initTRPC.context<TRPCContext>().create({
  */
 export const createTRPCRouter = t.router;
 
+export const createCallerFactory = t.createCallerFactory;
+
 /**
  * Middleware for timing procedure execution and adding an articifial delay in development.
  *

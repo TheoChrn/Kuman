@@ -54,7 +54,7 @@ export function useChapterNavigation({
 
           if (index + 1 !== page) {
             navigate({
-              to: "/$serieSlug/$chapterNumber/$page",
+              to: "/$serieSlug/chapter/$chapterNumber/$page",
               params: {
                 serieSlug,
                 chapterNumber: String(chapterNumber),

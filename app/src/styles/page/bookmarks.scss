@@ -1,0 +1,20 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#bookmarks {
+  min-height: calc(100svh - 62px);
+  margin: auto;
+  padding: 1rem;
+  place-content: center;
+  text-align: center;
+  @include space-y-8;
+
+  & > h1 {
+    font-size: 1.125rem;
+  }
+
+  & > a {
+    display: inline-flex;
+    gap: 0.5rem;
+  }
+}

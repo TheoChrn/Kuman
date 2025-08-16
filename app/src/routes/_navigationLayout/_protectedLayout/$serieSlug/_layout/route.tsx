@@ -52,7 +52,7 @@ function RouteComponent() {
               <li className="status">{statusLabelFrench[manga.status]}</li>
               <li>De {manga.author}</li>
               <Link
-                to="/$serieSlug/$chapterNumber/$page"
+                to="/$serieSlug/chapter/$chapterNumber/$page"
                 params={{
                   chapterNumber: "1",
                   page: "1",
