@@ -2,7 +2,6 @@
 @use "../variables.scss" as *;
 
 #login {
-  min-height: calc(100svh - 62px);
   place-content: center;
   margin: auto;
   max-width: 65ch;

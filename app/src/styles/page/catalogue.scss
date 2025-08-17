@@ -187,8 +187,6 @@
   }
 
   .catalogue {
-    min-height: calc(100svh - 65px);
-
     & ul {
       @include flex-center;
       flex-wrap: wrap;

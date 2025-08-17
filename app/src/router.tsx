@@ -1,14 +1,9 @@
-import { appRouter, AppRouter, createTRPCContext } from "@kuman/api";
+import { AppRouter } from "@kuman/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
-import {
-  getHeaders,
-  getRequestHeader,
-  getRequestHeaders,
-  requestHandler,
-} from "@tanstack/react-start/server";
+import { getHeaders } from "@tanstack/react-start/server";
 import {
   createTRPCClient,
   httpBatchLink,
@@ -22,9 +17,6 @@ import { TRPCProvider } from "~/trpc/react";
 import { DefaultCatchBoundary } from "./components/default-catch-boundary";
 import { NotFound } from "./components/not-found";
 import { routeTree } from "./routeTree.gen";
-import { cache } from "react";
-import { getWebRequest } from "@tanstack/react-start/server";
-import { getResponseHeader } from "@tanstack/react-start/server";
 
 const getIncomingHeaders = createIsomorphicFn().server(() => getHeaders());
 
@@ -106,13 +98,10 @@ export function createRouter() {
     createTanStackRouter({
       scrollRestoration: true,
       routeTree,
-      context: { trpc, queryClient, isAuth: false, caller: trpcClient },
+      context: { trpc, queryClient, user: null, caller: trpcClient },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
-      defaultPendingComponent: () => (
-        <div className={`p-2 text-2xl`}>LOADING</div>
-      ),
       Wrap: function WrapComponent({ children }) {
         return (
           <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>

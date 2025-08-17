@@ -20,7 +20,7 @@ export const Route = createFileRoute(
     return <div>Charge</div>;
   },
   component: RouteComponent,
-  beforeLoad: async ({ context: { isAuth }, params: { chapterNumber } }) => {
+  beforeLoad: async ({ context: { user }, params: { chapterNumber } }) => {
     if (chapterNumber.startsWith(".") || chapterNumber === "well-known") {
       throw redirect({ to: "/", replace: true });
     }
@@ -30,7 +30,7 @@ export const Route = createFileRoute(
       throw notFound();
     }
 
-    if (num > 1 && !isAuth) {
+    if (num > 1 && !user) {
       throw redirect({ to: "/auth/login" });
     }
   },
