@@ -1,17 +1,8 @@
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
-import { useRef } from "react";
-import { ChapterImage } from "~/components/chapter-image";
-import styles from "~/components/chapter-number.module.scss";
-import DesktopMenu from "~/components/route-components/chapter/menu/desktop-menu";
-import MobileMenu from "~/components/route-components/chapter/menu/mobile-menu";
 import { Scroll } from "~/components/reading-mode/scroll";
 import { SinglePage } from "~/components/reading-mode/single-page";
-import { useDevice } from "~/hooks/use-device";
-import { useChapterNavigation } from "~/hooks/use-read-chapter";
-import { useTRPC } from "~/trpc/react";
-import { appStore } from "~/utils/stores/chapter-store";
+import { FreeChapter } from "~/components/route-components/chapter/free/free-chapter";
+import { PremiumChapter } from "~/components/route-components/chapter/premium/premium-chapter";
 
 export const readingModeMapping = {
   scroll: Scroll,
@@ -29,13 +20,11 @@ export const Route = createFileRoute(
     return <div>Charge</div>;
   },
   component: RouteComponent,
-  beforeLoad: async ({
-    context: { isAuth, queryClient, trpc },
-    params: { chapterNumber, serieSlug },
-  }) => {
+  beforeLoad: async ({ context: { isAuth }, params: { chapterNumber } }) => {
     if (chapterNumber.startsWith(".") || chapterNumber === "well-known") {
       throw redirect({ to: "/", replace: true });
     }
+
     const num = Number(chapterNumber);
     if (isNaN(num) || num < 1) {
       throw notFound();
@@ -44,141 +33,51 @@ export const Route = createFileRoute(
     if (num > 1 && !isAuth) {
       throw redirect({ to: "/auth/login" });
     }
-
-    const serieInBookmarks = await queryClient.ensureQueryData(
-      trpc.bookmarks.get.queryOptions({ mangaSlug: serieSlug })
-    );
-
-    console.log(serieInBookmarks);
-
-    if (serieInBookmarks) {
-      redirect({
-        to: "/$serieSlug/chapter/$chapterNumber/$page",
-        params: {
-          chapterNumber: serieInBookmarks.currentChapter.toString(),
-          page: serieInBookmarks.currentPage.toString(),
-          serieSlug,
-        },
-      });
-    } else {
-    }
   },
-  onLeave: ({
-    context: { caller },
-    params: { chapterNumber, page, serieSlug },
-  }) => {
-    console.log("leave");
-    caller.bookmarks.upsert({
-      currentChapter: Number(chapterNumber),
-      currentPage: Number(page),
-      mangaId: serieSlug,
-    });
-  },
+
   loader: async ({
     context: { trpc, queryClient },
     params: { chapterNumber, serieSlug },
   }) => {
-    const [chapter] = await Promise.all([
-      queryClient.ensureQueryData(
-        trpc.chapters.get.queryOptions({
-          chapterNumber: Number(chapterNumber),
-          serie: serieSlug,
-        })
-      ),
-      queryClient.ensureQueryData(
-        trpc.chapters.getAll.queryOptions({ serie: serieSlug })
-      ),
-    ]);
-
-    if (!chapter) throw new Error("This chapter doesn't exists");
+    if (Number(chapterNumber) === 1) {
+      await Promise.all([
+        queryClient.prefetchQuery(
+          trpc.chapters.getFreeChapter.queryOptions({
+            chapterNumber: Number(chapterNumber),
+            serie: serieSlug,
+          })
+        ),
+        queryClient.prefetchQuery(
+          trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+        ),
+      ]);
+    } else {
+      await Promise.all([
+        queryClient.prefetchQuery(
+          trpc.chapters.get.queryOptions({
+            chapterNumber: Number(chapterNumber),
+            serie: serieSlug,
+          })
+        ),
+        queryClient.prefetchQuery(
+          trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+        ),
+      ]);
+    }
   },
 });
 
 function RouteComponent() {
-  const trpc = useTRPC();
-  const { device } = useDevice();
   const params = Route.useParams();
 
-  const [chapterNumber, page, serieSlug] = [
+  const [chapterNumber, serieSlug] = [
     Number(params.chapterNumber),
-    Number(params.page),
     params.serieSlug,
   ];
-  const { data: chapter } = useSuspenseQuery(
-    trpc.chapters.get.queryOptions({ chapterNumber, serie: serieSlug })
-  );
-  const { data: chapterList } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions({ serie: serieSlug })
-  );
 
-  const readingMode = useStore(
-    appStore,
-    (state) => state.preferences.readingMode
-  );
+  if (chapterNumber === 1) {
+    return <FreeChapter chapterNumber={chapterNumber} serie={serieSlug} />;
+  }
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const { blockObserver, scrollToPage } = useChapterNavigation({
-    serieSlug,
-    chapterNumber,
-    page,
-    pageRefs,
-    readingMode,
-  });
-
-  return (
-    <div>
-      {device ? (
-        device !== "desktop" ? (
-          <MobileMenu
-            serieSlug={serieSlug}
-            chapter={chapter}
-            chapterList={chapterList}
-            currentChapter={chapterNumber}
-            currentPage={page}
-            blockObserver={blockObserver}
-            scrollToPage={(value) => {
-              blockObserver.current = true;
-              scrollToPage(value);
-            }}
-          />
-        ) : (
-          <DesktopMenu
-            serieSlug={serieSlug}
-            chapter={chapter}
-            chapterList={chapterList}
-            currentChapter={chapterNumber}
-            currentPage={page}
-            blockObserver={blockObserver}
-          />
-        )
-      ) : null}
-
-      <section
-        key={chapter.number}
-        ref={containerRef}
-        className={`${styles["chapter-images-container"]} ${
-          readingMode === "scroll"
-            ? styles["chapter-images-container-scroll-y"]
-            : styles["chapter-images-container-scroll-x"]
-        }`}
-      >
-        {chapter.pages?.map((element, index) => {
-          return (
-            <ChapterImage
-              key={index}
-              index={index}
-              src={element.signedUrl}
-              alt={`Chapitre ${chapter.number} - Page ${index + 1}`}
-              chapterNumber={chapterNumber}
-              ref={(el) => {
-                pageRefs.current[index] = el;
-              }}
-            />
-          );
-        })}
-      </section>
-    </div>
-  );
+  return <PremiumChapter chapterNumber={chapterNumber} serie={serieSlug} />;
 }

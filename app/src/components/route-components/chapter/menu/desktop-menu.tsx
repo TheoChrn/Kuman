@@ -10,9 +10,9 @@ import {
   readingModes,
 } from "~/components/route-components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
-import { ReadingMode } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 import { appActions, appStore } from "~/utils/stores/chapter-store";
 import styles from "./styles.module.scss";
+import { ReadingMode } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 
 export interface DesktopMenuProps {
   serieSlug: string;

@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-router";
 import {
   PiBinocularsBold,
-  PiBookmarkBold,
+  PiBookmarkSimpleBold,
   PiHouseBold,
   PiSignOutBold,
   PiUser,
@@ -70,7 +70,7 @@ function RouteComponent() {
           Explorer
         </Link>
         <Link to="/bookmarks" activeProps={{ className: "active" }}>
-          <PiBookmarkBold size={24} />
+          <PiBookmarkSimpleBold size={24} />
           Favoris
         </Link>
       </nav>

@@ -17,7 +17,6 @@ export const Route = createFileRoute("/_navigationLayout/auth/login")({
 });
 
 function RouteComponent() {
-  const [loginError, setLoginError] = useState<string | null>(null);
   const navigate = useNavigate();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -26,6 +25,7 @@ function RouteComponent() {
   const loginMutation = useMutation(
     trpc.auth.login.mutationOptions({
       onSuccess: async (userId) => {
+        queryClient.clear();
         queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), userId);
         router.invalidate();
         navigate({ to: "/catalogue" });

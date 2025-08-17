@@ -17,8 +17,8 @@ export const bookmarks = pgTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => generateBookmarkId()),
-    mangaId: text("manga_id")
-      .references(() => mangas.id)
+    mangaSlug: text("manga_slug")
+      .references(() => mangas.slug)
       .notNull(),
     userId: text("user_id")
       .references(() => users.id)
@@ -28,7 +28,7 @@ export const bookmarks = pgTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
-  (table) => [unique().on(table.userId, table.mangaId)],
+  (table) => [unique().on(table.userId, table.mangaSlug)],
 );
 
 export const bookmarksRelation = relations(bookmarks, ({ many }) => ({

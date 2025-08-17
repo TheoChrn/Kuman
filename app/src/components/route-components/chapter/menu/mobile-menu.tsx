@@ -61,7 +61,7 @@ export default function MobileMenu(props: MobileMenuProps) {
           }}
         >
           {props.chapterList.map((list) => (
-            <Ariakit.SelectGroup>
+            <Ariakit.SelectGroup key={list.volumeNumber}>
               <Ariakit.SelectGroupLabel
                 className={styles["select-group-label"]}
               >

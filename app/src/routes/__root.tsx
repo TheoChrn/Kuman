@@ -16,12 +16,13 @@ import { NotFound } from "~/components/not-found";
 import "~/styles/global.scss";
 import { seo } from "~/utils/seo";
 import styleUrl from "~/styles/global.scss?url";
+import { TRPCClient } from "@trpc/client";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
   isAuth: boolean;
-  caller: ReturnType<typeof createCaller>;
+  caller: TRPCClient<AppRouter>;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -41,10 +42,10 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       }),
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: styleUrl,
-      },
+      // {
+      //   rel: "stylesheet",
+      //   href: styleUrl,
+      // },
       {
         rel: "apple-touch-icon",
         sizes: "180x180",

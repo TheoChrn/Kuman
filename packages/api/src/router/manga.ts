@@ -1,9 +1,12 @@
+import { normalize } from "path";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
-import { normalize } from "path";
+import { getTableColumns } from "drizzle-orm";
 import z from "zod/v4";
 
+import type { PublisherFr, PublisherJp, Status, Type } from "@kuman/db/enums";
 import {
+  and,
   arrayContainsPartial,
   arrayOverlaps,
   eq,
@@ -11,14 +14,8 @@ import {
   inArray,
   or,
   schema,
-  sql
+  sql,
 } from "@kuman/db";
-import type {
-  PublisherFr,
-  PublisherJp,
-  Status,
-  Type
-} from "@kuman/db/enums";
 import { toSlug } from "@kuman/shared/format";
 import { createManga, searchParamsSchema } from "@kuman/shared/validators";
 
@@ -128,26 +125,45 @@ export const mangaRouter = {
   get: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
-      return ctx.db
-        .select({
-          slug: schema.mangas.slug,
-          title: schema.mangas.title,
-          originalTitle: schema.mangas.originalTitle,
-          romajiTitle: schema.mangas.romajiTitle,
-          alternativeTitles: schema.mangas.alternativeTitles,
-          author: schema.mangas.author,
-          synopsis: schema.mangas.synopsis,
-          coverUrl: schema.mangas.coverUrl,
-          tomeCount: schema.mangas.tomeCount,
-          status: schema.mangas.status,
-          type: schema.mangas.type,
-          genres: schema.mangas.genres,
-          releaseDate: schema.mangas.releaseDate,
-          publisherJp: schema.mangas.publisherJp,
-          publisherFr: schema.mangas.publisherFr,
-        })
-        .from(schema.mangas)
-        .where(eq(schema.mangas.slug, input.slug))
-        .then((rows) => rows[0]!);
+      const { createdAt, updatedAt, id, ...baseColumns } = getTableColumns(
+        schema.mangas,
+      );
+
+      let manga;
+
+      if (ctx.session?.user?.id) {
+        manga = await ctx.db
+          .select({
+            ...baseColumns,
+            currentPage: schema.bookmarks.currentPage,
+            currentChapter: schema.bookmarks.currentChapter,
+          })
+          .from(schema.mangas)
+          .leftJoin(
+            schema.bookmarks,
+            eq(schema.bookmarks.userId, ctx.session.user.id),
+          )
+          .where(and(eq(schema.mangas.slug, input.slug)))
+          .then((rows) => rows[0]);
+      } else {
+        manga = await ctx.db
+          .select({
+            ...baseColumns,
+            currentPage: sql<null>`NULL`,
+            currentChapter: sql<null>`NULL`,
+          })
+          .from(schema.mangas)
+          .where(eq(schema.mangas.slug, input.slug))
+          .then((rows) => rows[0]);
+      }
+
+      if (!manga) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Cette série n'existe pas.",
+        });
+      }
+
+      return manga;
     }),
 } satisfies TRPCRouterRecord;

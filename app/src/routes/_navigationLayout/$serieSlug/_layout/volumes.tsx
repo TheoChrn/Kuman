@@ -5,7 +5,7 @@ import { PiCaretDown } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_protectedLayout/$serieSlug/_layout/volumes"
+  "/_navigationLayout/$serieSlug/_layout/volumes"
 )({
   component: RouteComponent,
 });

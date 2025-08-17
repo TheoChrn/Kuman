@@ -36,16 +36,16 @@ function getUrl() {
   return base + "/api/trpc";
 }
 
-export const createContext = () => {
-  const resHeaders = new Headers(
-    Object.entries(getIncomingHeaders() ?? {}).filter(
-      ([_, v]) => v !== undefined
-    ) as [string, string][]
-  );
-  const req = getWebRequest();
+// export const createContext = () => {
+//   const resHeaders = new Headers(
+//     Object.entries(getIncomingHeaders() ?? {}).filter(
+//       ([_, v]) => v !== undefined
+//     ) as [string, string][]
+//   );
+//   const req = getWebRequest();
 
-  return createTRPCContext({ req, resHeaders });
-};
+//   return createTRPCContext({ req, resHeaders });
+// };
 
 export function createRouter() {
   const queryClient = new QueryClient({
@@ -56,7 +56,7 @@ export function createRouter() {
     },
   });
 
-  const caller = appRouter.createCaller(createContext);
+  // const caller = appRouter.createCaller(createContext);
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
@@ -104,8 +104,9 @@ export function createRouter() {
 
   const router = routerWithQueryClient(
     createTanStackRouter({
+      scrollRestoration: true,
       routeTree,
-      context: { trpc, queryClient, isAuth: false, caller },
+      context: { trpc, queryClient, isAuth: false, caller: trpcClient },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
