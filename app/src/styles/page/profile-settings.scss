@@ -1,0 +1,22 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#options {
+  padding: 1rem;
+  @include space-y-6;
+  #settings {
+    & > header {
+      & > a {
+        margin-left: auto;
+      }
+    }
+    & > main {
+      @include space-y-2;
+      & > button,
+      a {
+        width: 100%;
+        justify-content: start;
+      }
+    }
+  }
+}

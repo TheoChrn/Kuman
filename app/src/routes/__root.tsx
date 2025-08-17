@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { AppRouter, createCaller } from "@kuman/api";
+import { AppRouter } from "@kuman/api";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -9,20 +9,20 @@ import {
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { TRPCClient } from "@trpc/client";
 import { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import { User } from "lucia";
 import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
 import "~/styles/global.scss";
 import { seo } from "~/utils/seo";
-import styleUrl from "~/styles/global.scss?url";
-import { TRPCClient } from "@trpc/client";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
-  isAuth: boolean;
   caller: TRPCClient<AppRouter>;
+  user: User | null;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -79,11 +79,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       context.trpc.user.getCurrentUser.queryOptions()
     );
 
-    context.isAuth = !!user;
+    context.user = user;
 
-    return { isAuth: context.isAuth };
+    return { user: context.user };
   },
-  loader: ({ context }) => ({ isAuth: context.isAuth }),
+  loader: ({ context }) => ({ user: context.user }),
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
 });

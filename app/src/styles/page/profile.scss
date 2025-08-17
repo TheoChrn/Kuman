@@ -1,0 +1,12 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#profile {
+  & > header {
+    & > a {
+      & > svg {
+        margin-left: auto;
+      }
+    }
+  }
+}
