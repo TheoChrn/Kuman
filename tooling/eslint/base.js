@@ -42,7 +42,7 @@ export default tseslint.config(
   includeIgnoreFile(
     path.join(path.dirname(fileURLToPath(import.meta.url)), "../../.gitignore"),
   ),
-  { ignores: ["**/*.config.*"] },
+  { ignores: ["**/*.config.*", "routeTree.gen.ts"] },
   {
     files: ["**/*.js", "**/*.ts", "**/*.tsx"],
     plugins: {

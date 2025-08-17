@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
+import { useTRPC } from "~/trpc/react";
 
 export function useChapterNavigation({
   serieSlug,
@@ -54,7 +56,7 @@ export function useChapterNavigation({
 
           if (index + 1 !== page) {
             navigate({
-              to: "/$serieSlug/$chapterNumber/$page",
+              to: "/$serieSlug/chapter/$chapterNumber/$page",
               params: {
                 serieSlug,
                 chapterNumber: String(chapterNumber),

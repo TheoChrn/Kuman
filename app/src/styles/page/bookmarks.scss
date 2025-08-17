@@ -1,0 +1,72 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+.empty {
+  margin: auto;
+  place-content: center;
+  text-align: center;
+}
+
+#bookmarks {
+  min-height: calc(100svh - 62px);
+  padding: 1rem;
+  @include space-y-8;
+
+  & > h1 {
+    font-size: 1.125rem;
+  }
+
+  & > .bookmarks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 150px);
+    justify-content: start;
+
+    & > a {
+      @include space-y-1;
+      position: relative;
+      display: inline-block;
+
+      & img {
+        border-radius: 4px;
+      }
+
+      & > .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        padding: 0.25rem;
+        opacity: 0;
+
+        & > button {
+          display: block;
+          margin-left: auto;
+          border-radius: 100%;
+          padding: 0.25rem;
+          backdrop-filter: blur(2px);
+          border: solid 1px $stroke;
+
+          & > svg > * {
+            fill: white;
+            opacity: 1;
+          }
+        }
+      }
+      &:hover {
+        & > div {
+          opacity: 1;
+        }
+      }
+
+      & h2 {
+        font-size: 1.125rem;
+      }
+
+      & span {
+        gap: 0.25rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+}

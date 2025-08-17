@@ -3,15 +3,14 @@ import {
   createFileRoute,
   Link,
   Outlet,
-  Router,
   useLoaderData,
-  useLoaderDeps,
   useMatch,
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
 import {
   PiBinocularsBold,
+  PiBookmarkSimpleBold,
   PiHouseBold,
   PiSignOutBold,
   PiUser,
@@ -69,6 +68,10 @@ function RouteComponent() {
         <Link to="/catalogue" activeProps={{ className: "active" }}>
           <PiBinocularsBold size={24} />
           Explorer
+        </Link>
+        <Link to="/bookmarks" activeProps={{ className: "active" }}>
+          <PiBookmarkSimpleBold size={24} />
+          Favoris
         </Link>
       </nav>
     </>

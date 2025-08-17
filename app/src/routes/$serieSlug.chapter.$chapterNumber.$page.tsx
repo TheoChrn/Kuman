@@ -1,0 +1,83 @@
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { Scroll } from "~/components/reading-mode/scroll";
+import { SinglePage } from "~/components/reading-mode/single-page";
+import { FreeChapter } from "~/components/route-components/chapter/free/free-chapter";
+import { PremiumChapter } from "~/components/route-components/chapter/premium/premium-chapter";
+
+export const readingModeMapping = {
+  scroll: Scroll,
+  singlePage: SinglePage,
+};
+
+export const readingModes = ["scroll", "singlePage"] as const;
+type ReadingModes = typeof readingModes;
+export type ReadingMode = ReadingModes[number];
+
+export const Route = createFileRoute(
+  "/$serieSlug/chapter/$chapterNumber/$page"
+)({
+  pendingComponent: () => {
+    return <div>Charge</div>;
+  },
+  component: RouteComponent,
+  beforeLoad: async ({ context: { isAuth }, params: { chapterNumber } }) => {
+    if (chapterNumber.startsWith(".") || chapterNumber === "well-known") {
+      throw redirect({ to: "/", replace: true });
+    }
+
+    const num = Number(chapterNumber);
+    if (isNaN(num) || num < 1) {
+      throw notFound();
+    }
+
+    if (num > 1 && !isAuth) {
+      throw redirect({ to: "/auth/login" });
+    }
+  },
+
+  loader: async ({
+    context: { trpc, queryClient },
+    params: { chapterNumber, serieSlug },
+  }) => {
+    if (Number(chapterNumber) === 1) {
+      await Promise.all([
+        queryClient.prefetchQuery(
+          trpc.chapters.getFreeChapter.queryOptions({
+            chapterNumber: Number(chapterNumber),
+            serie: serieSlug,
+          })
+        ),
+        queryClient.prefetchQuery(
+          trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+        ),
+      ]);
+    } else {
+      await Promise.all([
+        queryClient.prefetchQuery(
+          trpc.chapters.get.queryOptions({
+            chapterNumber: Number(chapterNumber),
+            serie: serieSlug,
+          })
+        ),
+        queryClient.prefetchQuery(
+          trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+        ),
+      ]);
+    }
+  },
+});
+
+function RouteComponent() {
+  const params = Route.useParams();
+
+  const [chapterNumber, serieSlug] = [
+    Number(params.chapterNumber),
+    params.serieSlug,
+  ];
+
+  if (chapterNumber === 1) {
+    return <FreeChapter chapterNumber={chapterNumber} serie={serieSlug} />;
+  }
+
+  return <PremiumChapter chapterNumber={chapterNumber} serie={serieSlug} />;
+}

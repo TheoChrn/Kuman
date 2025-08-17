@@ -1,9 +1,14 @@
-import { AppRouter } from "@kuman/api";
+import { appRouter, AppRouter, createTRPCContext } from "@kuman/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
-import { getHeaders } from "@tanstack/react-start/server";
+import {
+  getHeaders,
+  getRequestHeader,
+  getRequestHeaders,
+  requestHandler,
+} from "@tanstack/react-start/server";
 import {
   createTRPCClient,
   httpBatchLink,
@@ -17,6 +22,9 @@ import { TRPCProvider } from "~/trpc/react";
 import { DefaultCatchBoundary } from "./components/default-catch-boundary";
 import { NotFound } from "./components/not-found";
 import { routeTree } from "./routeTree.gen";
+import { cache } from "react";
+import { getWebRequest } from "@tanstack/react-start/server";
+import { getResponseHeader } from "@tanstack/react-start/server";
 
 const getIncomingHeaders = createIsomorphicFn().server(() => getHeaders());
 
@@ -28,6 +36,17 @@ function getUrl() {
   return base + "/api/trpc";
 }
 
+// export const createContext = () => {
+//   const resHeaders = new Headers(
+//     Object.entries(getIncomingHeaders() ?? {}).filter(
+//       ([_, v]) => v !== undefined
+//     ) as [string, string][]
+//   );
+//   const req = getWebRequest();
+
+//   return createTRPCContext({ req, resHeaders });
+// };
+
 export function createRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -36,6 +55,8 @@ export function createRouter() {
       hydrate: { deserializeData: superjson.deserialize },
     },
   });
+
+  // const caller = appRouter.createCaller(createContext);
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
@@ -83,8 +104,9 @@ export function createRouter() {
 
   const router = routerWithQueryClient(
     createTanStackRouter({
+      scrollRestoration: true,
       routeTree,
-      context: { trpc, queryClient, isAuth: false },
+      context: { trpc, queryClient, isAuth: false, caller: trpcClient },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,

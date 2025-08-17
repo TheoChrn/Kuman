@@ -1,64 +1,31 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { RouterOutputs } from "@kuman/api";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { useBlocker } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useRef } from "react";
-import { ChapterImage } from "~/components/chapter-image";
-import styles from "~/components/chapter-number.module.scss";
 import DesktopMenu from "~/components/route-components/chapter/menu/desktop-menu";
 import MobileMenu from "~/components/route-components/chapter/menu/mobile-menu";
-import { Scroll } from "~/components/reading-mode/scroll";
-import { SinglePage } from "~/components/reading-mode/single-page";
 import { useDevice } from "~/hooks/use-device";
 import { useChapterNavigation } from "~/hooks/use-read-chapter";
+import { Route } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 import { useTRPC } from "~/trpc/react";
 import { appStore } from "~/utils/stores/chapter-store";
+import styles from "~/components/chapter-number.module.scss";
+import { ChapterImage } from "~/components/chapter-image";
 
-export const readingModeMapping = {
-  scroll: Scroll,
-  singlePage: SinglePage,
-  // doublePage: DoublePage,
-};
-
-export const readingModes = ["scroll", "singlePage"] as const;
-type ReadingModes = typeof readingModes;
-export type ReadingMode = ReadingModes[number];
-
-export const Route = createFileRoute("/_protectedLayout/$serieSlug/$chapterNumber/$page")({
-  pendingComponent: () => {
-    return <div>Charge</div>;
-  },
-  component: RouteComponent,
-  beforeLoad: async ({ params: { chapterNumber } }) => {
-    if (chapterNumber.startsWith(".") || chapterNumber === "well-known") {
-      throw redirect({ to: "/", replace: true });
-    }
-    const num = Number(chapterNumber);
-    if (isNaN(num) || num < 1) {
-      throw notFound();
-    }
-  },
-  loader: async ({
-    context: { trpc, queryClient },
-    params: { chapterNumber, serieSlug },
-  }) => {
-    const [chapter] = await Promise.all([
-      queryClient.ensureQueryData(
-        trpc.chapters.get.queryOptions({
-          chapterNumber: Number(chapterNumber),
-          serie: serieSlug,
-        })
-      ),
-      queryClient.ensureQueryData(
-        trpc.chapters.getAll.queryOptions({ serie: serieSlug })
-      ),
-    ]);
-
-    if (!chapter) throw new Error("This chapter doesn't exists");
-  },
-});
-
-function RouteComponent() {
+export function ChapterRouteComponent({
+  chapter,
+}: {
+  chapter:
+    | RouterOutputs["chapters"]["get"]
+    | RouterOutputs["chapters"]["getFreeChapter"];
+}) {
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
   const { device } = useDevice();
   const params = Route.useParams();
 
@@ -67,9 +34,10 @@ function RouteComponent() {
     Number(params.page),
     params.serieSlug,
   ];
-  const { data: chapter } = useSuspenseQuery(
-    trpc.chapters.get.queryOptions({ chapterNumber, serie: serieSlug })
-  );
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const { data: chapterList } = useSuspenseQuery(
     trpc.chapters.getAll.queryOptions({ serie: serieSlug })
   );
@@ -79,15 +47,67 @@ function RouteComponent() {
     (state) => state.preferences.readingMode
   );
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   const { blockObserver, scrollToPage } = useChapterNavigation({
     serieSlug,
     chapterNumber,
     page,
     pageRefs,
     readingMode,
+  });
+
+  const upsertBookmark = useMutation(
+    trpc.bookmarks.upsert.mutationOptions({
+      onSuccess: (_, variables) => {
+        queryClient.setQueryData(
+          trpc.bookmarks.get.queryKey({ mangaSlug: variables.mangaSlug }),
+          variables
+        );
+        queryClient.invalidateQueries(
+          trpc.bookmarks.get.queryFilter({
+            mangaSlug: variables.mangaSlug,
+          })
+        );
+
+        queryClient.setQueryData(
+          trpc.mangas.get.queryKey({ slug: variables.mangaSlug }),
+          (prevData) => {
+            if (!prevData) return prevData;
+
+            return {
+              ...prevData,
+              currentChapter: variables.currentChapter,
+              currentPage: variables.currentPage,
+            };
+          }
+        );
+
+        queryClient.invalidateQueries(
+          trpc.mangas.get.queryFilter({
+            slug: variables.mangaSlug,
+          })
+        );
+      },
+    })
+  );
+
+  useBlocker({
+    shouldBlockFn: ({ current, next }) => {
+      if (
+        current.routeId !== next.routeId ||
+        (current.routeId === next.routeId &&
+          (current.params as typeof params).chapterNumber !==
+            (next.params as typeof params).chapterNumber)
+      ) {
+        upsertBookmark.mutate({
+          currentChapter: chapterNumber,
+          currentPage: page,
+          mangaSlug: serieSlug,
+        });
+      }
+
+      return false;
+    },
+    enableBeforeUnload: false,
   });
 
   return (

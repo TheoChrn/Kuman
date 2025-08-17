@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
@@ -19,10 +15,51 @@ import {
 } from "@kuman/db";
 import { createChapter } from "@kuman/shared/validators";
 
-import { publicProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const chapterRouter = {
-  get: publicProcedure
+  getFreeChapter: publicProcedure
+    .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const chapter = await ctx.db
+        .select({
+          name: schema.chapters.name,
+          number: schema.chapters.number,
+          volumeNumber: schema.volumes.volumeNumber,
+          pageCount: schema.chapters.pageCount,
+        })
+        .from(schema.chapters)
+        .leftJoin(schema.volumes, eq(schema.volumes.mangaSlug, input.serie))
+        .where(
+          and(
+            eq(schema.chapters.number, input.chapterNumber),
+            eq(schema.chapters.volumeId, schema.volumes.id),
+          ),
+        )
+        .then((rows) => ({ ...rows[0] }));
+
+      const { data: list } = await ctx.supabase.storage
+        .from("assets")
+        .list(
+          `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}`,
+        );
+
+      const images = list?.map(
+        (l) =>
+          `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}/${l.name}`,
+      );
+
+      const { data } = await ctx.supabase.storage
+        .from("assets")
+        .createSignedUrls(images ?? [], 60)
+        .then((rows) => ({
+          ...rows,
+          data: rows.data?.map(({ path, ...row }) => row),
+        }));
+
+      return { ...chapter, pages: data };
+    }),
+  get: protectedProcedure
     .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
     .query(async ({ input, ctx }) => {
       const chapter = await ctx.db

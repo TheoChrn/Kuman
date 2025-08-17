@@ -9,20 +9,16 @@ import {
 } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute(
-  "/_navigationLayout/_protectedLayout/$serieSlug/_layout"
-)({
+export const Route = createFileRoute("/_navigationLayout/$serieSlug/_layout")({
   loader: async ({ context: { trpc, queryClient }, params: { serieSlug } }) => {
-    const [serie] = await Promise.all([
-      queryClient.ensureQueryData(
+    await Promise.all([
+      queryClient.prefetchQuery(
         trpc.mangas.get.queryOptions({ slug: serieSlug })
       ),
-      queryClient.ensureQueryData(
+      queryClient.prefetchQuery(
         trpc.chapters.getAll.queryOptions({ serie: serieSlug })
       ),
     ]);
-
-    if (!serie) throw new Error("Cette série n'existe pas");
   },
   component: RouteComponent,
 });
@@ -52,15 +48,15 @@ function RouteComponent() {
               <li className="status">{statusLabelFrench[manga.status]}</li>
               <li>De {manga.author}</li>
               <Link
-                to="/$serieSlug/$chapterNumber/$page"
+                to="/$serieSlug/chapter/$chapterNumber/$page"
                 params={{
-                  chapterNumber: "1",
-                  page: "1",
+                  chapterNumber: manga.currentChapter?.toString() ?? "1",
+                  page: manga.currentPage?.toString() ?? "1",
                   serieSlug: manga.slug,
                 }}
                 className="button button-primary"
               >
-                Commencer
+                {manga.currentChapter ? "Continuer" : "Commencer"}
               </Link>
             </ul>
           </div>

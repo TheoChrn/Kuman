@@ -2,13 +2,14 @@ import * as Ariakit from "@ariakit/react";
 import {
   publisherFrLabelFrench,
   publisherJpLabelFrench,
-  statusLabelFrench,
 } from "@kuman/db/enums";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useTRPC } from "~/trpc/react";
 
-export const Route = createFileRoute("/_navigationLayout/_protectedLayout/$serieSlug/_layout/fiche")({
+export const Route = createFileRoute(
+  "/_navigationLayout/$serieSlug/_layout/fiche"
+)({
   component: RouteComponent,
 });
 

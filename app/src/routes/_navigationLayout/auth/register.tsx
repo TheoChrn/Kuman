@@ -26,6 +26,7 @@ function RouteComponent() {
   const registerMutation = useMutation(
     trpc.auth.register.mutationOptions({
       onSuccess: async (userId) => {
+        queryClient.clear();
         queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), userId);
         router.invalidate();
         navigate({ to: "/catalogue" });

@@ -80,6 +80,8 @@
   }
 
   .button {
+    display: inline-flex;
+    gap: 0.25rem;
     padding: 0.625rem 1rem;
     border-radius: 4px;
     margin: 0 auto;
