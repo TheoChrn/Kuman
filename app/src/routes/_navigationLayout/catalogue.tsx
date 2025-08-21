@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_navigationLayout/catalogue")({
     context: { queryClient, trpc },
     deps: { genres, types },
   }) => {
-    await queryClient.prefetchQuery(
+    queryClient.prefetchQuery(
       trpc.mangas.getAll.queryOptions({ genres, types })
     );
   },

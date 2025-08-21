@@ -13,7 +13,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_protectedLayout/profile/options/"
+  "/_navigationLayout/_authLayout/profile/options/"
 )({
   component: RouteComponent,
 });

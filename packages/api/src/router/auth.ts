@@ -4,6 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { hash, verify } from "argon2";
 
 import { eq, schema } from "@kuman/db";
+import { role } from "@kuman/db/enums";
 import { loginFormSchema, registerFormSchema } from "@kuman/shared/validators";
 
 import { lucia } from "../auth/lucia";
@@ -19,6 +20,8 @@ export const authRouter = {
           id: schema.users.id,
           userName: schema.users.userName,
           password: schema.users.password,
+          role: schema.users.role,
+          email: schema.users.email,
         })
         .from(schema.users)
         .where(eq(schema.users.email, input.email))
@@ -54,7 +57,12 @@ export const authRouter = {
       const cookie = lucia.createSessionCookie(session.id);
 
       ctx.resHeaders.set("Set-Cookie", cookie.serialize());
-      return session.userId;
+
+      return {
+        id: existingUserByEmail.id,
+        email: existingUserByEmail.email,
+        role: existingUserByEmail.role,
+      };
     }),
   register: publicProcedure
     .input(registerFormSchema)
@@ -63,7 +71,7 @@ export const authRouter = {
         .select({ id: schema.users.id })
         .from(schema.users)
         .where(eq(schema.users.email, input.email))
-        .then((res) => res[0]?.id);
+        .then((res) => res[0]);
 
       if (existingUserByEmail) {
         throw new TRPCError({
@@ -85,7 +93,11 @@ export const authRouter = {
 
       ctx.resHeaders.set("Set-Cookie", cookie.serialize());
 
-      return session.userId;
+      return {
+        id: session.userId,
+        email: input.email,
+        role: role.USER,
+      };
     }),
 
   logout: protectedProcedure.mutation(async ({ ctx }) => {

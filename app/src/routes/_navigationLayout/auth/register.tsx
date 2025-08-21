@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useAppForm } from "~/hooks/form-composition";
 import { useTRPC } from "~/trpc/react";
 import * as Ariakit from "@ariakit/react";
+import { User } from "lucia";
 
 export const Route = createFileRoute("/_navigationLayout/auth/register")({
   component: RouteComponent,
@@ -25,9 +26,12 @@ function RouteComponent() {
   const trpc = useTRPC();
   const registerMutation = useMutation(
     trpc.auth.register.mutationOptions({
-      onSuccess: async (userId) => {
+      onSuccess: async (user) => {
         queryClient.clear();
-        queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), userId);
+        queryClient.setQueryData(
+          trpc.user.getCurrentUser.queryKey(),
+          user as User
+        );
         router.invalidate();
         navigate({ to: "/catalogue" });
       },

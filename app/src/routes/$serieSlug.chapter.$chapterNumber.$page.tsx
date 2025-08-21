@@ -40,30 +40,23 @@ export const Route = createFileRoute(
     params: { chapterNumber, serieSlug },
   }) => {
     if (Number(chapterNumber) === 1) {
-      await Promise.all([
-        queryClient.prefetchQuery(
-          trpc.chapters.getFreeChapter.queryOptions({
-            chapterNumber: Number(chapterNumber),
-            serie: serieSlug,
-          })
-        ),
-        queryClient.prefetchQuery(
-          trpc.chapters.getAll.queryOptions({ serie: serieSlug })
-        ),
-      ]);
+      queryClient.prefetchQuery(
+        trpc.chapters.getFreeChapter.queryOptions({
+          chapterNumber: Number(chapterNumber),
+          serie: serieSlug,
+        })
+      );
     } else {
-      await Promise.all([
-        queryClient.prefetchQuery(
-          trpc.chapters.get.queryOptions({
-            chapterNumber: Number(chapterNumber),
-            serie: serieSlug,
-          })
-        ),
-        queryClient.prefetchQuery(
-          trpc.chapters.getAll.queryOptions({ serie: serieSlug })
-        ),
-      ]);
+      queryClient.prefetchQuery(
+        trpc.chapters.get.queryOptions({
+          chapterNumber: Number(chapterNumber),
+          serie: serieSlug,
+        })
+      );
     }
+    queryClient.prefetchQuery(
+      trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+    );
   },
 });
 

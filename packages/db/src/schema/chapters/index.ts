@@ -9,7 +9,6 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-import { generateChapterId } from "../../generate-ids";
 import { volumes } from "../volumes";
 
 export const chapters = pgTable(

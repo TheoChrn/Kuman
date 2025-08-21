@@ -22,7 +22,7 @@ export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
   caller: TRPCClient<AppRouter>;
-  user: User | null;
+  user?: User | null;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -36,8 +36,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
+        title: "Kuman | Type-Safe, Client-First, Full-Stack React Framework",
         description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
       }),
     ],
@@ -75,11 +74,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
     );
   },
   beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.ensureQueryData(
-      context.trpc.user.getCurrentUser.queryOptions()
-    );
+    if (context.user === undefined) {
+      const user = await context.queryClient.ensureQueryData(
+        context.trpc.user.getCurrentUser.queryOptions()
+      );
 
-    context.user = user;
+      context.user = user;
+    }
 
     return { user: context.user };
   },

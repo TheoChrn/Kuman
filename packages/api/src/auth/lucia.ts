@@ -1,6 +1,7 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { Lucia } from "lucia";
 
+import type { Role } from "@kuman/db/enums";
 import { schema } from "@kuman/db";
 import { db } from "@kuman/db/client";
 
@@ -17,6 +18,8 @@ export const lucia = new Lucia(
       return {
         userName: attributes.userName,
         email: attributes.email,
+        role: attributes.role,
+        stripeCustomerId: attributes.stripeCustomerId,
       };
     },
   },
@@ -28,6 +31,8 @@ declare module "lucia" {
     DatabaseUserAttributes: {
       userName: string;
       email: string;
+      role: Role;
+      stripeCustomerId: string;
     };
   }
 }

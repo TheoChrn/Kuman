@@ -1,0 +1,24 @@
+import * as Ariakit from "@ariakit/react";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+
+export const Route = createFileRoute(
+  "/_navigationLayout/_authLayout/profile/options/abonnement/cancel"
+)({
+  component: RouteComponent,
+  beforeLoad: ({ context: { user } }) => {
+    if (user?.stripeCustomerId) redirect({ to: "/profile/options/abonnement" });
+  },
+});
+
+function RouteComponent() {
+  const { caller } = Route.useRouteContext();
+  const navigate = useNavigate();
+
+  return (
+    <Ariakit.DialogProvider>
+      <Ariakit.Dialog>
+        <Ariakit.DialogHeading>Paiment annulé</Ariakit.DialogHeading>
+      </Ariakit.Dialog>
+    </Ariakit.DialogProvider>
+  );
+}

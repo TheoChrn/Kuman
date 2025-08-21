@@ -1,9 +1,10 @@
 import { authRouter } from "./router/auth";
+import { bookmarksRouter } from "./router/bookmarks";
 import { chapterRouter } from "./router/chapter";
 import { mangaRouter } from "./router/manga";
-import { bookmarksRouter } from "./router/bookmarks";
-import { volumeRouter } from "./router/volume";
+import { stripeRouter } from "./router/stripe";
 import { userRouter } from "./router/user";
+import { volumeRouter } from "./router/volume";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   auth: authRouter,
   user: userRouter,
   bookmarks: bookmarksRouter,
+  stripe: stripeRouter,
 });
 
 export type AppRouter = typeof appRouter;

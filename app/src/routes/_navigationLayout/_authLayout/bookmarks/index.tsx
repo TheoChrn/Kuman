@@ -11,11 +11,14 @@ import { useTRPC } from "~/trpc/react";
 import { typeIcons } from "~/utils/icons/typeIcons";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_protectedLayout/bookmarks/"
+  "/_navigationLayout/_authLayout/bookmarks/"
 )({
   component: RouteComponent,
   loader: ({ context: { trpc, queryClient } }) => {
     queryClient.prefetchQuery(trpc.bookmarks.getMany.queryOptions());
+  },
+  pendingComponent: () => {
+    return <div>Pending</div>;
   },
 });
 

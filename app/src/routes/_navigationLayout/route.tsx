@@ -1,22 +1,21 @@
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  useLoaderData,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import { Suspense } from "react";
 import {
   PiBinocularsBold,
   PiBookmarkSimpleBold,
   PiHouseBold,
+  PiSpinner,
   PiUser,
+  PiUserBold,
 } from "react-icons/pi";
 
 export const Route = createFileRoute("/_navigationLayout")({
   component: RouteComponent,
+  loader: ({ context: { user } }) => ({ user: user }),
 });
 
 function RouteComponent() {
-  const { user } = useLoaderData({ from: "__root__" });
+  const { user } = Route.useLoaderData();
 
   return (
     <>
@@ -28,25 +27,27 @@ function RouteComponent() {
           <PiHouseBold size={24} />
           Accueil
         </Link>
-        {!!user ? (
-          <Link to="/profile">
-            <PiUser size={24} />
-            Profile
-          </Link>
+        <Link to="/catalogue" activeProps={{ className: "active" }}>
+          <PiBinocularsBold size={24} />
+          Explorer
+        </Link>
+        {user ? (
+          <>
+            <Link to="/bookmarks" activeProps={{ className: "active" }}>
+              <PiBookmarkSimpleBold size={24} />
+              Favoris
+            </Link>
+            <Link to="/profile">
+              <PiUserBold size={24} />
+              Profile
+            </Link>
+          </>
         ) : (
           <Link to="/auth/login">
             <PiUser size={24} />
             Connexion
           </Link>
         )}
-        <Link to="/catalogue" activeProps={{ className: "active" }}>
-          <PiBinocularsBold size={24} />
-          Explorer
-        </Link>
-        <Link to="/bookmarks" activeProps={{ className: "active" }}>
-          <PiBookmarkSimpleBold size={24} />
-          Favoris
-        </Link>
       </nav>
     </>
   );
