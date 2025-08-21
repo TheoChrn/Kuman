@@ -8,7 +8,7 @@ import {
 import { PiArrowLeftBold } from "react-icons/pi";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_protectedLayout/profile/options"
+  "/_navigationLayout/_authLayout/profile/options"
 )({
   component: RouteComponent,
 });

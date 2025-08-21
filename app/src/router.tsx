@@ -98,10 +98,11 @@ export function createRouter() {
     createTanStackRouter({
       scrollRestoration: true,
       routeTree,
-      context: { trpc, queryClient, user: null, caller: trpcClient },
+      context: { trpc, queryClient, caller: trpcClient },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
+      defaultPendingComponent: () => <div>LOADING</div>,
       Wrap: function WrapComponent({ children }) {
         return (
           <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>

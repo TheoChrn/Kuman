@@ -1,21 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod/v4";
 
-import {
-  and,
-  asc,
-  eq,
-  generateChapterId,
-  jsonAgg,
-  schema,
-  sql,
-} from "@kuman/db";
+import { and, eq, generateChapterId, jsonAgg, schema } from "@kuman/db";
 import { createChapter } from "@kuman/shared/validators";
 
-import { protectedProcedure, publicProcedure } from "../trpc";
+import {
+  protectedProcedure,
+  publicProcedure,
+  subscriberProtectedProcedure,
+} from "../trpc";
 
 export const chapterRouter = {
   getFreeChapter: publicProcedure
@@ -59,7 +57,7 @@ export const chapterRouter = {
 
       return { ...chapter, pages: data };
     }),
-  get: protectedProcedure
+  get: subscriberProtectedProcedure
     .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
     .query(async ({ input, ctx }) => {
       const chapter = await ctx.db

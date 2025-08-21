@@ -112,7 +112,10 @@ export const publicProcedure = t.procedure;
  */
 export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Vous devez être connecté",
+    });
   }
   return next({
     ctx: {
@@ -120,3 +123,15 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   });
 });
+
+export const subscriberProtectedProcedure = protectedProcedure.use(
+  ({ ctx, next }) => {
+    if (ctx.session.user.role === "user") {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Seul les membres premium ont accès à cette ressource",
+      });
+    }
+    return next();
+  },
+);

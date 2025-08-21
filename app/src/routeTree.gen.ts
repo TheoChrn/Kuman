@@ -16,21 +16,24 @@ import { Route as NavigationLayoutRouteRouteImport } from './routes/_navigationL
 import { Route as NavigationLayoutIndexRouteImport } from './routes/_navigationLayout/index'
 import { Route as NavigationLayoutCatalogueRouteImport } from './routes/_navigationLayout/catalogue'
 import { Route as NavigationLayoutAuthRouteRouteImport } from './routes/_navigationLayout/auth/route'
-import { Route as NavigationLayoutProtectedLayoutRouteRouteImport } from './routes/_navigationLayout/_protectedLayout/route'
+import { Route as NavigationLayoutAuthLayoutRouteRouteImport } from './routes/_navigationLayout/_authLayout/route'
 import { Route as NavigationLayoutAuthRegisterRouteImport } from './routes/_navigationLayout/auth/register'
 import { Route as NavigationLayoutAuthLoginRouteImport } from './routes/_navigationLayout/auth/login'
+import { Route as NavigationLayoutAuthLayoutAdminRouteRouteImport } from './routes/_navigationLayout/_authLayout/admin/route'
 import { Route as NavigationLayoutSerieSlugLayoutRouteRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/route'
-import { Route as NavigationLayoutProtectedLayoutProfileIndexRouteImport } from './routes/_navigationLayout/_protectedLayout/profile/index'
-import { Route as NavigationLayoutProtectedLayoutBookmarksIndexRouteImport } from './routes/_navigationLayout/_protectedLayout/bookmarks/index'
-import { Route as NavigationLayoutProtectedLayoutAdminAddAVolumeRouteImport } from './routes/_navigationLayout/_protectedLayout/admin/add-a-volume'
-import { Route as NavigationLayoutProtectedLayoutAdminAddASerieRouteImport } from './routes/_navigationLayout/_protectedLayout/admin/add-a-serie'
-import { Route as NavigationLayoutProtectedLayoutAdminAddAChapterRouteImport } from './routes/_navigationLayout/_protectedLayout/admin/add-a-chapter'
+import { Route as NavigationLayoutAuthLayoutProfileIndexRouteImport } from './routes/_navigationLayout/_authLayout/profile/index'
+import { Route as NavigationLayoutAuthLayoutBookmarksIndexRouteImport } from './routes/_navigationLayout/_authLayout/bookmarks/index'
+import { Route as NavigationLayoutAuthLayoutAdminAddAVolumeRouteImport } from './routes/_navigationLayout/_authLayout/admin/add-a-volume'
+import { Route as NavigationLayoutAuthLayoutAdminAddASerieRouteImport } from './routes/_navigationLayout/_authLayout/admin/add-a-serie'
+import { Route as NavigationLayoutAuthLayoutAdminAddAChapterRouteImport } from './routes/_navigationLayout/_authLayout/admin/add-a-chapter'
 import { Route as NavigationLayoutSerieSlugLayoutVolumesRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/volumes'
 import { Route as NavigationLayoutSerieSlugLayoutFicheRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/fiche'
 import { Route as SerieSlugChapterChapterNumberPageRouteImport } from './routes/$serieSlug.chapter.$chapterNumber.$page'
-import { Route as NavigationLayoutProtectedLayoutProfileOptionsRouteRouteImport } from './routes/_navigationLayout/_protectedLayout/profile/options/route'
-import { Route as NavigationLayoutProtectedLayoutProfileOptionsIndexRouteImport } from './routes/_navigationLayout/_protectedLayout/profile/options/index'
-import { Route as NavigationLayoutProtectedLayoutProfileOptionsAbonnementRouteImport } from './routes/_navigationLayout/_protectedLayout/profile/options/abonnement'
+import { Route as NavigationLayoutAuthLayoutProfileOptionsRouteRouteImport } from './routes/_navigationLayout/_authLayout/profile/options/route'
+import { Route as NavigationLayoutAuthLayoutProfileOptionsIndexRouteImport } from './routes/_navigationLayout/_authLayout/profile/options/index'
+import { Route as NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteImport } from './routes/_navigationLayout/_authLayout/profile/options/abonnement'
+import { Route as NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRouteImport } from './routes/_navigationLayout/_authLayout/profile/options/abonnement.success'
+import { Route as NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRouteImport } from './routes/_navigationLayout/_authLayout/profile/options/abonnement.cancel'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'
 
 const NavigationLayoutSerieSlugRouteImport = createFileRoute(
@@ -65,9 +68,9 @@ const NavigationLayoutAuthRouteRoute =
     path: '/auth',
     getParentRoute: () => NavigationLayoutRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutRouteRoute =
-  NavigationLayoutProtectedLayoutRouteRouteImport.update({
-    id: '/_protectedLayout',
+const NavigationLayoutAuthLayoutRouteRoute =
+  NavigationLayoutAuthLayoutRouteRouteImport.update({
+    id: '/_authLayout',
     getParentRoute: () => NavigationLayoutRouteRoute,
   } as any)
 const NavigationLayoutAuthRegisterRoute =
@@ -82,40 +85,46 @@ const NavigationLayoutAuthLoginRoute =
     path: '/login',
     getParentRoute: () => NavigationLayoutAuthRouteRoute,
   } as any)
+const NavigationLayoutAuthLayoutAdminRouteRoute =
+  NavigationLayoutAuthLayoutAdminRouteRouteImport.update({
+    id: '/admin',
+    path: '/admin',
+    getParentRoute: () => NavigationLayoutAuthLayoutRouteRoute,
+  } as any)
 const NavigationLayoutSerieSlugLayoutRouteRoute =
   NavigationLayoutSerieSlugLayoutRouteRouteImport.update({
     id: '/_layout',
     getParentRoute: () => NavigationLayoutSerieSlugRoute,
   } as any)
-const NavigationLayoutProtectedLayoutProfileIndexRoute =
-  NavigationLayoutProtectedLayoutProfileIndexRouteImport.update({
+const NavigationLayoutAuthLayoutProfileIndexRoute =
+  NavigationLayoutAuthLayoutProfileIndexRouteImport.update({
     id: '/profile/',
     path: '/profile/',
-    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+    getParentRoute: () => NavigationLayoutAuthLayoutRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutBookmarksIndexRoute =
-  NavigationLayoutProtectedLayoutBookmarksIndexRouteImport.update({
+const NavigationLayoutAuthLayoutBookmarksIndexRoute =
+  NavigationLayoutAuthLayoutBookmarksIndexRouteImport.update({
     id: '/bookmarks/',
     path: '/bookmarks/',
-    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+    getParentRoute: () => NavigationLayoutAuthLayoutRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutAdminAddAVolumeRoute =
-  NavigationLayoutProtectedLayoutAdminAddAVolumeRouteImport.update({
-    id: '/admin/add-a-volume',
-    path: '/admin/add-a-volume',
-    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+const NavigationLayoutAuthLayoutAdminAddAVolumeRoute =
+  NavigationLayoutAuthLayoutAdminAddAVolumeRouteImport.update({
+    id: '/add-a-volume',
+    path: '/add-a-volume',
+    getParentRoute: () => NavigationLayoutAuthLayoutAdminRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutAdminAddASerieRoute =
-  NavigationLayoutProtectedLayoutAdminAddASerieRouteImport.update({
-    id: '/admin/add-a-serie',
-    path: '/admin/add-a-serie',
-    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+const NavigationLayoutAuthLayoutAdminAddASerieRoute =
+  NavigationLayoutAuthLayoutAdminAddASerieRouteImport.update({
+    id: '/add-a-serie',
+    path: '/add-a-serie',
+    getParentRoute: () => NavigationLayoutAuthLayoutAdminRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutAdminAddAChapterRoute =
-  NavigationLayoutProtectedLayoutAdminAddAChapterRouteImport.update({
-    id: '/admin/add-a-chapter',
-    path: '/admin/add-a-chapter',
-    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+const NavigationLayoutAuthLayoutAdminAddAChapterRoute =
+  NavigationLayoutAuthLayoutAdminAddAChapterRouteImport.update({
+    id: '/add-a-chapter',
+    path: '/add-a-chapter',
+    getParentRoute: () => NavigationLayoutAuthLayoutAdminRouteRoute,
   } as any)
 const NavigationLayoutSerieSlugLayoutVolumesRoute =
   NavigationLayoutSerieSlugLayoutVolumesRouteImport.update({
@@ -135,25 +144,37 @@ const SerieSlugChapterChapterNumberPageRoute =
     path: '/$serieSlug/chapter/$chapterNumber/$page',
     getParentRoute: () => rootRouteImport,
   } as any)
-const NavigationLayoutProtectedLayoutProfileOptionsRouteRoute =
-  NavigationLayoutProtectedLayoutProfileOptionsRouteRouteImport.update({
+const NavigationLayoutAuthLayoutProfileOptionsRouteRoute =
+  NavigationLayoutAuthLayoutProfileOptionsRouteRouteImport.update({
     id: '/profile/options',
     path: '/profile/options',
-    getParentRoute: () => NavigationLayoutProtectedLayoutRouteRoute,
+    getParentRoute: () => NavigationLayoutAuthLayoutRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutProfileOptionsIndexRoute =
-  NavigationLayoutProtectedLayoutProfileOptionsIndexRouteImport.update({
+const NavigationLayoutAuthLayoutProfileOptionsIndexRoute =
+  NavigationLayoutAuthLayoutProfileOptionsIndexRouteImport.update({
     id: '/',
     path: '/',
-    getParentRoute: () =>
-      NavigationLayoutProtectedLayoutProfileOptionsRouteRoute,
+    getParentRoute: () => NavigationLayoutAuthLayoutProfileOptionsRouteRoute,
   } as any)
-const NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute =
-  NavigationLayoutProtectedLayoutProfileOptionsAbonnementRouteImport.update({
+const NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute =
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteImport.update({
     id: '/abonnement',
     path: '/abonnement',
+    getParentRoute: () => NavigationLayoutAuthLayoutProfileOptionsRouteRoute,
+  } as any)
+const NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute =
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRouteImport.update({
+    id: '/success',
+    path: '/success',
     getParentRoute: () =>
-      NavigationLayoutProtectedLayoutProfileOptionsRouteRoute,
+      NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute,
+  } as any)
+const NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute =
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRouteImport.update({
+    id: '/cancel',
+    path: '/cancel',
+    getParentRoute: () =>
+      NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute,
   } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
   id: '/api/trpc/$',
@@ -166,60 +187,69 @@ export interface FileRoutesByFullPath {
   '/catalogue': typeof NavigationLayoutCatalogueRoute
   '/': typeof NavigationLayoutIndexRoute
   '/$serieSlug': typeof NavigationLayoutSerieSlugLayoutRouteRouteWithChildren
+  '/admin': typeof NavigationLayoutAuthLayoutAdminRouteRouteWithChildren
   '/auth/login': typeof NavigationLayoutAuthLoginRoute
   '/auth/register': typeof NavigationLayoutAuthRegisterRoute
-  '/profile/options': typeof NavigationLayoutProtectedLayoutProfileOptionsRouteRouteWithChildren
+  '/profile/options': typeof NavigationLayoutAuthLayoutProfileOptionsRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
   '/$serieSlug/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
   '/$serieSlug/volumes': typeof NavigationLayoutSerieSlugLayoutVolumesRoute
-  '/admin/add-a-chapter': typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
-  '/admin/add-a-serie': typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
-  '/admin/add-a-volume': typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
-  '/bookmarks': typeof NavigationLayoutProtectedLayoutBookmarksIndexRoute
-  '/profile': typeof NavigationLayoutProtectedLayoutProfileIndexRoute
-  '/profile/options/abonnement': typeof NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute
-  '/profile/options/': typeof NavigationLayoutProtectedLayoutProfileOptionsIndexRoute
+  '/admin/add-a-chapter': typeof NavigationLayoutAuthLayoutAdminAddAChapterRoute
+  '/admin/add-a-serie': typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
+  '/admin/add-a-volume': typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
+  '/bookmarks': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
+  '/profile': typeof NavigationLayoutAuthLayoutProfileIndexRoute
+  '/profile/options/abonnement': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteWithChildren
+  '/profile/options/': typeof NavigationLayoutAuthLayoutProfileOptionsIndexRoute
+  '/profile/options/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute
+  '/profile/options/abonnement/success': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
   '/catalogue': typeof NavigationLayoutCatalogueRoute
   '/': typeof NavigationLayoutIndexRoute
   '/$serieSlug': typeof NavigationLayoutSerieSlugLayoutRouteRouteWithChildren
+  '/admin': typeof NavigationLayoutAuthLayoutAdminRouteRouteWithChildren
   '/auth/login': typeof NavigationLayoutAuthLoginRoute
   '/auth/register': typeof NavigationLayoutAuthRegisterRoute
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
   '/$serieSlug/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
   '/$serieSlug/volumes': typeof NavigationLayoutSerieSlugLayoutVolumesRoute
-  '/admin/add-a-chapter': typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
-  '/admin/add-a-serie': typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
-  '/admin/add-a-volume': typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
-  '/bookmarks': typeof NavigationLayoutProtectedLayoutBookmarksIndexRoute
-  '/profile': typeof NavigationLayoutProtectedLayoutProfileIndexRoute
-  '/profile/options/abonnement': typeof NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute
-  '/profile/options': typeof NavigationLayoutProtectedLayoutProfileOptionsIndexRoute
+  '/admin/add-a-chapter': typeof NavigationLayoutAuthLayoutAdminAddAChapterRoute
+  '/admin/add-a-serie': typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
+  '/admin/add-a-volume': typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
+  '/bookmarks': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
+  '/profile': typeof NavigationLayoutAuthLayoutProfileIndexRoute
+  '/profile/options/abonnement': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteWithChildren
+  '/profile/options': typeof NavigationLayoutAuthLayoutProfileOptionsIndexRoute
+  '/profile/options/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute
+  '/profile/options/abonnement/success': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_navigationLayout': typeof NavigationLayoutRouteRouteWithChildren
-  '/_navigationLayout/_protectedLayout': typeof NavigationLayoutProtectedLayoutRouteRouteWithChildren
+  '/_navigationLayout/_authLayout': typeof NavigationLayoutAuthLayoutRouteRouteWithChildren
   '/_navigationLayout/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
   '/_navigationLayout/catalogue': typeof NavigationLayoutCatalogueRoute
   '/_navigationLayout/': typeof NavigationLayoutIndexRoute
   '/_navigationLayout/$serieSlug': typeof NavigationLayoutSerieSlugRouteWithChildren
   '/_navigationLayout/$serieSlug/_layout': typeof NavigationLayoutSerieSlugLayoutRouteRouteWithChildren
+  '/_navigationLayout/_authLayout/admin': typeof NavigationLayoutAuthLayoutAdminRouteRouteWithChildren
   '/_navigationLayout/auth/login': typeof NavigationLayoutAuthLoginRoute
   '/_navigationLayout/auth/register': typeof NavigationLayoutAuthRegisterRoute
-  '/_navigationLayout/_protectedLayout/profile/options': typeof NavigationLayoutProtectedLayoutProfileOptionsRouteRouteWithChildren
+  '/_navigationLayout/_authLayout/profile/options': typeof NavigationLayoutAuthLayoutProfileOptionsRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
   '/_navigationLayout/$serieSlug/_layout/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
   '/_navigationLayout/$serieSlug/_layout/volumes': typeof NavigationLayoutSerieSlugLayoutVolumesRoute
-  '/_navigationLayout/_protectedLayout/admin/add-a-chapter': typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
-  '/_navigationLayout/_protectedLayout/admin/add-a-serie': typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
-  '/_navigationLayout/_protectedLayout/admin/add-a-volume': typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
-  '/_navigationLayout/_protectedLayout/bookmarks/': typeof NavigationLayoutProtectedLayoutBookmarksIndexRoute
-  '/_navigationLayout/_protectedLayout/profile/': typeof NavigationLayoutProtectedLayoutProfileIndexRoute
-  '/_navigationLayout/_protectedLayout/profile/options/abonnement': typeof NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute
-  '/_navigationLayout/_protectedLayout/profile/options/': typeof NavigationLayoutProtectedLayoutProfileOptionsIndexRoute
+  '/_navigationLayout/_authLayout/admin/add-a-chapter': typeof NavigationLayoutAuthLayoutAdminAddAChapterRoute
+  '/_navigationLayout/_authLayout/admin/add-a-serie': typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
+  '/_navigationLayout/_authLayout/admin/add-a-volume': typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
+  '/_navigationLayout/_authLayout/bookmarks/': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
+  '/_navigationLayout/_authLayout/profile/': typeof NavigationLayoutAuthLayoutProfileIndexRoute
+  '/_navigationLayout/_authLayout/profile/options/abonnement': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteWithChildren
+  '/_navigationLayout/_authLayout/profile/options/': typeof NavigationLayoutAuthLayoutProfileOptionsIndexRoute
+  '/_navigationLayout/_authLayout/profile/options/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute
+  '/_navigationLayout/_authLayout/profile/options/abonnement/success': typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -228,6 +258,7 @@ export interface FileRouteTypes {
     | '/catalogue'
     | '/'
     | '/$serieSlug'
+    | '/admin'
     | '/auth/login'
     | '/auth/register'
     | '/profile/options'
@@ -241,12 +272,15 @@ export interface FileRouteTypes {
     | '/profile'
     | '/profile/options/abonnement'
     | '/profile/options/'
+    | '/profile/options/abonnement/cancel'
+    | '/profile/options/abonnement/success'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
     | '/catalogue'
     | '/'
     | '/$serieSlug'
+    | '/admin'
     | '/auth/login'
     | '/auth/register'
     | '/$serieSlug/chapter/$chapterNumber/$page'
@@ -259,28 +293,33 @@ export interface FileRouteTypes {
     | '/profile'
     | '/profile/options/abonnement'
     | '/profile/options'
+    | '/profile/options/abonnement/cancel'
+    | '/profile/options/abonnement/success'
   id:
     | '__root__'
     | '/_navigationLayout'
-    | '/_navigationLayout/_protectedLayout'
+    | '/_navigationLayout/_authLayout'
     | '/_navigationLayout/auth'
     | '/_navigationLayout/catalogue'
     | '/_navigationLayout/'
     | '/_navigationLayout/$serieSlug'
     | '/_navigationLayout/$serieSlug/_layout'
+    | '/_navigationLayout/_authLayout/admin'
     | '/_navigationLayout/auth/login'
     | '/_navigationLayout/auth/register'
-    | '/_navigationLayout/_protectedLayout/profile/options'
+    | '/_navigationLayout/_authLayout/profile/options'
     | '/$serieSlug/chapter/$chapterNumber/$page'
     | '/_navigationLayout/$serieSlug/_layout/fiche'
     | '/_navigationLayout/$serieSlug/_layout/volumes'
-    | '/_navigationLayout/_protectedLayout/admin/add-a-chapter'
-    | '/_navigationLayout/_protectedLayout/admin/add-a-serie'
-    | '/_navigationLayout/_protectedLayout/admin/add-a-volume'
-    | '/_navigationLayout/_protectedLayout/bookmarks/'
-    | '/_navigationLayout/_protectedLayout/profile/'
-    | '/_navigationLayout/_protectedLayout/profile/options/abonnement'
-    | '/_navigationLayout/_protectedLayout/profile/options/'
+    | '/_navigationLayout/_authLayout/admin/add-a-chapter'
+    | '/_navigationLayout/_authLayout/admin/add-a-serie'
+    | '/_navigationLayout/_authLayout/admin/add-a-volume'
+    | '/_navigationLayout/_authLayout/bookmarks/'
+    | '/_navigationLayout/_authLayout/profile/'
+    | '/_navigationLayout/_authLayout/profile/options/abonnement'
+    | '/_navigationLayout/_authLayout/profile/options/'
+    | '/_navigationLayout/_authLayout/profile/options/abonnement/cancel'
+    | '/_navigationLayout/_authLayout/profile/options/abonnement/success'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -346,11 +385,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NavigationLayoutAuthRouteRouteImport
       parentRoute: typeof NavigationLayoutRouteRoute
     }
-    '/_navigationLayout/_protectedLayout': {
-      id: '/_navigationLayout/_protectedLayout'
+    '/_navigationLayout/_authLayout': {
+      id: '/_navigationLayout/_authLayout'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutRouteRouteImport
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutRouteRouteImport
       parentRoute: typeof NavigationLayoutRouteRoute
     }
     '/_navigationLayout/auth/register': {
@@ -367,6 +406,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NavigationLayoutAuthLoginRouteImport
       parentRoute: typeof NavigationLayoutAuthRouteRoute
     }
+    '/_navigationLayout/_authLayout/admin': {
+      id: '/_navigationLayout/_authLayout/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminRouteRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutRouteRoute
+    }
     '/_navigationLayout/$serieSlug/_layout': {
       id: '/_navigationLayout/$serieSlug/_layout'
       path: '/$serieSlug'
@@ -374,40 +420,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NavigationLayoutSerieSlugLayoutRouteRouteImport
       parentRoute: typeof NavigationLayoutSerieSlugRoute
     }
-    '/_navigationLayout/_protectedLayout/profile/': {
-      id: '/_navigationLayout/_protectedLayout/profile/'
+    '/_navigationLayout/_authLayout/profile/': {
+      id: '/_navigationLayout/_authLayout/profile/'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutProfileIndexRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileIndexRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutRouteRoute
     }
-    '/_navigationLayout/_protectedLayout/bookmarks/': {
-      id: '/_navigationLayout/_protectedLayout/bookmarks/'
+    '/_navigationLayout/_authLayout/bookmarks/': {
+      id: '/_navigationLayout/_authLayout/bookmarks/'
       path: '/bookmarks'
       fullPath: '/bookmarks'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutBookmarksIndexRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutBookmarksIndexRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutRouteRoute
     }
-    '/_navigationLayout/_protectedLayout/admin/add-a-volume': {
-      id: '/_navigationLayout/_protectedLayout/admin/add-a-volume'
-      path: '/admin/add-a-volume'
+    '/_navigationLayout/_authLayout/admin/add-a-volume': {
+      id: '/_navigationLayout/_authLayout/admin/add-a-volume'
+      path: '/add-a-volume'
       fullPath: '/admin/add-a-volume'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminAddAVolumeRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutAdminRouteRoute
     }
-    '/_navigationLayout/_protectedLayout/admin/add-a-serie': {
-      id: '/_navigationLayout/_protectedLayout/admin/add-a-serie'
-      path: '/admin/add-a-serie'
+    '/_navigationLayout/_authLayout/admin/add-a-serie': {
+      id: '/_navigationLayout/_authLayout/admin/add-a-serie'
+      path: '/add-a-serie'
       fullPath: '/admin/add-a-serie'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutAdminAddASerieRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminAddASerieRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutAdminRouteRoute
     }
-    '/_navigationLayout/_protectedLayout/admin/add-a-chapter': {
-      id: '/_navigationLayout/_protectedLayout/admin/add-a-chapter'
-      path: '/admin/add-a-chapter'
+    '/_navigationLayout/_authLayout/admin/add-a-chapter': {
+      id: '/_navigationLayout/_authLayout/admin/add-a-chapter'
+      path: '/add-a-chapter'
       fullPath: '/admin/add-a-chapter'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutAdminAddAChapterRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminAddAChapterRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutAdminRouteRoute
     }
     '/_navigationLayout/$serieSlug/_layout/volumes': {
       id: '/_navigationLayout/$serieSlug/_layout/volumes'
@@ -430,26 +476,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SerieSlugChapterChapterNumberPageRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_navigationLayout/_protectedLayout/profile/options': {
-      id: '/_navigationLayout/_protectedLayout/profile/options'
+    '/_navigationLayout/_authLayout/profile/options': {
+      id: '/_navigationLayout/_authLayout/profile/options'
       path: '/profile/options'
       fullPath: '/profile/options'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsRouteRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileOptionsRouteRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutRouteRoute
     }
-    '/_navigationLayout/_protectedLayout/profile/options/': {
-      id: '/_navigationLayout/_protectedLayout/profile/options/'
+    '/_navigationLayout/_authLayout/profile/options/': {
+      id: '/_navigationLayout/_authLayout/profile/options/'
       path: '/'
       fullPath: '/profile/options/'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsIndexRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileOptionsIndexRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutProfileOptionsRouteRoute
     }
-    '/_navigationLayout/_protectedLayout/profile/options/abonnement': {
-      id: '/_navigationLayout/_protectedLayout/profile/options/abonnement'
+    '/_navigationLayout/_authLayout/profile/options/abonnement': {
+      id: '/_navigationLayout/_authLayout/profile/options/abonnement'
       path: '/abonnement'
       fullPath: '/profile/options/abonnement'
-      preLoaderRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsAbonnementRouteImport
-      parentRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsRouteRoute
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutProfileOptionsRouteRoute
+    }
+    '/_navigationLayout/_authLayout/profile/options/abonnement/success': {
+      id: '/_navigationLayout/_authLayout/profile/options/abonnement/success'
+      path: '/success'
+      fullPath: '/profile/options/abonnement/success'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute
+    }
+    '/_navigationLayout/_authLayout/profile/options/abonnement/cancel': {
+      id: '/_navigationLayout/_authLayout/profile/options/abonnement/cancel'
+      path: '/cancel'
+      fullPath: '/profile/options/abonnement/cancel'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute
     }
   }
 }
@@ -465,52 +525,85 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
-interface NavigationLayoutProtectedLayoutProfileOptionsRouteRouteChildren {
-  NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute
-  NavigationLayoutProtectedLayoutProfileOptionsIndexRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsIndexRoute
+interface NavigationLayoutAuthLayoutAdminRouteRouteChildren {
+  NavigationLayoutAuthLayoutAdminAddAChapterRoute: typeof NavigationLayoutAuthLayoutAdminAddAChapterRoute
+  NavigationLayoutAuthLayoutAdminAddASerieRoute: typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
+  NavigationLayoutAuthLayoutAdminAddAVolumeRoute: typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
 }
 
-const NavigationLayoutProtectedLayoutProfileOptionsRouteRouteChildren: NavigationLayoutProtectedLayoutProfileOptionsRouteRouteChildren =
+const NavigationLayoutAuthLayoutAdminRouteRouteChildren: NavigationLayoutAuthLayoutAdminRouteRouteChildren =
   {
-    NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute:
-      NavigationLayoutProtectedLayoutProfileOptionsAbonnementRoute,
-    NavigationLayoutProtectedLayoutProfileOptionsIndexRoute:
-      NavigationLayoutProtectedLayoutProfileOptionsIndexRoute,
+    NavigationLayoutAuthLayoutAdminAddAChapterRoute:
+      NavigationLayoutAuthLayoutAdminAddAChapterRoute,
+    NavigationLayoutAuthLayoutAdminAddASerieRoute:
+      NavigationLayoutAuthLayoutAdminAddASerieRoute,
+    NavigationLayoutAuthLayoutAdminAddAVolumeRoute:
+      NavigationLayoutAuthLayoutAdminAddAVolumeRoute,
   }
 
-const NavigationLayoutProtectedLayoutProfileOptionsRouteRouteWithChildren =
-  NavigationLayoutProtectedLayoutProfileOptionsRouteRoute._addFileChildren(
-    NavigationLayoutProtectedLayoutProfileOptionsRouteRouteChildren,
+const NavigationLayoutAuthLayoutAdminRouteRouteWithChildren =
+  NavigationLayoutAuthLayoutAdminRouteRoute._addFileChildren(
+    NavigationLayoutAuthLayoutAdminRouteRouteChildren,
   )
 
-interface NavigationLayoutProtectedLayoutRouteRouteChildren {
-  NavigationLayoutProtectedLayoutProfileOptionsRouteRoute: typeof NavigationLayoutProtectedLayoutProfileOptionsRouteRouteWithChildren
-  NavigationLayoutProtectedLayoutAdminAddAChapterRoute: typeof NavigationLayoutProtectedLayoutAdminAddAChapterRoute
-  NavigationLayoutProtectedLayoutAdminAddASerieRoute: typeof NavigationLayoutProtectedLayoutAdminAddASerieRoute
-  NavigationLayoutProtectedLayoutAdminAddAVolumeRoute: typeof NavigationLayoutProtectedLayoutAdminAddAVolumeRoute
-  NavigationLayoutProtectedLayoutBookmarksIndexRoute: typeof NavigationLayoutProtectedLayoutBookmarksIndexRoute
-  NavigationLayoutProtectedLayoutProfileIndexRoute: typeof NavigationLayoutProtectedLayoutProfileIndexRoute
+interface NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteChildren {
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute
 }
 
-const NavigationLayoutProtectedLayoutRouteRouteChildren: NavigationLayoutProtectedLayoutRouteRouteChildren =
+const NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteChildren: NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteChildren =
   {
-    NavigationLayoutProtectedLayoutProfileOptionsRouteRoute:
-      NavigationLayoutProtectedLayoutProfileOptionsRouteRouteWithChildren,
-    NavigationLayoutProtectedLayoutAdminAddAChapterRoute:
-      NavigationLayoutProtectedLayoutAdminAddAChapterRoute,
-    NavigationLayoutProtectedLayoutAdminAddASerieRoute:
-      NavigationLayoutProtectedLayoutAdminAddASerieRoute,
-    NavigationLayoutProtectedLayoutAdminAddAVolumeRoute:
-      NavigationLayoutProtectedLayoutAdminAddAVolumeRoute,
-    NavigationLayoutProtectedLayoutBookmarksIndexRoute:
-      NavigationLayoutProtectedLayoutBookmarksIndexRoute,
-    NavigationLayoutProtectedLayoutProfileIndexRoute:
-      NavigationLayoutProtectedLayoutProfileIndexRoute,
+    NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute:
+      NavigationLayoutAuthLayoutProfileOptionsAbonnementCancelRoute,
+    NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute:
+      NavigationLayoutAuthLayoutProfileOptionsAbonnementSuccessRoute,
   }
 
-const NavigationLayoutProtectedLayoutRouteRouteWithChildren =
-  NavigationLayoutProtectedLayoutRouteRoute._addFileChildren(
-    NavigationLayoutProtectedLayoutRouteRouteChildren,
+const NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteWithChildren =
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute._addFileChildren(
+    NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteChildren,
+  )
+
+interface NavigationLayoutAuthLayoutProfileOptionsRouteRouteChildren {
+  NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute: typeof NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteWithChildren
+  NavigationLayoutAuthLayoutProfileOptionsIndexRoute: typeof NavigationLayoutAuthLayoutProfileOptionsIndexRoute
+}
+
+const NavigationLayoutAuthLayoutProfileOptionsRouteRouteChildren: NavigationLayoutAuthLayoutProfileOptionsRouteRouteChildren =
+  {
+    NavigationLayoutAuthLayoutProfileOptionsAbonnementRoute:
+      NavigationLayoutAuthLayoutProfileOptionsAbonnementRouteWithChildren,
+    NavigationLayoutAuthLayoutProfileOptionsIndexRoute:
+      NavigationLayoutAuthLayoutProfileOptionsIndexRoute,
+  }
+
+const NavigationLayoutAuthLayoutProfileOptionsRouteRouteWithChildren =
+  NavigationLayoutAuthLayoutProfileOptionsRouteRoute._addFileChildren(
+    NavigationLayoutAuthLayoutProfileOptionsRouteRouteChildren,
+  )
+
+interface NavigationLayoutAuthLayoutRouteRouteChildren {
+  NavigationLayoutAuthLayoutAdminRouteRoute: typeof NavigationLayoutAuthLayoutAdminRouteRouteWithChildren
+  NavigationLayoutAuthLayoutProfileOptionsRouteRoute: typeof NavigationLayoutAuthLayoutProfileOptionsRouteRouteWithChildren
+  NavigationLayoutAuthLayoutBookmarksIndexRoute: typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
+  NavigationLayoutAuthLayoutProfileIndexRoute: typeof NavigationLayoutAuthLayoutProfileIndexRoute
+}
+
+const NavigationLayoutAuthLayoutRouteRouteChildren: NavigationLayoutAuthLayoutRouteRouteChildren =
+  {
+    NavigationLayoutAuthLayoutAdminRouteRoute:
+      NavigationLayoutAuthLayoutAdminRouteRouteWithChildren,
+    NavigationLayoutAuthLayoutProfileOptionsRouteRoute:
+      NavigationLayoutAuthLayoutProfileOptionsRouteRouteWithChildren,
+    NavigationLayoutAuthLayoutBookmarksIndexRoute:
+      NavigationLayoutAuthLayoutBookmarksIndexRoute,
+    NavigationLayoutAuthLayoutProfileIndexRoute:
+      NavigationLayoutAuthLayoutProfileIndexRoute,
+  }
+
+const NavigationLayoutAuthLayoutRouteRouteWithChildren =
+  NavigationLayoutAuthLayoutRouteRoute._addFileChildren(
+    NavigationLayoutAuthLayoutRouteRouteChildren,
   )
 
 interface NavigationLayoutAuthRouteRouteChildren {
@@ -563,7 +656,7 @@ const NavigationLayoutSerieSlugRouteWithChildren =
   )
 
 interface NavigationLayoutRouteRouteChildren {
-  NavigationLayoutProtectedLayoutRouteRoute: typeof NavigationLayoutProtectedLayoutRouteRouteWithChildren
+  NavigationLayoutAuthLayoutRouteRoute: typeof NavigationLayoutAuthLayoutRouteRouteWithChildren
   NavigationLayoutAuthRouteRoute: typeof NavigationLayoutAuthRouteRouteWithChildren
   NavigationLayoutCatalogueRoute: typeof NavigationLayoutCatalogueRoute
   NavigationLayoutIndexRoute: typeof NavigationLayoutIndexRoute
@@ -571,8 +664,8 @@ interface NavigationLayoutRouteRouteChildren {
 }
 
 const NavigationLayoutRouteRouteChildren: NavigationLayoutRouteRouteChildren = {
-  NavigationLayoutProtectedLayoutRouteRoute:
-    NavigationLayoutProtectedLayoutRouteRouteWithChildren,
+  NavigationLayoutAuthLayoutRouteRoute:
+    NavigationLayoutAuthLayoutRouteRouteWithChildren,
   NavigationLayoutAuthRouteRoute: NavigationLayoutAuthRouteRouteWithChildren,
   NavigationLayoutCatalogueRoute: NavigationLayoutCatalogueRoute,
   NavigationLayoutIndexRoute: NavigationLayoutIndexRoute,

@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/buttons/button";
 import * as Ariakit from "@ariakit/react";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_protectedLayout/profile/"
+  "/_navigationLayout/_authLayout/profile/"
 )({
   component: RouteComponent,
 });

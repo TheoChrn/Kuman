@@ -17,11 +17,11 @@ import {
 import { generateMangaId } from "../../generate-ids";
 import { volumes } from "../volumes";
 
-export const statusEnum = pgEnum("status", statusValues);
-export const typeEnum = pgEnum("type", typeValues);
-export const genreEnum = pgEnum("genre", genreValues);
-export const publisherJp = pgEnum("publisher_jp", publisherJpValues);
-export const publisherFr = pgEnum("publisher_fr", publisherFrValues);
+// export const statusEnum = pgEnum("status", statusValues);
+// export const typeEnum = pgEnum("type", typeValues);
+// export const genreEnum = pgEnum("genre", genreValues);
+// export const publisherJp = pgEnum("publisher_jp", publisherJpValues);
+// export const publisherFr = pgEnum("publisher_fr", publisherFrValues);
 
 export const mangas = pgTable(
   "mangas",

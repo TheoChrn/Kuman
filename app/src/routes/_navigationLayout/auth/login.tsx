@@ -1,3 +1,4 @@
+import * as Ariakit from "@ariakit/react";
 import { loginFormSchema } from "@kuman/shared/validators";
 import { revalidateLogic } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -7,10 +8,9 @@ import {
   useNavigate,
   useRouter,
 } from "@tanstack/react-router";
-import { useState } from "react";
 import { useAppForm } from "~/hooks/form-composition";
 import { useTRPC } from "~/trpc/react";
-import * as Ariakit from "@ariakit/react";
+import { User } from "lucia";
 
 export const Route = createFileRoute("/_navigationLayout/auth/login")({
   component: RouteComponent,
@@ -24,9 +24,13 @@ function RouteComponent() {
   const trpc = useTRPC();
   const loginMutation = useMutation(
     trpc.auth.login.mutationOptions({
-      onSuccess: async (userId) => {
+      onSuccess: async (user) => {
+        console.log(user);
         queryClient.clear();
-        queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), userId);
+        queryClient.setQueryData(
+          trpc.user.getCurrentUser.queryKey(),
+          user as User
+        );
         router.invalidate();
         navigate({ to: "/catalogue" });
       },

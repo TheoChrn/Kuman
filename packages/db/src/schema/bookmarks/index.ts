@@ -31,7 +31,13 @@ export const bookmarks = pgTable(
   (table) => [unique().on(table.userId, table.mangaSlug)],
 );
 
-export const bookmarksRelation = relations(bookmarks, ({ many }) => ({
-  mangas: many(mangas),
-  users: many(users),
+export const bookmarksRelation = relations(bookmarks, ({ one }) => ({
+  manga: one(mangas, {
+    fields: [bookmarks.mangaSlug],
+    references: [mangas.slug],
+  }),
+  user: one(users, {
+    fields: [bookmarks.userId],
+    references: [users.id],
+  }),
 }));
