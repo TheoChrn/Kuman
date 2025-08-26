@@ -38,6 +38,12 @@
   justify-content: start;
 }
 
+@mixin space-y-none {
+  & > :not(:last-child) {
+    margin-block-end: 0;
+  }
+}
+
 @mixin space-y-1 {
   & > :not(:last-child) {
     margin-block-end: 0.25rem;
@@ -72,7 +78,14 @@
     margin-block-end: 2rem;
   }
 }
+@mixin space-y-16 {
+  & > :not(:last-child) {
+    margin-block-end: 4rem;
+  }
+}
 
 @mixin shadow {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

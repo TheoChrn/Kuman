@@ -186,7 +186,7 @@
     }
   }
 
-  .catalogue {
+  main {
     & ul {
       @include flex-center;
       flex-wrap: wrap;
