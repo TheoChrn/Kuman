@@ -4,6 +4,7 @@ import { searchParamsSchema } from "@kuman/shared/validators";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { FaBars, FaPlus } from "react-icons/fa6";
+import { Footer } from "~/components/footer";
 import { Collection } from "~/components/route-components/catalogue/collection";
 import SearchSerie from "~/components/search/search-serie";
 import { Button } from "~/components/ui/buttons/button";
@@ -188,6 +189,8 @@ function RouteComponent() {
             <Collection searchParams={searchParams} />
           </section>
         </main>
+
+        <Footer />
       </Ariakit.HeadingLevel>
     </div>
   );

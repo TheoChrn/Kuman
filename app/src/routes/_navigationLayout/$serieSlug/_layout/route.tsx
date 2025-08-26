@@ -7,6 +7,7 @@ import {
   PiTiktokLogoBold,
   PiXLogoBold,
 } from "react-icons/pi";
+import { Footer } from "~/components/footer";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_navigationLayout/$serieSlug/_layout")({
@@ -82,39 +83,7 @@ function RouteComponent() {
           </nav>
           <Outlet />
         </main>
-
-        <footer>
-          <Ariakit.HeadingLevel>
-            <section className="social-networks">
-              <Ariakit.Heading>Retrouvez-nous sur nos réseaux</Ariakit.Heading>
-              <ul>
-                <li>
-                  <a href="" target="_blank" rel="noopener noreferre">
-                    <PiXLogoBold size={40} />
-                  </a>
-                </li>
-                <li>
-                  <a href="" target="_blank" rel="noopener noreferre">
-                    <PiInstagramLogoBold size={40} />
-                  </a>
-                </li>
-                <li>
-                  <a href="" target="_blank" rel="noopener noreferre">
-                    <PiTiktokLogoBold size={40} />
-                  </a>
-                </li>
-              </ul>
-            </section>
-            <section className="copyrights">
-              © 2025 Kuman — Merci de faire partie de l'aventure. Tous droits
-              réservés.
-              <br />
-              <strong>
-                Projet réalisé dans le cadre d’un projet scolaire.
-              </strong>
-            </section>
-          </Ariakit.HeadingLevel>
-        </footer>
+        <Footer />
       </Ariakit.HeadingLevel>
     </div>
   );

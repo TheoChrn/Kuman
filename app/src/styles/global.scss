@@ -6,12 +6,14 @@
 @use "./components/search-input.scss" as *;
 @use "./components/error-block.scss" as *;
 @use "./components/input.scss" as *;
+@use "./components/tabs.scss" as *;
 @use "./page/serie.scss" as *;
 @use "./page/catalogue.scss" as *;
 @use "./page/bookmarks.scss" as *;
 @use "./page/register.scss" as *;
 @use "./page/login.scss" as *;
 @use "./page/profile.scss" as *;
+@use "./page/home.scss" as *;
 @use "./page/abonnement.scss" as *;
 @use "./page/profile-settings.scss" as *;
 
@@ -130,5 +132,10 @@ button {
 }
 
 #app-wrapper {
+  display: flex;
   min-height: calc(100svh - 62px);
+
+  & > div:first-child {
+    flex: 1;
+  }
 }

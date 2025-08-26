@@ -1,5 +1,5 @@
 import * as Ariakit from "@ariakit/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 
 function usePrevious<T>(value: T) {
   const ref = useRef<T>(null);
@@ -11,13 +11,21 @@ function usePrevious<T>(value: T) {
 
 export function TabPanel(props: Ariakit.TabPanelProps) {
   const tab = Ariakit.useTabContext();
-  const selectedTabId = Ariakit.useStoreState(tab, "selectedId");
-  const previousTabId = usePrevious(selectedTabId);
-
-  const panel = Ariakit.useStoreState(tab, () => tab?.panels.item(props.id));
-
-  const wasPanelOpen = panel?.tabId && previousTabId === panel.tabId;
+  const defaultId = "month";
+  const id = props.id ?? defaultId;
+  const tabId = Ariakit.useStoreState(
+    tab,
+    () => props.tabId ?? tab?.panels.item(id)?.tabId
+  );
+  const previousTabId = usePrevious(Ariakit.useStoreState(tab, "selectedId"));
+  const wasOpen = tabId && previousTabId === tabId;
   return (
-    <Ariakit.TabPanel {...props} data-was-open={wasPanelOpen || undefined} />
+    <Ariakit.TabPanel
+      ref={props.ref}
+      {...props}
+      id={id}
+      tabId={tabId}
+      data-was-open={wasOpen || undefined}
+    />
   );
 }

@@ -1,13 +1,15 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { Suspense } from "react";
 import {
   PiBinocularsBold,
   PiBookmarkSimpleBold,
   PiHouseBold,
-  PiSpinner,
+  PiInstagramLogoBold,
+  PiTiktokLogoBold,
   PiUser,
   PiUserBold,
+  PiXLogoBold,
 } from "react-icons/pi";
+import * as Ariakit from "@ariakit/react";
 
 export const Route = createFileRoute("/_navigationLayout")({
   component: RouteComponent,
