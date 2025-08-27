@@ -1,7 +1,11 @@
 import * as Ariakit from "@ariakit/react";
 
 import { searchParamsSchema } from "@kuman/shared/validators";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { z } from "zod/v4";
 import { useTRPC } from "~/trpc/react";
@@ -11,16 +15,19 @@ export function Collection(props: {
 }) {
   const trpc = useTRPC();
 
-  const { data: collection } = useSuspenseQuery(
-    trpc.mangas.getAll.queryOptions({ ...props.searchParams })
+  const { data: collection, isFetching } = useQuery(
+    trpc.mangas.getAll.queryOptions(
+      { ...props.searchParams },
+      { placeholderData: keepPreviousData }
+    )
   );
 
-  if (!collection.length) {
+  if (!collection?.length) {
     return "Aucun résultat";
   }
 
   return (
-    <>
+    <section className="mangas" data-pending={isFetching}>
       <Ariakit.HeadingLevel>
         {Array.from({ length: 20 }, (_, index) => (
           <Link
@@ -35,6 +42,6 @@ export function Collection(props: {
           </Link>
         ))}
       </Ariakit.HeadingLevel>
-    </>
+    </section>
   );
 }
