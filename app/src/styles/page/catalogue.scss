@@ -200,6 +200,10 @@
       justify-content: center;
       gap: 1rem;
 
+      &[data-pending="true"] {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
       & > a {
         @include space-y-2;
         flex: 0 0 100%;
@@ -221,5 +225,99 @@
         }
       }
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  #catalogue {
+    .quick-filters {
+      padding: 1rem;
+    }
+
+    main {
+      max-width: 1284px;
+      margin: 0 auto;
+      .mangas {
+        grid-template-columns: repeat(auto-fit, 165px);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #catalogue {
+    main {
+      .mangas {
+        grid-template-columns: repeat(auto-fit, 235px);
+      }
+    }
+  }
+}
+
+.quick-filters {
+  max-width: 1280px;
+  margin: 0 auto;
+  &-heading {
+    @include flex-between;
+    top: 0;
+    background-color: $background;
+    & a {
+      font-size: 0.875rem;
+    }
+  }
+
+  &-heading + div {
+    .quick-filters-genres {
+      &-heading {
+        top: 27px;
+        background-color: $background;
+        padding-top: 1.5rem;
+        padding-bottom: 0.5rem;
+        @include flex-between;
+
+        & button {
+          font-size: 0.875rem;
+        }
+      }
+      &-list {
+        flex-wrap: wrap;
+        @include justify-start;
+        gap: 0.5rem;
+
+        &:has(.tag-active) > .tag:not(.tag-active) {
+          opacity: 0.5;
+          position: relative;
+        }
+      }
+    }
+    .quick-filters-types {
+      @include space-y-2;
+      &-heading {
+        top: 27px;
+        background-color: $background;
+        padding-top: 1.5rem;
+        padding-bottom: 0.5rem;
+        @include flex-between;
+      }
+      &-list {
+        flex-wrap: wrap;
+        @include justify-start;
+        gap: 0.5rem;
+
+        &:has(.tag-active) > .tag:not(.tag-active) {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
   }
 }

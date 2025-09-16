@@ -9,11 +9,8 @@ export const genreValues = [
   "psychologique",
   "romance",
   "science-fiction",
-  "slice of life",
   "sport",
-  "surnaturel",
   "thriller",
-  "historique",
   "arts martiaux",
   "militaire",
   "mecha",
@@ -25,10 +22,7 @@ export const genreValues = [
   "isekai",
   "tranche de vie",
   "cyberpunk",
-  "space opera",
-  "voyage temporel",
   "cuisine",
-  "animaux",
 ] as const;
 
 export type GenreValues = typeof genreValues;
@@ -45,11 +39,8 @@ export const genre = {
   PSYCHOLOGIQUE: "psychologique",
   ROMANCE: "romance",
   SCIENCE_FICTION: "science-fiction",
-  SLICE_OF_LIFE: "slice of life",
   SPORT: "sport",
-  SURNATUREL: "surnaturel",
   THRILLER: "thriller",
-  HISTORIQUE: "historique",
   ARTS_MARTIAUX: "arts martiaux",
   MILITAIRE: "militaire",
   MECHA: "mecha",
@@ -61,10 +52,8 @@ export const genre = {
   ISEKAI: "isekai",
   TRANCHE_DE_VIE: "tranche de vie",
   CYBERPUNK: "cyberpunk",
-  SPACE_OPERA: "space opera",
-  VOYAGE_TEMPOREL: "voyage temporel",
+
   CUISINE: "cuisine",
-  ANIMAUX: "animaux",
 } as const satisfies Record<string, Genre>;
 
 export const genreLabelFrench = {
@@ -78,11 +67,8 @@ export const genreLabelFrench = {
   [genre.PSYCHOLOGIQUE]: "Psychologique",
   [genre.ROMANCE]: "Romance",
   [genre.SCIENCE_FICTION]: "Science-fiction",
-  [genre.SLICE_OF_LIFE]: "Slice of Life",
   [genre.SPORT]: "Sport",
-  [genre.SURNATUREL]: "Surnaturel",
   [genre.THRILLER]: "Thriller",
-  [genre.HISTORIQUE]: "Historique",
   [genre.ARTS_MARTIAUX]: "Arts martiaux",
   [genre.MILITAIRE]: "Militaire",
   [genre.MECHA]: "Mecha",
@@ -94,8 +80,5 @@ export const genreLabelFrench = {
   [genre.ISEKAI]: "Isekai",
   [genre.TRANCHE_DE_VIE]: "Tranche de vie",
   [genre.CYBERPUNK]: "Cyberpunk",
-  [genre.SPACE_OPERA]: "Space opera",
-  [genre.VOYAGE_TEMPOREL]: "Voyage temporel",
   [genre.CUISINE]: "Cuisine",
-  [genre.ANIMAUX]: "Animaux",
 } as const satisfies Record<Genre, string>;
