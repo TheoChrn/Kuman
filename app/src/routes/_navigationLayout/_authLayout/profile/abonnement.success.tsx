@@ -3,7 +3,7 @@ import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { PiXBold } from "react-icons/pi";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_authLayout/profile/options/abonnement/success"
+  "/_navigationLayout/_authLayout/profile/abonnement/success"
 )({
   component: RouteComponent,
   validateSearch: ({ session_id }: { session_id: string }) => {
