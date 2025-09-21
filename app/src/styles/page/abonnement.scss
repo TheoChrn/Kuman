@@ -32,3 +32,9 @@
   background-color: hsla(0, 0%, 0%, 0.4);
   z-index: 2;
 }
+
+#abonnement {
+  & > .heading {
+    text-align: center;
+  }
+}

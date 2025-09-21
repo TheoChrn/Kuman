@@ -2,7 +2,7 @@ import * as Ariakit from "@ariakit/react";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_authLayout/profile/options/abonnement/cancel"
+  "/_navigationLayout/_authLayout/profile/abonnement/cancel"
 )({
   component: RouteComponent,
   beforeLoad: ({ context: { user } }) => {
