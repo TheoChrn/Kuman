@@ -1,8 +1,7 @@
 @use "../../../styles/mixins.scss" as *;
 @use "../../../styles/variables.scss" as *;
-@use "../../ui/inputs/select/select.scss" as *;
 
-.add-a-manga {
+#add-a-volume {
   padding: 1.5rem;
   & form {
     max-width: 1024px;
@@ -101,11 +100,9 @@
   }
 }
 @media screen and (min-width: 768px) {
-  .add-a-manga {
+  #add-a-manga {
     & form {
       & .container {
-        & .custom-file-input {
-        }
         & .fields {
           gap: 0.5rem;
           display: grid;

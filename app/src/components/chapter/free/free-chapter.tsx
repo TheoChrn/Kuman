@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChapterRouteComponent } from "~/components/route-components/chapter/route-component";
+import { Chapter } from "~/components/chapter/route-component";
 import { useTRPC } from "~/trpc/react";
 
-export function PremiumChapter({
+export function FreeChapter({
   chapterNumber,
   serie,
 }: {
@@ -12,8 +12,8 @@ export function PremiumChapter({
   const trpc = useTRPC();
 
   const { data: chapter } = useSuspenseQuery(
-    trpc.chapters.get.queryOptions({ chapterNumber, serie })
+    trpc.chapters.getFreeChapter.queryOptions({ chapterNumber, serie })
   );
 
-  return <ChapterRouteComponent chapter={chapter} />;
+  return <Chapter chapter={chapter} />;
 }

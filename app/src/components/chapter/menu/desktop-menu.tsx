@@ -8,7 +8,7 @@ import { PiGear } from "react-icons/pi";
 import {
   readingModeMapping,
   readingModes,
-} from "~/components/route-components/chapter/menu/reading-mode";
+} from "~/components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
 import { appActions, appStore } from "~/utils/stores/chapter-store";
 import styles from "./styles.module.scss";

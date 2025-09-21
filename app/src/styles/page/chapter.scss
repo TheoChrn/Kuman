@@ -1,6 +1,22 @@
 @use "../styles/mixins.scss" as *;
 @use "../styles/variables.scss" as *;
 
+.page {
+  @include justify-center;
+  flex: 0 0 100%;
+  max-height: 100%;
+  scroll-snap-align: start;
+
+  .img-container {
+    display: flex;
+    img {
+      margin: auto;
+      max-height: 100%;
+      width: 100%;
+    }
+  }
+}
+
 .chapter-images-container {
   background-color: $neutral;
   height: 100svh;

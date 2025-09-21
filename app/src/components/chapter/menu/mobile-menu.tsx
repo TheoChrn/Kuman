@@ -2,8 +2,8 @@ import * as Ariakit from "@ariakit/react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa6";
-import { DesktopMenuProps } from "~/components/route-components/chapter/menu/desktop-menu";
-import { ReadingMode } from "~/components/route-components/chapter/menu/reading-mode";
+import { DesktopMenuProps } from "~/components/chapter/menu/desktop-menu";
+import { ReadingMode } from "~/components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
 import styles from "./styles.module.scss";
 

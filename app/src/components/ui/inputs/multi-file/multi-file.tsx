@@ -3,7 +3,6 @@ import { InputHTMLAttributes, useEffect, useRef } from "react";
 import { ErrorMessage } from "~/components/ui/inputs/error-message/error-message";
 import { InputProps } from "~/components/ui/inputs/text";
 import { useFieldContext } from "~/hooks/form-composition";
-import styles from "./styles.module.scss";
 
 interface MultiFileInputProps
   extends InputProps,
@@ -37,7 +36,7 @@ export function MultiFileInput({
   }, []);
 
   return (
-    <div className={`${styles["multi-file-input"]} ${className}`}>
+    <div className={`multi-file-input ${className}`}>
       <label>
         <Ariakit.VisuallyHidden>
           <input
@@ -62,9 +61,9 @@ export function MultiFileInput({
             {...props}
           />
         </Ariakit.VisuallyHidden>
-        <div className={styles["drop-zone-container"]}>
+        <div className="drop-zone-container">
           <div
-            className={styles["drop-zone"]}
+            className="drop-zone"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               e.preventDefault();
@@ -91,7 +90,7 @@ export function MultiFileInput({
       </label>
 
       {!!field.state.value.length && (
-        <div className={styles["files-container"]}>
+        <div className="files-container">
           {field.state.value.map((_, index) => (
             <img
               key={index}
