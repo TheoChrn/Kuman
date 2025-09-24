@@ -1,7 +1,6 @@
-@use "../styles/mixins.scss" as *;
-@use "../styles/variables.scss" as *;
-
-.page {
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+.chapter-image {
   @include justify-center;
   flex: 0 0 100%;
   max-height: 100%;

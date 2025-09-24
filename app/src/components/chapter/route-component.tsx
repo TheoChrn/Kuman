@@ -14,7 +14,6 @@ import { useChapterNavigation } from "~/hooks/use-read-chapter";
 import { Route } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 import { useTRPC } from "~/trpc/react";
 import { appStore } from "~/utils/stores/chapter-store";
-import styles from "~/components/chapter-number.module.scss";
 import { ChapterImage } from "~/components/chapter-image";
 
 export function Chapter({
@@ -141,10 +140,10 @@ export function Chapter({
       <section
         key={chapter.number}
         ref={containerRef}
-        className={`${styles["chapter-images-container"]} ${
+        className={`chapter-images-container ${
           readingMode === "scroll"
-            ? styles["chapter-images-container-scroll-y"]
-            : styles["chapter-images-container-scroll-x"]
+            ? "chapter-images-container-scroll-y"
+            : "chapter-images-container-scroll-x"
         }`}
       >
         {chapter.pages?.map((element, index) => {

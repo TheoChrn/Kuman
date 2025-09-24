@@ -1,5 +1,5 @@
-@use "../../../../styles/mixins.scss" as *;
-@use "../../../../styles/variables.scss" as *;
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
 
 .select {
   border: solid 1px $stroke;
@@ -11,7 +11,9 @@
   @include flex-between;
 
   &[aria-expanded="true"] {
-    @extend %select-expanded;
+    border: solid 1px $primary;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 
     & .select-arrow {
       transform: rotate(180deg);
@@ -24,12 +26,6 @@
 
   &-arrow {
     transition-duration: 200ms;
-  }
-
-  &-expanded {
-    border: solid 1px $primary;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
   }
 
   &-popover {
@@ -68,7 +64,8 @@
     &:nth-child(odd):hover,
     &:nth-child(odd)[data-active-item="true"],
     &[data-active-item="true"] {
-      @extend %select-item-hover;
+      background-color: $primary-hover;
+      color: white;
     }
 
     &:nth-child(odd) {

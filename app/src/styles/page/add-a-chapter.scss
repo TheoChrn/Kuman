@@ -1,6 +1,5 @@
-@use "../../../styles/mixins.scss" as *;
-@use "../../../styles/variables.scss" as *;
-@use "../../ui/inputs/select/select.scss" as *;
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
 
 #add-a-chapter {
   padding: 1.5rem;
@@ -71,10 +70,6 @@
 
       & .select:disabled {
         opacity: 0.5;
-      }
-
-      & .render-multi-selection {
-        @extend %render-multi-selection;
       }
     }
   }

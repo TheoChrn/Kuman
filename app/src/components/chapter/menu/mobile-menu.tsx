@@ -5,7 +5,6 @@ import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa6";
 import { DesktopMenuProps } from "~/components/chapter/menu/desktop-menu";
 import { ReadingMode } from "~/components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
-import styles from "./styles.module.scss";
 
 export interface MobileMenuProps extends DesktopMenuProps {
   scrollToPage: (pageIndex: number) => void;
@@ -20,25 +19,22 @@ export default function MobileMenu(props: MobileMenuProps) {
 
   return (
     <Ariakit.DialogProvider>
-      <Ariakit.DialogDisclosure
-        id="dialog-trigger"
-        className={styles["dialog-trigger"]}
-      >
+      <Ariakit.DialogDisclosure id="dialog-trigger" className="dialog-trigger">
         <Ariakit.VisuallyHidden>Ouvrir le menu</Ariakit.VisuallyHidden>
-        <FaBars size={24} className={styles.burger} />
-        <FaPlus size={24} className={styles.close} />
+        <FaBars size={24} className="burger" />
+        <FaPlus size={24} className="close" />
       </Ariakit.DialogDisclosure>
       <Ariakit.Dialog
         getPersistentElements={() => {
           const el = document.querySelector("#dialog-trigger");
           return el ? [el] : [];
         }}
-        className={styles["content"]}
+        className="content"
       >
         <Link
           to="/$serieSlug/volumes"
           params={{ serieSlug: props.serieSlug }}
-          className={styles.back}
+          className="back"
         >
           <FaArrowLeft size={24} />
           <Ariakit.VisuallyHidden>Retour</Ariakit.VisuallyHidden>
@@ -51,10 +47,10 @@ export default function MobileMenu(props: MobileMenuProps) {
             )} - ${props.chapter.name}`,
           }}
           selectProps={{
-            className: `${styles["select"]} ${styles["select-chapter"]}`,
+            className: "select select-chapter",
           }}
           selectPopoverProps={{
-            className: styles["select-popover"],
+            className: "select-popover",
             sameWidth: true,
             portal: true,
             preventBodyScroll: true,
@@ -62,15 +58,13 @@ export default function MobileMenu(props: MobileMenuProps) {
         >
           {props.chapterList.map((list) => (
             <Ariakit.SelectGroup key={list.volumeNumber}>
-              <Ariakit.SelectGroupLabel
-                className={styles["select-group-label"]}
-              >
+              <Ariakit.SelectGroupLabel className="select-group-label">
                 Volume - {list.volumeNumber}
               </Ariakit.SelectGroupLabel>
               {list.chapters.map((chapter) => (
                 <SelectItem
                   key={chapter.number}
-                  className={styles["select-item"]}
+                  className="select-item"
                   disabled={props.currentChapter === chapter.number}
                   hideOnClick
                   render={(renderProps) => (
@@ -95,7 +89,7 @@ export default function MobileMenu(props: MobileMenuProps) {
           ))}
         </Select>
 
-        <div className={styles.range}>
+        <div className="range">
           {props.chapter.pages?.length}
           <input
             type="range"
