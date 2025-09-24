@@ -1,13 +1,6 @@
 import { z } from "zod/v4";
 
-import { baseInputRequiredTextField } from "./utils";
-
-export const passwordSchema = z
-  .string()
-  .regex(
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=[\]{};:'"\\|,.<>/?]).{12,128}$/,
-    "Le mot de passe doit contenir au moins 12 caractères, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.",
-  );
+import { baseInputRequiredTextField, passwordSchema } from "./utils";
 
 export const registerFormSchema = z
   .object({

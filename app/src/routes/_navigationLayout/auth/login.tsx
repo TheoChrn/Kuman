@@ -11,6 +11,7 @@ import {
 import { useAppForm } from "~/hooks/form-composition";
 import { useTRPC } from "~/trpc/react";
 import { User } from "lucia";
+import { Button } from "~/components/ui/buttons/button";
 
 export const Route = createFileRoute("/_navigationLayout/auth/login")({
   component: RouteComponent,
@@ -91,9 +92,17 @@ function RouteComponent() {
             }}
           </form.Subscribe>
 
-          <button type="submit" className="button button-primary">
-            Se connecter
-          </button>
+          <form.Subscribe selector={(state) => [state.canSubmit]}>
+            {([canSubmit]) => (
+              <Button
+                type="submit"
+                disabled={!canSubmit}
+                className="Button button-primary"
+              >
+                Se connecter
+              </Button>
+            )}
+          </form.Subscribe>
         </form>
         <p>
           Vous n'avez pas de compte ? <br />

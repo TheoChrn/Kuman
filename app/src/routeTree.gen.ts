@@ -23,6 +23,7 @@ import { Route as NavigationLayoutAuthLayoutProfileRouteRouteImport } from './ro
 import { Route as NavigationLayoutAuthLayoutAdminRouteRouteImport } from './routes/_navigationLayout/_authLayout/admin/route'
 import { Route as NavigationLayoutSerieSlugLayoutRouteRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/route'
 import { Route as NavigationLayoutAuthLayoutBookmarksIndexRouteImport } from './routes/_navigationLayout/_authLayout/bookmarks/index'
+import { Route as NavigationLayoutAuthLayoutProfileAccountRouteImport } from './routes/_navigationLayout/_authLayout/profile/account'
 import { Route as NavigationLayoutAuthLayoutProfileAbonnementRouteImport } from './routes/_navigationLayout/_authLayout/profile/abonnement'
 import { Route as NavigationLayoutAuthLayoutAdminAddAVolumeRouteImport } from './routes/_navigationLayout/_authLayout/admin/add-a-volume'
 import { Route as NavigationLayoutAuthLayoutAdminAddASerieRouteImport } from './routes/_navigationLayout/_authLayout/admin/add-a-serie'
@@ -106,6 +107,12 @@ const NavigationLayoutAuthLayoutBookmarksIndexRoute =
     path: '/bookmarks/',
     getParentRoute: () => NavigationLayoutAuthLayoutRouteRoute,
   } as any)
+const NavigationLayoutAuthLayoutProfileAccountRoute =
+  NavigationLayoutAuthLayoutProfileAccountRouteImport.update({
+    id: '/account',
+    path: '/account',
+    getParentRoute: () => NavigationLayoutAuthLayoutProfileRouteRoute,
+  } as any)
 const NavigationLayoutAuthLayoutProfileAbonnementRoute =
   NavigationLayoutAuthLayoutProfileAbonnementRouteImport.update({
     id: '/abonnement',
@@ -182,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/admin/add-a-serie': typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
   '/admin/add-a-volume': typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
   '/profile/abonnement': typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
+  '/profile/account': typeof NavigationLayoutAuthLayoutProfileAccountRoute
   '/bookmarks': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
   '/profile/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRoute
   '/profile/abonnement/success': typeof NavigationLayoutAuthLayoutProfileAbonnementSuccessRoute
@@ -202,6 +210,7 @@ export interface FileRoutesByTo {
   '/admin/add-a-serie': typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
   '/admin/add-a-volume': typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
   '/profile/abonnement': typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
+  '/profile/account': typeof NavigationLayoutAuthLayoutProfileAccountRoute
   '/bookmarks': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
   '/profile/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRoute
   '/profile/abonnement/success': typeof NavigationLayoutAuthLayoutProfileAbonnementSuccessRoute
@@ -226,6 +235,7 @@ export interface FileRoutesById {
   '/_navigationLayout/_authLayout/admin/add-a-serie': typeof NavigationLayoutAuthLayoutAdminAddASerieRoute
   '/_navigationLayout/_authLayout/admin/add-a-volume': typeof NavigationLayoutAuthLayoutAdminAddAVolumeRoute
   '/_navigationLayout/_authLayout/profile/abonnement': typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
+  '/_navigationLayout/_authLayout/profile/account': typeof NavigationLayoutAuthLayoutProfileAccountRoute
   '/_navigationLayout/_authLayout/bookmarks/': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
   '/_navigationLayout/_authLayout/profile/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRoute
   '/_navigationLayout/_authLayout/profile/abonnement/success': typeof NavigationLayoutAuthLayoutProfileAbonnementSuccessRoute
@@ -248,6 +258,7 @@ export interface FileRouteTypes {
     | '/admin/add-a-serie'
     | '/admin/add-a-volume'
     | '/profile/abonnement'
+    | '/profile/account'
     | '/bookmarks'
     | '/profile/abonnement/cancel'
     | '/profile/abonnement/success'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/admin/add-a-serie'
     | '/admin/add-a-volume'
     | '/profile/abonnement'
+    | '/profile/account'
     | '/bookmarks'
     | '/profile/abonnement/cancel'
     | '/profile/abonnement/success'
@@ -291,6 +303,7 @@ export interface FileRouteTypes {
     | '/_navigationLayout/_authLayout/admin/add-a-serie'
     | '/_navigationLayout/_authLayout/admin/add-a-volume'
     | '/_navigationLayout/_authLayout/profile/abonnement'
+    | '/_navigationLayout/_authLayout/profile/account'
     | '/_navigationLayout/_authLayout/bookmarks/'
     | '/_navigationLayout/_authLayout/profile/abonnement/cancel'
     | '/_navigationLayout/_authLayout/profile/abonnement/success'
@@ -407,6 +420,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/bookmarks'
       preLoaderRoute: typeof NavigationLayoutAuthLayoutBookmarksIndexRouteImport
       parentRoute: typeof NavigationLayoutAuthLayoutRouteRoute
+    }
+    '/_navigationLayout/_authLayout/profile/account': {
+      id: '/_navigationLayout/_authLayout/profile/account'
+      path: '/account'
+      fullPath: '/profile/account'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileAccountRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutProfileRouteRoute
     }
     '/_navigationLayout/_authLayout/profile/abonnement': {
       id: '/_navigationLayout/_authLayout/profile/abonnement'
@@ -526,12 +546,15 @@ const NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren =
 
 interface NavigationLayoutAuthLayoutProfileRouteRouteChildren {
   NavigationLayoutAuthLayoutProfileAbonnementRoute: typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
+  NavigationLayoutAuthLayoutProfileAccountRoute: typeof NavigationLayoutAuthLayoutProfileAccountRoute
 }
 
 const NavigationLayoutAuthLayoutProfileRouteRouteChildren: NavigationLayoutAuthLayoutProfileRouteRouteChildren =
   {
     NavigationLayoutAuthLayoutProfileAbonnementRoute:
       NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren,
+    NavigationLayoutAuthLayoutProfileAccountRoute:
+      NavigationLayoutAuthLayoutProfileAccountRoute,
   }
 
 const NavigationLayoutAuthLayoutProfileRouteRouteWithChildren =

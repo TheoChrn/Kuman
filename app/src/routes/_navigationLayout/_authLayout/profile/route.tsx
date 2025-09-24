@@ -1,6 +1,10 @@
 import * as Ariakit from "@ariakit/react";
 import { role, roleLabelFrench } from "@kuman/db/enums";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
@@ -17,9 +21,12 @@ export const Route = createFileRoute("/_navigationLayout/_authLayout/profile")({
 });
 
 function RouteComponent() {
-  const { user } = Route.useRouteContext();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
+
+  const { data: user } = useSuspenseQuery(
+    trpc.user.getCurrentUser.queryOptions()
+  );
   const router = useRouter();
   const navigate = useNavigate();
 
@@ -46,7 +53,7 @@ function RouteComponent() {
                     Panneau d'administration
                   </Link>
                 )}
-                <Link className="button button-neutral" to=".">
+                <Link className="button button-neutral" to="/profile/account">
                   Modifier mes informations
                 </Link>
                 {user!.role !== role.ADMINISTRATOR &&
@@ -93,7 +100,12 @@ function RouteComponent() {
       </Ariakit.HeadingLevel>
       <main>
         <div className="user-info">
-          <img src="/mock_profile.png" alt="Photo de profil" />
+          <img
+            src="/mock_profile.png"
+            alt="Photo de profil"
+            height={50}
+            width={50}
+          />
           <div>
             <Ariakit.Heading>{user!.userName}</Ariakit.Heading>
             <span>{roleLabelFrench[user!.role]}</span>

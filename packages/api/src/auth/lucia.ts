@@ -17,6 +17,8 @@ export const lucia = new Lucia(
     getUserAttributes: (attributes) => {
       return {
         userName: attributes.userName,
+        firstName: attributes.firstName,
+        lastName: attributes.lastName,
         email: attributes.email,
         role: attributes.role,
         stripeCustomerId: attributes.stripeCustomerId,
@@ -30,6 +32,8 @@ declare module "lucia" {
     Lucia: typeof lucia;
     DatabaseUserAttributes: {
       userName: string;
+      firstName: string;
+      lastName: string;
       email: string;
       role: Role;
       stripeCustomerId: string;

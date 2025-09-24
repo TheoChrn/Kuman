@@ -40,7 +40,13 @@ function RouteComponent() {
               Favoris
             </Link>
             <Link to="/profile">
-              <PiUserBold size={24} />
+              <img
+                src="/mock_profile.png"
+                alt="Photo de profil"
+                className="logo"
+                height={24}
+                width={24}
+              />
               Profile
             </Link>
           </>

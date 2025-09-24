@@ -10,6 +10,11 @@
   transition-duration: 200ms;
   text-align: center;
 
+  &[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   &-link {
     font-weight: 600;
     border-radius: 0px;

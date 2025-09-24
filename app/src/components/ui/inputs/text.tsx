@@ -10,20 +10,22 @@ export function TextInput({ label, ...props }: InputProps) {
   const field = useFieldContext<string>();
 
   return (
-    <label>
-      {label}
-      <input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        className="text-input"
-        {...props}
-      />
+    <div className="input">
+      <label>
+        {label}
+        <input
+          id={field.name}
+          name={field.name}
+          value={field.state.value}
+          onBlur={field.handleBlur}
+          onChange={(e) => field.handleChange(e.target.value)}
+          className="text-input"
+          {...props}
+        />
+      </label>
       {field.state.meta.isTouched && !field.state.meta.isValid ? (
         <ErrorMessage>{field.state.meta.errors[0]?.message}</ErrorMessage>
       ) : null}
-    </label>
+    </div>
   );
 }
