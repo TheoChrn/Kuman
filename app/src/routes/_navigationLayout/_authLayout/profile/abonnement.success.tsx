@@ -13,7 +13,7 @@ export const Route = createFileRoute(
   },
   beforeLoad: async ({ context: { caller, user, queryClient, trpc } }) => {
     if (user?.role === "subscriber")
-      redirect({ to: "/profile/options/abonnement" });
+      redirect({ to: "/profile/abonnement" });
 
     await queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
 
@@ -27,7 +27,7 @@ function RouteComponent() {
   return (
     <Ariakit.DialogProvider>
       <Ariakit.Dialog
-        onClose={() => navigate({ to: "/profile/options/abonnement" })}
+        onClose={() => navigate({ to: "/profile/abonnement" })}
         open={true}
         className="dialog"
         backdrop={<div className="backdrop"></div>}

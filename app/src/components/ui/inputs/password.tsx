@@ -13,28 +13,30 @@ export function PasswordInput({ label, ...props }: InputProps) {
   const [showPassword, toggleShowPassword] = useState(false);
 
   return (
-    <label className="password-input">
-      {label}
-      <div>
-        <input
-          id={field.name}
-          name={field.name}
-          value={field.state.value}
-          onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
-          type={showPassword ? "text" : "password"}
-          {...props}
-        />
-        <Button onClick={() => toggleShowPassword(!showPassword)}>
-          <Ariakit.VisuallyHidden>
-            {showPassword ? "Cacher" : "Monter"} le mot de passe
-          </Ariakit.VisuallyHidden>
-          {showPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
-        </Button>
-      </div>
+    <div className="input">
+      <label className="password-input">
+        {label}
+        <div>
+          <input
+            id={field.name}
+            name={field.name}
+            value={field.state.value}
+            onBlur={field.handleBlur}
+            onChange={(e) => field.handleChange(e.target.value)}
+            type={showPassword ? "text" : "password"}
+            {...props}
+          />
+          <Button onClick={() => toggleShowPassword(!showPassword)}>
+            <Ariakit.VisuallyHidden>
+              {showPassword ? "Cacher" : "Monter"} le mot de passe
+            </Ariakit.VisuallyHidden>
+            {showPassword ? <PiEyeBold /> : <PiEyeClosedBold />}
+          </Button>
+        </div>
+      </label>
       {field.state.meta.isTouched && !field.state.meta.isValid ? (
         <ErrorMessage>{field.state.meta.errors[0]?.message}</ErrorMessage>
       ) : null}
-    </label>
+    </div>
   );
 }

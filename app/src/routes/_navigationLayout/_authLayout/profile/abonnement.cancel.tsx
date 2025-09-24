@@ -6,7 +6,7 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
   beforeLoad: ({ context: { user } }) => {
-    if (user?.stripeCustomerId) redirect({ to: "/profile/options/abonnement" });
+    if (user?.stripeCustomerId) redirect({ to: "/profile/abonnement" });
   },
 });
 
