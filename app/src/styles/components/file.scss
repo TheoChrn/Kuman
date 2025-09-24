@@ -1,12 +1,10 @@
-@use "../../../../styles/mixins.scss" as *;
-@use "../../../../styles/variables.scss" as *;
-@use "../../../ui/inputs/select/select.scss" as *;
-
-.multi-file-input {
-  @include space-y-3;
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+.file-input {
   & .drop-zone-container {
+    display: flex;
+    gap: 0.5rem;
     @include space-y-3;
-
     & .drop-zone {
       flex: 1;
       background-color: $background-100;
@@ -18,16 +16,8 @@
       cursor: pointer;
       @include flex-col-center;
     }
-  }
 
-  & .files-container {
-    overflow-x: scroll;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.5rem;
-
-    & > img {
-      flex: 1;
+    & img {
       object-fit: cover;
       max-height: 10rem;
       border-radius: 4px;

@@ -5,7 +5,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Suspense, useState } from "react";
 import { FaBars, FaPlus } from "react-icons/fa6";
 import { Footer } from "~/components/footer";
-import { Collection } from "~/components/route-components/catalogue/collection";
+import { Catalogue } from "~/components/catalogue";
 import SearchSerie from "~/components/search/search-serie";
 import { Button } from "~/components/ui/buttons/button";
 import { useDevice } from "~/hooks/use-device";
@@ -272,7 +272,7 @@ function RouteComponent() {
         )}
 
         <main className="catalogue">
-          <Collection searchParams={searchParams} />
+          <Catalogue searchParams={searchParams} />
         </main>
 
         <Footer />

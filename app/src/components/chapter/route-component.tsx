@@ -7,17 +7,16 @@ import {
 import { useBlocker } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useRef } from "react";
-import DesktopMenu from "~/components/route-components/chapter/menu/desktop-menu";
-import MobileMenu from "~/components/route-components/chapter/menu/mobile-menu";
+import DesktopMenu from "~/components/chapter/menu/desktop-menu";
+import MobileMenu from "~/components/chapter/menu/mobile-menu";
 import { useDevice } from "~/hooks/use-device";
 import { useChapterNavigation } from "~/hooks/use-read-chapter";
 import { Route } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 import { useTRPC } from "~/trpc/react";
 import { appStore } from "~/utils/stores/chapter-store";
-import styles from "~/components/chapter-number.module.scss";
 import { ChapterImage } from "~/components/chapter-image";
 
-export function ChapterRouteComponent({
+export function Chapter({
   chapter,
 }: {
   chapter:
@@ -141,10 +140,10 @@ export function ChapterRouteComponent({
       <section
         key={chapter.number}
         ref={containerRef}
-        className={`${styles["chapter-images-container"]} ${
+        className={`chapter-images-container ${
           readingMode === "scroll"
-            ? styles["chapter-images-container-scroll-y"]
-            : styles["chapter-images-container-scroll-x"]
+            ? "chapter-images-container-scroll-y"
+            : "chapter-images-container-scroll-x"
         }`}
       >
         {chapter.pages?.map((element, index) => {

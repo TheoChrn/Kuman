@@ -1,8 +1,7 @@
-@use "../../../styles/mixins.scss" as *;
-@use "../../../styles/variables.scss" as *;
-@use "../../ui/inputs/select/select.scss" as *;
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
 
-.add-a-chapter {
+#add-a-chapter {
   padding: 1.5rem;
   & form {
     max-width: 1024px;
@@ -72,10 +71,6 @@
       & .select:disabled {
         opacity: 0.5;
       }
-
-      & .render-multi-selection {
-        @extend %render-multi-selection;
-      }
     }
   }
 
@@ -107,7 +102,7 @@
   }
 }
 @media screen and (min-width: 768px) {
-  .add-a-manga {
+  #add-a-manga {
     & form {
       & .container {
         & .custom-file-input {

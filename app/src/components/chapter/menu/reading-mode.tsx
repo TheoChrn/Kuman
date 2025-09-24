@@ -1,5 +1,4 @@
 import * as Ariakit from "@ariakit/react";
-import styles from "./styles.module.scss";
 import { Scroll } from "~/components/reading-mode/scroll";
 import { SinglePage } from "~/components/reading-mode/single-page";
 import { useStore } from "@tanstack/react-store";
@@ -22,14 +21,14 @@ export function ReadingMode() {
 
   return (
     <Ariakit.RadioProvider>
-      <Ariakit.RadioGroup className={styles["radio-group"]}>
+      <Ariakit.RadioGroup className="radio-group">
         <Ariakit.VisuallyHidden>
           <Ariakit.GroupLabel>Options de lectures</Ariakit.GroupLabel>
         </Ariakit.VisuallyHidden>
         {readingModes.map((option) => {
           const ReadingMode = readingModeMapping[option];
           return (
-            <label key={option} className={styles["reading-mode-label"]}>
+            <label key={option} className="reading-mode-label">
               <Ariakit.VisuallyHidden>
                 <Ariakit.Radio
                   value={option}

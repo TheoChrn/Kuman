@@ -1,16 +1,12 @@
 import * as Ariakit from "@ariakit/react";
 
 import { searchParamsSchema } from "@kuman/shared/validators";
-import {
-  keepPreviousData,
-  useQuery,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { z } from "zod/v4";
 import { useTRPC } from "~/trpc/react";
 
-export function Collection(props: {
+export function Catalogue(props: {
   searchParams: z.infer<typeof searchParamsSchema>;
 }) {
   const trpc = useTRPC();

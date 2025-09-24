@@ -8,10 +8,10 @@ import { PiGear } from "react-icons/pi";
 import {
   readingModeMapping,
   readingModes,
-} from "~/components/route-components/chapter/menu/reading-mode";
+} from "~/components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
 import { appActions, appStore } from "~/utils/stores/chapter-store";
-import styles from "./styles.module.scss";
+
 import { ReadingMode } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 
 export interface DesktopMenuProps {
@@ -28,11 +28,11 @@ export default function DesktopMenu(props: DesktopMenuProps) {
     (state) => state.preferences.readingMode
   );
   return (
-    <div className={styles["content"]}>
+    <div className="content">
       <Link
         to="/$serieSlug/volumes"
         params={{ serieSlug: props.serieSlug }}
-        className={styles.back}
+        className="back"
       >
         <FaArrowLeft size={32} />
         <Ariakit.VisuallyHidden>Retour</Ariakit.VisuallyHidden>
@@ -44,10 +44,10 @@ export default function DesktopMenu(props: DesktopMenuProps) {
           }`,
         }}
         selectProps={{
-          className: `${styles["select"]} ${styles["select-chapter"]}`,
+          className: "select select-chapter",
         }}
         selectPopoverProps={{
-          className: styles["select-popover"],
+          className: "select-popover",
           sameWidth: true,
           portal: true,
           preventBodyScroll: true,
@@ -55,13 +55,13 @@ export default function DesktopMenu(props: DesktopMenuProps) {
       >
         {props.chapterList.map((list) => (
           <Ariakit.SelectGroup>
-            <Ariakit.SelectGroupLabel className={styles["select-group-label"]}>
+            <Ariakit.SelectGroupLabel className="select-group-label">
               Volume - {list.volumeNumber}
             </Ariakit.SelectGroupLabel>
             {list.chapters.map((chapter) => (
               <SelectItem
                 key={chapter.number}
-                className={styles["select-item"]}
+                className="select-item"
                 disabled={props.currentChapter === chapter.number}
                 hideOnClick
                 render={(renderProps) => (
@@ -92,10 +92,10 @@ export default function DesktopMenu(props: DesktopMenuProps) {
             value: `Page ${String(props.currentPage).padStart(2, "0")}`,
           }}
           selectProps={{
-            className: `${styles["select"]} ${styles["select-page"]}`,
+            className: "select select-page",
           }}
           selectPopoverProps={{
-            className: styles["select-popover"],
+            className: "select-popover",
             sameWidth: true,
             portal: true,
             preventBodyScroll: true,
@@ -129,19 +129,16 @@ export default function DesktopMenu(props: DesktopMenuProps) {
           <Ariakit.PopoverDisclosure>
             <PiGear size={32} />
           </Ariakit.PopoverDisclosure>
-          <Ariakit.Popover className={styles["popover"]} gutter={24}>
+          <Ariakit.Popover className="popover" gutter={24}>
             <Ariakit.RadioProvider>
-              <Ariakit.RadioGroup className={styles["radio-group"]}>
+              <Ariakit.RadioGroup className="radio-group">
                 <Ariakit.VisuallyHidden>
                   <Ariakit.GroupLabel>Options de lectures</Ariakit.GroupLabel>
                 </Ariakit.VisuallyHidden>
                 {readingModes.map((option) => {
                   const ReadingMode = readingModeMapping[option];
                   return (
-                    <label
-                      key={option}
-                      className={styles["reading-mode-label"]}
-                    >
+                    <label key={option} className="reading-mode-label">
                       <Ariakit.VisuallyHidden>
                         <Ariakit.Radio
                           value={option}

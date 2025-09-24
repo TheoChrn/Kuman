@@ -3,7 +3,6 @@ import { InputHTMLAttributes, useEffect, useRef } from "react";
 import { ErrorMessage } from "~/components/ui/inputs/error-message/error-message";
 import { InputProps } from "~/components/ui/inputs/text";
 import { useFieldContext } from "~/hooks/form-composition";
-import styles from "./styles.module.scss";
 
 interface FileInputProps
   extends InputProps,
@@ -31,7 +30,7 @@ export function FileInput({ label, className, ...props }: FileInputProps) {
   }, []);
 
   return (
-    <label className={`${styles["file-input"]} ${className}`}>
+    <label className={`file-input ${className}`}>
       <Ariakit.VisuallyHidden>
         <input
           id={field.name}
@@ -51,9 +50,9 @@ export function FileInput({ label, className, ...props }: FileInputProps) {
           {...props}
         />
       </Ariakit.VisuallyHidden>
-      <div className={styles["drop-zone-container"]}>
+      <div className="drop-zone-container">
         <div
-          className={styles["drop-zone"]}
+          className="drop-zone"
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => {
             e.preventDefault();

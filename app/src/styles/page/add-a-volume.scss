@@ -1,8 +1,7 @@
-@use "../../../styles/mixins.scss" as *;
-@use "../../../styles/variables.scss" as *;
-@use "../../ui/inputs/select/select.scss" as *;
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
 
-.add-a-volume {
+#add-a-volume {
   padding: 1.5rem;
   & form {
     max-width: 1024px;
@@ -68,10 +67,6 @@
         min-height: 10rem;
         resize: none;
       }
-
-      & .render-multi-selection {
-        @extend %render-multi-selection;
-      }
     }
   }
 
@@ -101,11 +96,9 @@
   }
 }
 @media screen and (min-width: 768px) {
-  .add-a-manga {
+  #add-a-manga {
     & form {
       & .container {
-        & .custom-file-input {
-        }
         & .fields {
           gap: 0.5rem;
           display: grid;

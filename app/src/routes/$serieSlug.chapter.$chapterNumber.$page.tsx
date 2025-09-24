@@ -1,8 +1,8 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { Scroll } from "~/components/reading-mode/scroll";
 import { SinglePage } from "~/components/reading-mode/single-page";
-import { FreeChapter } from "~/components/route-components/chapter/free/free-chapter";
-import { PremiumChapter } from "~/components/route-components/chapter/premium/premium-chapter";
+import { FreeChapter } from "~/components/chapter/free/free-chapter";
+import { PremiumChapter } from "~/components/chapter/premium/premium-chapter";
 
 export const readingModeMapping = {
   scroll: Scroll,

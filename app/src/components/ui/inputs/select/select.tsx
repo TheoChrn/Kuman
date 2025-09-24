@@ -1,5 +1,4 @@
 import * as Ariakit from "@ariakit/react";
-import styles from "./styles.module.scss";
 
 export interface SelectProps {
   children?: React.ReactNode;
@@ -24,20 +23,20 @@ export function Select({
     <Ariakit.SelectProvider {...selectProviderProps}>
       <Ariakit.Select
         {...restSelectProps}
-        className={`${styles["select"]} ${selectClassName}`}
+        className={`select ${selectClassName}`}
       >
         {renderSelection ??
           (selectProps?.value || (
             <Ariakit.SelectValue fallback={restSelectProps.fallback} />
           ))}
-        <Ariakit.SelectArrow className={styles["select-arrow"]} />
+        <Ariakit.SelectArrow className="select-arrow" />
       </Ariakit.Select>
       <Ariakit.SelectPopover
         {...restPopoverProps}
         sameWidth
         portal
         flip="bottom"
-        className={`${styles["select-popover"]} ${popoverClassName}`}
+        className={`select-popover ${popoverClassName}`}
       >
         {children}
       </Ariakit.SelectPopover>
@@ -51,7 +50,7 @@ export function SelectItem({ className, ...props }: SelectItemProps) {
   return (
     <Ariakit.SelectItem
       {...props}
-      className={`${styles["select-item"]} ${className}`}
+      className={`select-item ${className}`}
       accessibleWhenDisabled={true}
     />
   );
