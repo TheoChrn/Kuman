@@ -79,9 +79,13 @@
         }
       }
       & > .other-nav {
-        @include space-y-2;
         display: flex;
+        flex-direction: column;
         gap: 0.5rem;
+
+        @include responsive(lg) {
+          flex-direction: row;
+        }
         & > * {
           flex: 1;
           flex-shrink: 0;
