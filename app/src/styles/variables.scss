@@ -15,3 +15,17 @@ $primary: #bc002d;
 $primary-hover: #d32f4c;
 
 $destructive: #e6002a;
+
+$xs: 480px;
+$sm: 640px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
+
+$breakpoints: (
+  xs: $xs,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+);

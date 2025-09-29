@@ -1,3 +1,6 @@
+@use "sass:map";
+@use "./variables.scss" as *;
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -88,4 +91,15 @@
   box-shadow:
     0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+@mixin responsive($size) {
+  $breakpoint: map.get($breakpoints, $size);
+  @if $breakpoint {
+    @media (min-width: $breakpoint) {
+      @content;
+    }
+  } @else {
+    @warn "No breakpoint found for `#{$size}`.";
+  }
 }
