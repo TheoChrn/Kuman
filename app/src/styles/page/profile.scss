@@ -2,11 +2,22 @@
 @use "../variables.scss" as *;
 
 #profile {
-  display: flex;
-  flex-direction: column-reverse;
-  & > main {
+  padding: 1rem;
+  @include space-y-6;
+
+  @include responsive(lg) {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  & > header {
     @include space-y-4;
-    padding: 1rem;
+
+    @include responsive(lg) {
+      overflow: auto;
+      flex: 1;
+    }
+
     & > .user-info {
       @include space-y-3;
       @include flex-col;
@@ -34,14 +45,17 @@
     }
   }
 
-  & > aside {
+  & > .menus {
+    @include responsive(lg) {
+      grid-template-columns: 75% 25%;
+      height: fit-content;
+      position: sticky;
+      top: 0.5rem;
+    }
+
     & > section {
       @include space-y-2;
       padding: 1rem 0;
-
-      &:not(:first-child) {
-        border-top: solid 1px $stroke;
-      }
 
       & > .heading {
         font-size: 1.125rem;
@@ -49,43 +63,52 @@
         padding: 0 0.5rem;
       }
 
-      & > menu {
-        @include flex-col;
-        gap: 0.25rem;
-        padding: 0 0.5rem;
+      & > .general-nav {
+        display: grid;
+        gap: 0.5rem;
 
-        & > .button {
-          justify-content: start;
+        @include responsive(lg) {
+          grid-template-columns: 65% 35%;
+        }
+
+        & > div {
+          @include space-y-2;
+          @include responsive(lg) {
+            justify-content: flex-start;
+          }
         }
       }
-    }
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  #profile {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    max-width: 1280px;
-    gap: 2rem;
-    margin: 0 auto;
-
-    & > aside {
-      height: fit-content;
-      position: sticky;
-      top: 0.5rem;
-
-      & > section:not(:first-child) {
-        border-top: none;
+      & > .other-nav {
+        @include space-y-2;
+        display: flex;
+        gap: 0.5rem;
+        & > * {
+          flex: 1;
+          flex-shrink: 0;
+        }
       }
-    }
 
-    & > main {
-      padding: 2rem;
-      overflow: auto;
-      flex: 1;
-      border-left: solid 2px $stroke;
+      & > nav {
+        & a,
+        & button {
+          background-color: $background-100;
+          @include flex-col;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 2rem;
+          border: solid 1px $stroke;
+          gap: 0.5rem;
+          transition: 200ms;
+          border-radius: 4px;
+        }
+
+        & button:hover,
+        & a:hover {
+          color: $primary;
+          border-color: $primary;
+        }
+      }
     }
   }
 }
