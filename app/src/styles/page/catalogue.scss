@@ -87,48 +87,6 @@
       color: $primary;
     }
 
-    .search-results {
-      @include space-y-6;
-      & > a {
-        display: flex;
-        gap: 0.5rem;
-
-        & > img {
-          aspect-ratio: 2/3;
-          border-radius: 4px;
-          max-height: 175px;
-        }
-
-        & img + div {
-          @include space-y-2;
-          overflow: auto;
-          margin: auto 0;
-
-          & h4 {
-            font-weight: 500;
-            color: $foreground-100;
-            font-size: 0.875rem;
-          }
-
-          & .tag {
-            font-size: 0.75rem;
-          }
-
-          & ul {
-            display: flex;
-            overflow: auto;
-            gap: 0.5rem;
-
-            & li {
-              & svg {
-                flex-shrink: 0;
-              }
-            }
-          }
-        }
-      }
-    }
-
     .quick-filters {
       &-heading {
         @include flex-between;

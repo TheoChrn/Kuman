@@ -97,7 +97,7 @@ function RouteComponent() {
               <Button
                 type="submit"
                 disabled={!canSubmit}
-                className="Button button-primary"
+                className="button button-primary"
               >
                 Se connecter
               </Button>

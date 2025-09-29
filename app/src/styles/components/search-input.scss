@@ -3,15 +3,29 @@
 
 .search-input {
   @include flex-between;
-  width: 100%;
 
-  & label {
+  & svg {
+    flex-shrink: 0;
+  }
+
+  &:has(input[aria-expanded="true"]) {
+    & > label {
+      border: solid 1px $primary;
+    }
+
+    svg {
+      fill: $primary;
+    }
+  }
+
+  & > label {
     @include flex-center;
-    border: solid 1px $primary;
+    border: solid 1px $stroke;
     border-radius: 1000px;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     width: 100%;
     gap: 1rem;
+
     & input {
       width: 100%;
     }
