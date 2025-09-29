@@ -51,7 +51,7 @@ function RouteComponent() {
 
   return (
     <Ariakit.HeadingLevel>
-      <section className="menus">
+      <div className="menus">
         <Ariakit.HeadingLevel>
           <section>
             <Ariakit.Heading className="heading">Général</Ariakit.Heading>
@@ -97,7 +97,7 @@ function RouteComponent() {
             </nav>
           </section>
         </Ariakit.HeadingLevel>
-      </section>
+      </div>
     </Ariakit.HeadingLevel>
   );
 }

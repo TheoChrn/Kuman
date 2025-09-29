@@ -3,7 +3,7 @@
 
 #profile {
   padding: 1rem;
-  @include space-y-6;
+  @include space-y-8;
 
   @include responsive(lg) {
     max-width: 1280px;
@@ -33,34 +33,17 @@
         height: 150px;
         width: 150px;
       }
-
-      & > .menus {
-        @include space-y-1;
-
-        & > span {
-          text-transform: capitalize;
-          font-weight: 500;
-        }
-      }
     }
   }
 
   & > .menus {
-    @include responsive(lg) {
-      grid-template-columns: 75% 25%;
-      height: fit-content;
-      position: sticky;
-      top: 0.5rem;
-    }
-
+    @include space-y-6;
     & > section {
       @include space-y-2;
-      padding: 1rem 0;
 
       & > .heading {
         font-size: 1.125rem;
         font-weight: 600;
-        padding: 0 0.5rem;
       }
 
       & > .general-nav {
