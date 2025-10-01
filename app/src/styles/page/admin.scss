@@ -1,0 +1,115 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#admin {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  @include space-y-3;
+
+  & .disclosure-wrapper {
+    border: solid 2px $stroke;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: $background-100;
+  }
+
+  & .add-new-resource {
+    @include flex-center;
+    gap: 0.5rem;
+    border: solid 1px $primary;
+    border-radius: 4px;
+    padding: 0.5rem;
+    color: $primary;
+    margin-left: auto;
+    width: fit-content;
+
+    &:hover {
+      color: $neutral-foreground;
+      background-color: $primary;
+      transition: 200ms;
+    }
+  }
+
+  & .disclosure {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    & .actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+
+      & .button-outline {
+        padding: 0.5rem;
+        border-radius: 4px;
+      }
+    }
+
+    &[aria-expanded="true"] {
+      padding-bottom: 1rem;
+      & .caret {
+        transform: rotate(180deg);
+      }
+    }
+    & .caret {
+      transition-duration: 150ms;
+      flex-shrink: 0;
+    }
+  }
+
+  & .disclosure-content {
+    display: grid;
+    transition: grid-template-rows 150ms;
+    grid-template-rows: 0fr;
+    padding: 1rem;
+    border: solid 2px $stroke;
+    border-radius: 8px;
+    background-color: $background;
+
+    & > div {
+      @include space-y-4;
+    }
+
+    & .disclosure-content {
+      background-color: $background;
+    }
+
+    &[data-enter] {
+      grid-template-rows: 1fr;
+    }
+
+    > * {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    & ul {
+      @include space-y-2;
+      & > li:not(:first-child) {
+        border-top: solid 2px $stroke;
+      }
+    }
+
+    & .chapter-list {
+      @include space-y-none;
+      & li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+
+        & .chapter-number {
+          font-size: 2rem;
+          color: $foreground-100;
+        }
+
+        & .chapter-page-count {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}

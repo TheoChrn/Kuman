@@ -1,38 +1,6 @@
 @use "../mixins.scss" as *;
 @use "../variables.scss" as *;
 
-.dialog {
-  position: fixed;
-  max-width: 65ch;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 1rem;
-  @include space-y-4;
-
-  & > div {
-    padding: 1.5rem;
-    border-radius: 8px;
-    background-color: $background;
-    @include flex-between;
-
-    & > .dialog-heading {
-      font-size: 1.125rem;
-    }
-
-    & > .dialog-dismiss {
-      display: block;
-      margin-left: auto;
-    }
-  }
-}
-
-.backdrop {
-  background-color: hsla(0, 0%, 0%, 0.4);
-  z-index: 2;
-}
-
 #abonnement {
   & > .heading {
     text-align: center;

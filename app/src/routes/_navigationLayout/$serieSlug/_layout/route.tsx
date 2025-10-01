@@ -2,11 +2,6 @@ import * as Ariakit from "@ariakit/react";
 import { statusLabelFrench } from "@kuman/db/enums";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import {
-  PiInstagramLogoBold,
-  PiTiktokLogoBold,
-  PiXLogoBold,
-} from "react-icons/pi";
 import { Footer } from "~/components/footer";
 import { useTRPC } from "~/trpc/react";
 

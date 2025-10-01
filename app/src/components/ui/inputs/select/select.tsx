@@ -35,7 +35,7 @@ export function Select({
         {...restPopoverProps}
         sameWidth
         portal
-        flip="bottom"
+        gutter={8}
         className={`select-popover ${popoverClassName}`}
       >
         {children}

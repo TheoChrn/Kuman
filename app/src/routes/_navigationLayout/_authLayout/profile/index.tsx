@@ -63,7 +63,7 @@ function RouteComponent() {
                   Gérer mon abonnement
                 </Link>
               ) : (
-                <Link to="/admin">
+                <Link to="/admin/series">
                   <MdAdminPanelSettings size={24} /> Panneau d'administration
                 </Link>
               )}

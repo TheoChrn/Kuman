@@ -32,9 +32,6 @@ function RouteComponent() {
     trpc.user.getCurrentUser.queryOptions()
   );
 
-  console.log(Route.fullPath);
-  console.log(location.pathname);
-
   return (
     <div id="profile">
       <header id="profile-header">

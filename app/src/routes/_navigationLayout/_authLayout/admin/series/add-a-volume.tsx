@@ -8,7 +8,7 @@ import { useTRPC } from "~/trpc/react";
 import { createVolumeForm } from "@kuman/shared/validators";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_authLayout/admin/add-a-volume"
+  "/_navigationLayout/_authLayout/admin/series/add-a-volume"
 )({
   loader: async ({ context: { trpc, queryClient } }) => {
     await queryClient.ensureQueryData(trpc.mangas.getAll.queryOptions());

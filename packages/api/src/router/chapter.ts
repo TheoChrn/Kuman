@@ -9,11 +9,7 @@ import { z } from "zod/v4";
 import { and, eq, generateChapterId, jsonAgg, schema } from "@kuman/db";
 import { createChapter } from "@kuman/shared/validators";
 
-import {
-  protectedProcedure,
-  publicProcedure,
-  subscriberProtectedProcedure,
-} from "../trpc";
+import { publicProcedure, subscriberProtectedProcedure } from "../trpc";
 
 export const chapterRouter = {
   getFreeChapter: publicProcedure
@@ -75,7 +71,7 @@ export const chapterRouter = {
             eq(schema.chapters.volumeId, schema.volumes.id),
           ),
         )
-        .then((rows) => ({ ...rows[0] }));
+        .then((rows) => rows[0]!);
 
       const { data: list } = await ctx.supabase.storage
         .from("assets")

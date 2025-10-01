@@ -12,6 +12,7 @@ import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
 import { db } from "@kuman/db/client";
+import { role, roleValues } from "@kuman/db/enums";
 import { createSupabaseClient } from "@kuman/db/supabase";
 
 import type { Session } from "./auth/session";
@@ -38,7 +39,9 @@ export const createTRPCContext = async ({
   resHeaders: Headers;
 }) => {
   const session: Session = await validateSessionCookies(req.headers);
-  const supabase = createSupabaseClient("");
+  const supabase = createSupabaseClient({
+    admin: session?.user?.role === role.ADMINISTRATOR,
+  });
 
   return {
     session,

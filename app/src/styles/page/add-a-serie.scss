@@ -1,10 +1,13 @@
 @use "../mixins.scss" as *;
 @use "../variables.scss" as *;
 
-#add-a-serie {
-  padding: 1.5rem;
-  & form {
+#add-a-serie,
+#edit-a-serie {
+  position: relative;
+
+  .dialog-content {
     max-width: 1024px;
+    padding-bottom: 0;
     margin: 0 auto;
     @include space-y-6;
 
@@ -12,103 +15,84 @@
       text-align: center;
     }
 
-    & .container {
-      @include space-y-6;
+    & .custom-file-input {
+      display: flex;
+      gap: 0.5rem;
+      @include space-y-3;
 
-      & .custom-file-input {
-        display: flex;
-        gap: 0.5rem;
-        @include space-y-3;
+      & > div:first-of-type {
+        flex: 1;
+        background-color: $background-100;
+        border: dashed 2px $stroke;
+        text-align: center;
+        min-height: 10rem;
+        border-radius: 8px;
+        gap: 0.25rem;
+        cursor: pointer;
+        @include flex-col-center;
 
-        & > div:first-of-type {
-          flex: 1;
-          background-color: $background-100;
-          border: dashed 2px $stroke;
-          text-align: center;
-          min-height: 10rem;
-          border-radius: 8px;
-          gap: 0.25rem;
-          cursor: pointer;
-          @include flex-col-center;
-
-          & div {
-            & svg {
-              margin: 0 auto;
-            }
+        & div {
+          & svg {
+            margin: 0 auto;
           }
         }
-
-        & img {
-          object-fit: cover;
-          max-height: 10rem;
-          border-radius: 4px;
-        }
       }
 
-      & label {
-        display: block;
-        width: 100%;
-      }
-
-      & input,
-      textarea {
-        border: solid 1px $stroke;
-        padding: 0.5rem;
-        background-color: $background-100;
-        border-radius: 8px;
-        width: 100%;
-
-        &:focus {
-          border: solid 1px $primary;
-        }
-      }
-
-      & textarea {
-        min-height: 10rem;
-        resize: none;
+      & img {
+        object-fit: cover;
+        max-height: 10rem;
+        border-radius: 4px;
       }
     }
-  }
 
-  .button {
-    padding: 0.625rem 1rem;
-    border-radius: 4px;
-    margin: 0 auto;
-    transition-duration: 100ms;
-
-    &:hover {
-      opacity: 0.7;
-    }
-
-    &-primary {
-      background-color: $primary;
-      border: solid 1px $primary;
-      color: $neutral-foreground;
-    }
-
-    &-outline {
-      border: solid 1px $primary;
-    }
-
-    &-full {
+    & label {
+      display: block;
       width: 100%;
+    }
+
+    & input,
+    textarea {
+      border: solid 1px $stroke;
+      padding: 0.5rem;
+      background-color: $background-100;
+      border-radius: 8px;
+      width: 100%;
+
+      &:focus {
+        border: solid 1px $primary;
+      }
+    }
+
+    & textarea {
+      min-height: 10rem;
+      resize: none;
+    }
+
+    & .button-container {
+      position: sticky;
+      bottom: 0;
+      background-color: $background;
+      padding: 1rem 0;
+
+      & .button {
+        height: fit-content;
+        border-radius: 4px;
+        margin: 0 auto;
+      }
     }
   }
 }
-@media screen and (min-width: 768px) {
-  #add-a-manga {
-    & form {
-      & .container {
-        & .custom-file-input {
-        }
-        & .fields {
-          gap: 0.5rem;
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
 
-          & label:nth-child(7) {
-            grid-column: 1 / span 2;
-          }
+@media screen and (min-width: 768px) {
+  #add-a-serie {
+    & form {
+      & .fields {
+        gap: 0.5rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        & label:nth-child(7) {
+          grid-column: 1 / span 2;
         }
       }
     }

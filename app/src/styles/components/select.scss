@@ -4,6 +4,7 @@
 .select {
   border: solid 1px $stroke;
   overflow: hidden;
+  text-transform: capitalize;
   background-color: $background-100;
   border-radius: 8px;
   width: 100%;
@@ -11,10 +12,7 @@
   @include flex-between;
 
   &[aria-expanded="true"] {
-    border: solid 1px $primary;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-
+    border-color: $primary;
     & .select-arrow {
       transform: rotate(180deg);
     }
@@ -30,21 +28,13 @@
 
   &-popover {
     background-color: $background-100;
-    border: solid 1px $stroke;
-    border-top: 0;
+    border: solid 1px $primary;
     border-radius: 8px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    z-index: 50;
+    z-index: 2;
     max-height: 24rem;
     overflow: auto;
     max-height: 11rem;
     @include shadow;
-
-    &[data-open="true"] {
-      border: solid 1px $primary;
-      border-top: 0;
-    }
   }
 
   &-item {
@@ -54,6 +44,10 @@
     cursor: pointer;
     padding: 0.5rem;
     width: 100%;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
 
     &-hover {
       background-color: $primary-hover;

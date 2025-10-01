@@ -9,7 +9,7 @@ import { SelectItem } from "~/components/ui/inputs/select/select";
 import { useStore } from "@tanstack/react-store";
 
 export const Route = createFileRoute(
-  "/_navigationLayout/_authLayout/admin/add-a-chapter"
+  "/_navigationLayout/_authLayout/admin/series/add-a-chapter"
 )({
   loader: async ({ context: { trpc, queryClient } }) => {
     await queryClient.ensureQueryData(trpc.mangas.getAll.queryOptions());

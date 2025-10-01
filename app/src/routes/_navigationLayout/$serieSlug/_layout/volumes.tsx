@@ -54,10 +54,7 @@ export function RouteComponent() {
                     </div>
                     <PiCaretDown className="volume-caret" size={24} />
                   </Ariakit.Disclosure>
-                  <Ariakit.DisclosureContent
-                    className="chapters"
-                    render={<div />}
-                  >
+                  <Ariakit.DisclosureContent className="chapters">
                     <Ariakit.HeadingLevel>
                       <ul>
                         {volume.chapters.length

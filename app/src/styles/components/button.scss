@@ -43,6 +43,10 @@
   &-outline {
     border: solid 1px $primary;
     color: $primary;
+
+    &:hover {
+      background-color: oklch(0% 0 0 / 0.05);
+    }
   }
 
   &-neutral {

@@ -1,10 +1,9 @@
-import { normalize } from "path";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { getTableColumns } from "drizzle-orm";
+import { normalize } from "path";
 import z from "zod/v4";
 
-import type { PublisherFr, PublisherJp, Status, Type } from "@kuman/db/enums";
 import {
   and,
   arrayContainsPartial,
@@ -16,7 +15,7 @@ import {
   schema,
   sql,
 } from "@kuman/db";
-import { toSlug } from "@kuman/shared/format";
+import type { PublisherFr, PublisherJp, Status, Type } from "@kuman/db/enums";
 import { createManga, searchParamsSchema } from "@kuman/shared/validators";
 
 import { publicProcedure } from "../trpc";
@@ -26,20 +25,24 @@ export const mangaRouter = {
     .input(createManga)
     .mutation(async ({ ctx, input }) => {
       const { cover, ...restinput } = input;
-      const slug = toSlug(input.romajiTitle);
-      const path = `mangas/${slug}/${input.cover.name}`;
+      const slug = input.slug;
 
       let publicUrl: string | null = null;
 
-      const { data } = await ctx.supabase.storage
-        .from("covers")
-        .upload(path, input.cover, {
-          cacheControl: "31536000",
-        });
+      if (input.cover) {
+        const path = `mangas/${slug}/${input.cover.name}`;
 
-      if (data) {
-        publicUrl = ctx.supabase.storage.from("covers").getPublicUrl(data.path)
-          .data.publicUrl;
+        const { data } = await ctx.supabase.storage
+          .from("covers")
+          .upload(path, input.cover, {
+            cacheControl: "31536000",
+          });
+
+        if (data) {
+          publicUrl = ctx.supabase.storage
+            .from("covers")
+            .getPublicUrl(data.path).data.publicUrl;
+        }
       }
 
       const res = await ctx.db
@@ -64,6 +67,54 @@ export const mangaRouter = {
           message: "Ce manga existe déjà",
         });
       }
+    }),
+
+  update: publicProcedure
+    .input(createManga)
+    .mutation(async ({ ctx, input }) => {
+      const { cover, ...restinput } = input;
+      const slug = input.slug;
+
+      let publicUrl: string | null = null;
+
+      console.log(input.cover);
+      if (input.cover) {
+        const path = `mangas/${slug}/${input.cover.name}`;
+
+        const { data, error } = await ctx.supabase.storage
+          .from("covers")
+          .upload(path, input.cover, {
+            cacheControl: "31536000",
+            upsert: true,
+          });
+
+        console.log("data");
+        console.log(data);
+        console.log("error");
+        console.log(error);
+
+        if (data) {
+          publicUrl = ctx.supabase.storage
+            .from("covers")
+            .getPublicUrl(data.path).data.publicUrl;
+        }
+      }
+
+      console.log(publicUrl);
+
+      await ctx.db
+        .update(schema.mangas)
+        .set({
+          ...restinput,
+          status: input.status as Status,
+          genres: input.genres,
+          type: input.type as Type,
+          publisherFr: input.publisherFr as PublisherFr,
+          publisherJp: input.publisherJp as PublisherJp,
+          slug,
+          coverUrl: publicUrl,
+        })
+        .where(eq(schema.mangas.slug, slug));
     }),
 
   getAll: publicProcedure
@@ -122,6 +173,7 @@ export const mangaRouter = {
           ),
         );
     }),
+
   get: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
