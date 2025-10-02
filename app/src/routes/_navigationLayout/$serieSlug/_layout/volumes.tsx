@@ -15,7 +15,9 @@ function RouteComponent() {
   const { serieSlug } = Route.useParams();
 
   const { data: volumes } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+    trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+      serie: serieSlug,
+    })
   );
 
   return (

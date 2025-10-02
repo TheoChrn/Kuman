@@ -7,6 +7,17 @@
   padding: 1rem;
   @include space-y-3;
 
+  & .actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    & .button-outline {
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+  }
+
   & .disclosure-wrapper {
     border: solid 2px $stroke;
     border-radius: 8px;
@@ -36,17 +47,6 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-
-    & .actions {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-
-      & .button-outline {
-        padding: 0.5rem;
-        border-radius: 4px;
-      }
-    }
 
     &[aria-expanded="true"] {
       padding-bottom: 1rem;
@@ -98,8 +98,14 @@
       & li {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        justify-content: space-between;
         padding: 1rem 0;
+
+        & > div {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
 
         & .chapter-number {
           font-size: 2rem;

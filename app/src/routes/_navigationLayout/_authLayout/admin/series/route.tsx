@@ -1,3 +1,4 @@
+import * as Ariakit from "@ariakit/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -5,10 +6,9 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
-import { useTRPC } from "~/trpc/react";
-import * as Ariakit from "@ariakit/react";
 import { PiCaretDown, PiPencil, PiPlus } from "react-icons/pi";
-import { Button } from "~/components/ui/buttons/button";
+import { Dialog } from "~/components/ui/dialog";
+import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series"
@@ -32,7 +32,11 @@ function RouteComponent() {
   return (
     <>
       <div id="admin">
-        <Link to="/admin/series/add" className="button add-new-resource">
+        <Link
+          resetScroll={false}
+          to="/admin/series/add"
+          className="button add-new-resource"
+        >
           <PiPlus size={24} /> Ajouter une série
         </Link>
         {library.map((serie) => (
@@ -52,6 +56,7 @@ function RouteComponent() {
                 </Ariakit.Heading>
                 <div className="actions">
                   <Link
+                    resetScroll={false}
                     to="/admin/series/$slug/edit"
                     params={{ slug: serie.slug }}
                     className="button button-outline"
@@ -81,12 +86,19 @@ function RouteComponent() {
 function Comp(props: { slug: string }) {
   const trpc = useTRPC();
   const { data: volumes } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions({ serie: props.slug })
+    trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+      serie: props.slug,
+    })
   );
 
   return (
     <div>
-      <Link className="button add-new-resource">
+      <Link
+        resetScroll={false}
+        to="/admin/series/$serieSlug/volume/add"
+        params={{ serieSlug: props.slug }}
+        className="button add-new-resource"
+      >
         <PiPlus size={24} />
         Ajouter un volume
       </Link>
@@ -106,12 +118,36 @@ function Comp(props: { slug: string }) {
                 <Ariakit.Heading className="heading-7">
                   Volume {volume.volumeNumber}
                 </Ariakit.Heading>
-                <PiCaretDown size={24} className="caret" />
+                <div className="actions">
+                  <Link
+                    resetScroll={false}
+                    to="/admin/series/$serieSlug/$volume/edit"
+                    params={{
+                      serieSlug: props.slug,
+                      volume: volume.volumeNumber.toString(),
+                    }}
+                    className="button button-outline"
+                  >
+                    <PiPencil size={24} />
+                    <Ariakit.VisuallyHidden>
+                      Éditer un volume
+                    </Ariakit.VisuallyHidden>
+                  </Link>
+                  <PiCaretDown size={24} className="caret" />
+                </div>
               </Ariakit.Disclosure>
               <Ariakit.DisclosureContent className="disclosure-content">
                 <Ariakit.HeadingLevel>
                   <div>
-                    <Link className="button add-new-resource">
+                    <Link
+                      resetScroll={false}
+                      to="/admin/series/$serieSlug/$volume/chapter/add"
+                      params={{
+                        serieSlug: props.slug,
+                        volume: volume.volumeNumber.toString(),
+                      }}
+                      className="button add-new-resource"
+                    >
                       <PiPlus size={24} />
                       Ajouter un chapitre
                     </Link>
@@ -120,14 +156,33 @@ function Comp(props: { slug: string }) {
                       <ul className="chapter-list">
                         {volume.chapters.map((chapter) => (
                           <li key={chapter.number}>
-                            <span className="chapter-number">
-                              {chapter.number}
-                            </span>
                             <div>
-                              <Ariakit.Heading className="text">
-                                {chapter.name}
-                              </Ariakit.Heading>
-                              <span>{chapter.pageCount} pages</span>
+                              <span className="chapter-number">
+                                {chapter.number}
+                              </span>
+                              <div>
+                                <Ariakit.Heading className="text">
+                                  {chapter.name}
+                                </Ariakit.Heading>
+                                <span>{chapter.pageCount} pages</span>
+                              </div>
+                            </div>
+                            <div className="actions">
+                              <Link
+                                resetScroll={false}
+                                to="/admin/series/$serieSlug/$volume/$chapter/edit"
+                                params={{
+                                  serieSlug: props.slug,
+                                  chapter: chapter.number.toString(),
+                                  volume: volume.volumeNumber.toString(),
+                                }}
+                                className="button button-outline"
+                              >
+                                <PiPencil size={24} />
+                                <Ariakit.VisuallyHidden>
+                                  Éditer une série
+                                </Ariakit.VisuallyHidden>
+                              </Link>
                             </div>
                           </li>
                         ))}

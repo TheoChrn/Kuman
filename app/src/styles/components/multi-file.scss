@@ -3,6 +3,11 @@
 
 .multi-file-input {
   @include space-y-3;
+
+  & > label {
+    display: block;
+  }
+
   & .drop-zone-container {
     @include space-y-3;
 
@@ -25,11 +30,32 @@
     flex-wrap: nowrap;
     gap: 0.5rem;
 
-    & > img {
-      flex: 1;
+    & > div {
+      position: relative;
+      display: flex;
+      flex: 0 0 auto;
+
+      & .button {
+        rotate: 45deg;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        border-radius: 100%;
+        color: $neutral-foreground;
+        padding: 0.25rem;
+        background-color: $neutral;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+
+    & img {
       object-fit: cover;
-      max-height: 10rem;
       border-radius: 4px;
+      height: 10rem;
+      width: 100%;
     }
   }
 }

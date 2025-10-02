@@ -127,12 +127,23 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   });
 });
 
-export const subscriberProtectedProcedure = protectedProcedure.use(
+export const protectedSubscriberProcedure = protectedProcedure.use(
   ({ ctx, next }) => {
-    if (ctx.session.user.role === "user") {
+    if (ctx.session.user.role === role.SUBSCRIBER) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Seul les membres premium ont accès à cette ressource",
+      });
+    }
+    return next();
+  },
+);
+export const protectedAdminProcedure = protectedProcedure.use(
+  ({ ctx, next }) => {
+    if (ctx.session.user.role !== role.ADMINISTRATOR) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Seuls les administrateurs accès à cette ressource",
       });
     }
     return next();

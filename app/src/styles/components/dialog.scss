@@ -2,7 +2,7 @@
 @use "../variables.scss" as *;
 
 .dialog {
-  position: absolute;
+  position: fixed;
   max-width: 768px;
   max-height: 95vh;
   overflow: auto;

@@ -38,7 +38,9 @@ export function Chapter({
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const { data: chapterList } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+    trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+      serie: serieSlug,
+    })
   );
 
   const readingMode = useStore(
@@ -151,7 +153,7 @@ export function Chapter({
             <ChapterImage
               key={index}
               index={index}
-              src={element.signedUrl}
+              src={element}
               alt={`Chapitre ${chapter.number} - Page ${index + 1}`}
               chapterNumber={chapterNumber}
               ref={(el) => {

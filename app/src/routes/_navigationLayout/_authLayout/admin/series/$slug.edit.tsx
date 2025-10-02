@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Dialog, DialogHeading } from "~/components/ui/dialog";
-import { AddSerieFormModal } from "~/routes/_navigationLayout/_authLayout/admin/series/-add-a-serie-form";
+import { AddSerieFormModal } from "~/components/serie-form";
 import { useTRPC } from "~/trpc/react";
 import * as Ariakit from "@ariakit/react";
 import { use, useMemo } from "react";
@@ -30,7 +30,7 @@ function RouteComponent() {
   return (
     <Dialog backUrl="/admin/series">
       <Ariakit.HeadingLevel>
-        <div id="add-a-serie">
+        <div id="serie-form" className="form-wrapper">
           <DialogHeading>Éditer</DialogHeading>
           <AddSerieFormModal serie={serie} />
         </div>

@@ -43,8 +43,8 @@ function RouteComponent() {
     trpc.auth.logout.mutationOptions({
       onSuccess: async () => {
         queryClient.clear();
-        router.invalidate();
         navigate({ to: "/auth/login" });
+        router.invalidate();
       },
     })
   );

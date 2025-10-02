@@ -7,7 +7,7 @@ import {
   baseInputTextField,
 } from "./utils";
 
-export const createVolumeForm = z.object({
+export const createOrUpdateVolumeForm = z.object({
   title: baseInputTextField(),
   volumeNumber: baseInputRequiredNumberField(
     z.number().positive("Le numéro doit être supérieur à 1"),
@@ -20,7 +20,7 @@ export const createVolumeForm = z.object({
   mangaSlug: baseInputRequiredTextField(),
 });
 
-export const createVolume = z
+export const createOrUpdateVolume = z
   .instanceof(FormData)
   .transform((formData) => {
     const json = formData.get("json")!.toString();
@@ -28,4 +28,4 @@ export const createVolume = z
     const cover = formData.get("cover");
     return { ...data, cover };
   })
-  .pipe(createVolumeForm);
+  .pipe(createOrUpdateVolumeForm);

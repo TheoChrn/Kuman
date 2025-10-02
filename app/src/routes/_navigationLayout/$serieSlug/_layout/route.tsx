@@ -12,7 +12,9 @@ export const Route = createFileRoute("/_navigationLayout/$serieSlug/_layout")({
         trpc.mangas.get.queryOptions({ slug: serieSlug })
       ),
       queryClient.prefetchQuery(
-        trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+        trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+          serie: serieSlug,
+        })
       ),
     ]);
   },

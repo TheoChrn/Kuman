@@ -21,10 +21,10 @@ import {
   searchParamsSchema,
 } from "@kuman/shared/validators";
 
-import { publicProcedure } from "../trpc";
+import { protectedAdminProcedure, publicProcedure } from "../trpc";
 
 export const mangaRouter = {
-  create: publicProcedure
+  create: protectedAdminProcedure
     .input(createOrUpdateSerie)
     .mutation(async ({ ctx, input }) => {
       const { cover, ...restinput } = input;
@@ -36,14 +36,14 @@ export const mangaRouter = {
         const path = `mangas/${slug}/${input.cover.name}`;
 
         const { data } = await ctx.supabase.storage
-          .from("covers")
+          .from("public-bucket")
           .upload(path, input.cover, {
             cacheControl: "31536000",
           });
 
         if (data) {
           publicUrl = ctx.supabase.storage
-            .from("covers")
+            .from("public-bucket")
             .getPublicUrl(data.path).data.publicUrl;
         }
       }
@@ -72,7 +72,7 @@ export const mangaRouter = {
       }
     }),
 
-  update: publicProcedure
+  update: protectedAdminProcedure
     .input(createOrUpdateSerie)
     .mutation(async ({ ctx, input }) => {
       const { cover, ...restinput } = input;
@@ -80,30 +80,22 @@ export const mangaRouter = {
 
       let publicUrl: string | null = null;
 
-      console.log(input.cover);
       if (input.cover) {
         const path = `mangas/${slug}/${input.cover.name}`;
 
-        const { data, error } = await ctx.supabase.storage
-          .from("covers")
+        const { data } = await ctx.supabase.storage
+          .from("public-bucket")
           .upload(path, input.cover, {
             cacheControl: "31536000",
             upsert: true,
           });
 
-        console.log("data");
-        console.log(data);
-        console.log("error");
-        console.log(error);
-
         if (data) {
           publicUrl = ctx.supabase.storage
-            .from("covers")
+            .from("public-bucket")
             .getPublicUrl(data.path).data.publicUrl;
         }
       }
-
-      console.log(publicUrl);
 
       await ctx.db
         .update(schema.mangas)

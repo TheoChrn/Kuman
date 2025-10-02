@@ -11,6 +11,7 @@ import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const userRouter = {
   getCurrentUser: publicProcedure.query(({ ctx }) => ctx.session?.user ?? null),
+  
   updateRole: protectedProcedure
     .input(z.object({ role: z.enum(roleValues) }))
     .mutation(({ input, ctx }) =>

@@ -3,6 +3,7 @@ import { Scroll } from "~/components/reading-mode/scroll";
 import { SinglePage } from "~/components/reading-mode/single-page";
 import { FreeChapter } from "~/components/chapter/free/free-chapter";
 import { PremiumChapter } from "~/components/chapter/premium/premium-chapter";
+import { role } from "@kuman/db/enums";
 
 export const readingModeMapping = {
   scroll: Scroll,
@@ -36,10 +37,10 @@ export const Route = createFileRoute(
   },
 
   loader: async ({
-    context: { trpc, queryClient },
+    context: { trpc, queryClient, user },
     params: { chapterNumber, serieSlug },
   }) => {
-    if (Number(chapterNumber) === 1) {
+    if (Number(chapterNumber) === 1 && (!user?.role || user?.role === "user")) {
       queryClient.prefetchQuery(
         trpc.chapters.getFreeChapter.queryOptions({
           chapterNumber: Number(chapterNumber),
@@ -55,20 +56,23 @@ export const Route = createFileRoute(
       );
     }
     queryClient.prefetchQuery(
-      trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+      trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+        serie: serieSlug,
+      })
     );
   },
 });
 
 function RouteComponent() {
   const params = Route.useParams();
+  const { user } = Route.useRouteContext();
 
   const [chapterNumber, serieSlug] = [
     Number(params.chapterNumber),
     params.serieSlug,
   ];
 
-  if (chapterNumber === 1) {
+  if (chapterNumber === 1 && (!user || user.role === role.USER)) {
     return <FreeChapter chapterNumber={chapterNumber} serie={serieSlug} />;
   }
 

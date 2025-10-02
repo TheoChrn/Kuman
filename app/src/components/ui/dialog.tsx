@@ -1,8 +1,5 @@
 import * as Ariakit from "@ariakit/react";
-import {
-  NavigateOptions,
-  useNavigate
-} from "@tanstack/react-router";
+import { NavigateOptions, useNavigate } from "@tanstack/react-router";
 import { PiXBold } from "react-icons/pi";
 
 export function Dialog(props: {
@@ -13,7 +10,7 @@ export function Dialog(props: {
   return (
     <Ariakit.DialogProvider>
       <Ariakit.Dialog
-        onClose={() => navigate({ to: props.backUrl })}
+        onClose={() => navigate({ to: props.backUrl, resetScroll: false })}
         open={true}
         modal
         className="dialog"

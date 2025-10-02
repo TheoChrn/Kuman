@@ -31,11 +31,12 @@ import { Route as SerieSlugChapterChapterNumberPageRouteImport } from './routes/
 import { Route as NavigationLayoutAuthLayoutAdminSeriesRouteRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/route'
 import { Route as NavigationLayoutAuthLayoutProfileAbonnementSuccessRouteImport } from './routes/_navigationLayout/_authLayout/profile/abonnement.success'
 import { Route as NavigationLayoutAuthLayoutProfileAbonnementCancelRouteImport } from './routes/_navigationLayout/_authLayout/profile/abonnement.cancel'
-import { Route as NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/add-a-volume'
-import { Route as NavigationLayoutAuthLayoutAdminSeriesAddAChapterRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/add-a-chapter'
 import { Route as NavigationLayoutAuthLayoutAdminSeriesAddRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/add'
 import { Route as NavigationLayoutAuthLayoutAdminSeriesSlugEditRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$slug.edit'
-import { Route as NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$serieSlug.volume'
+import { Route as NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$serieSlug.volume.add'
+import { Route as NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$serieSlug.$volume.edit'
+import { Route as NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$serieSlug.$volume.chapter.add'
+import { Route as NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$serieSlug.$volume.$chapter.edit'
 
 const NavigationLayoutSerieSlugRouteImport = createFileRoute(
   '/_navigationLayout/$serieSlug',
@@ -161,18 +162,6 @@ const NavigationLayoutAuthLayoutProfileAbonnementCancelRoute =
     path: '/cancel',
     getParentRoute: () => NavigationLayoutAuthLayoutProfileAbonnementRoute,
   } as any)
-const NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute =
-  NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRouteImport.update({
-    id: '/add-a-volume',
-    path: '/add-a-volume',
-    getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
-  } as any)
-const NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute =
-  NavigationLayoutAuthLayoutAdminSeriesAddAChapterRouteImport.update({
-    id: '/add-a-chapter',
-    path: '/add-a-chapter',
-    getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
-  } as any)
 const NavigationLayoutAuthLayoutAdminSeriesAddRoute =
   NavigationLayoutAuthLayoutAdminSeriesAddRouteImport.update({
     id: '/add',
@@ -185,12 +174,34 @@ const NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute =
     path: '/$slug/edit',
     getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
   } as any)
-const NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute =
-  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRouteImport.update({
-    id: '/$serieSlug/volume',
-    path: '/$serieSlug/volume',
+const NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute =
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRouteImport.update({
+    id: '/$serieSlug/volume/add',
+    path: '/$serieSlug/volume/add',
     getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
   } as any)
+const NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute =
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRouteImport.update({
+    id: '/$serieSlug/$volume/edit',
+    path: '/$serieSlug/$volume/edit',
+    getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
+  } as any)
+const NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute =
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRouteImport.update(
+    {
+      id: '/$serieSlug/$volume/chapter/add',
+      path: '/$serieSlug/$volume/chapter/add',
+      getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
+    } as any,
+  )
+const NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute =
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRouteImport.update(
+    {
+      id: '/$serieSlug/$volume/$chapter/edit',
+      path: '/$serieSlug/$volume/$chapter/edit',
+      getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
   '/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
@@ -210,12 +221,13 @@ export interface FileRoutesByFullPath {
   '/bookmarks': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
   '/profile/': typeof NavigationLayoutAuthLayoutProfileIndexRoute
   '/admin/series/add': typeof NavigationLayoutAuthLayoutAdminSeriesAddRoute
-  '/admin/series/add-a-chapter': typeof NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute
-  '/admin/series/add-a-volume': typeof NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute
   '/profile/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRoute
   '/profile/abonnement/success': typeof NavigationLayoutAuthLayoutProfileAbonnementSuccessRoute
-  '/admin/series/$serieSlug/volume': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute
   '/admin/series/$slug/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute
+  '/admin/series/$serieSlug/$volume/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute
+  '/admin/series/$serieSlug/volume/add': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute
+  '/admin/series/$serieSlug/$volume/$chapter/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute
+  '/admin/series/$serieSlug/$volume/chapter/add': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
@@ -234,12 +246,13 @@ export interface FileRoutesByTo {
   '/bookmarks': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
   '/profile': typeof NavigationLayoutAuthLayoutProfileIndexRoute
   '/admin/series/add': typeof NavigationLayoutAuthLayoutAdminSeriesAddRoute
-  '/admin/series/add-a-chapter': typeof NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute
-  '/admin/series/add-a-volume': typeof NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute
   '/profile/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRoute
   '/profile/abonnement/success': typeof NavigationLayoutAuthLayoutProfileAbonnementSuccessRoute
-  '/admin/series/$serieSlug/volume': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute
   '/admin/series/$slug/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute
+  '/admin/series/$serieSlug/$volume/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute
+  '/admin/series/$serieSlug/volume/add': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute
+  '/admin/series/$serieSlug/$volume/$chapter/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute
+  '/admin/series/$serieSlug/$volume/chapter/add': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -263,12 +276,13 @@ export interface FileRoutesById {
   '/_navigationLayout/_authLayout/bookmarks/': typeof NavigationLayoutAuthLayoutBookmarksIndexRoute
   '/_navigationLayout/_authLayout/profile/': typeof NavigationLayoutAuthLayoutProfileIndexRoute
   '/_navigationLayout/_authLayout/admin/series/add': typeof NavigationLayoutAuthLayoutAdminSeriesAddRoute
-  '/_navigationLayout/_authLayout/admin/series/add-a-chapter': typeof NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute
-  '/_navigationLayout/_authLayout/admin/series/add-a-volume': typeof NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute
   '/_navigationLayout/_authLayout/profile/abonnement/cancel': typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRoute
   '/_navigationLayout/_authLayout/profile/abonnement/success': typeof NavigationLayoutAuthLayoutProfileAbonnementSuccessRoute
-  '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute
   '/_navigationLayout/_authLayout/admin/series/$slug/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute
+  '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute
+  '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume/add': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute
+  '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/$chapter/edit': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute
+  '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/chapter/add': typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -290,12 +304,13 @@ export interface FileRouteTypes {
     | '/bookmarks'
     | '/profile/'
     | '/admin/series/add'
-    | '/admin/series/add-a-chapter'
-    | '/admin/series/add-a-volume'
     | '/profile/abonnement/cancel'
     | '/profile/abonnement/success'
-    | '/admin/series/$serieSlug/volume'
     | '/admin/series/$slug/edit'
+    | '/admin/series/$serieSlug/$volume/edit'
+    | '/admin/series/$serieSlug/volume/add'
+    | '/admin/series/$serieSlug/$volume/$chapter/edit'
+    | '/admin/series/$serieSlug/$volume/chapter/add'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
@@ -314,12 +329,13 @@ export interface FileRouteTypes {
     | '/bookmarks'
     | '/profile'
     | '/admin/series/add'
-    | '/admin/series/add-a-chapter'
-    | '/admin/series/add-a-volume'
     | '/profile/abonnement/cancel'
     | '/profile/abonnement/success'
-    | '/admin/series/$serieSlug/volume'
     | '/admin/series/$slug/edit'
+    | '/admin/series/$serieSlug/$volume/edit'
+    | '/admin/series/$serieSlug/volume/add'
+    | '/admin/series/$serieSlug/$volume/$chapter/edit'
+    | '/admin/series/$serieSlug/$volume/chapter/add'
   id:
     | '__root__'
     | '/_navigationLayout'
@@ -342,12 +358,13 @@ export interface FileRouteTypes {
     | '/_navigationLayout/_authLayout/bookmarks/'
     | '/_navigationLayout/_authLayout/profile/'
     | '/_navigationLayout/_authLayout/admin/series/add'
-    | '/_navigationLayout/_authLayout/admin/series/add-a-chapter'
-    | '/_navigationLayout/_authLayout/admin/series/add-a-volume'
     | '/_navigationLayout/_authLayout/profile/abonnement/cancel'
     | '/_navigationLayout/_authLayout/profile/abonnement/success'
-    | '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume'
     | '/_navigationLayout/_authLayout/admin/series/$slug/edit'
+    | '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/edit'
+    | '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume/add'
+    | '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/$chapter/edit'
+    | '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/chapter/add'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -505,20 +522,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NavigationLayoutAuthLayoutProfileAbonnementCancelRouteImport
       parentRoute: typeof NavigationLayoutAuthLayoutProfileAbonnementRoute
     }
-    '/_navigationLayout/_authLayout/admin/series/add-a-volume': {
-      id: '/_navigationLayout/_authLayout/admin/series/add-a-volume'
-      path: '/add-a-volume'
-      fullPath: '/admin/series/add-a-volume'
-      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRouteImport
-      parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
-    }
-    '/_navigationLayout/_authLayout/admin/series/add-a-chapter': {
-      id: '/_navigationLayout/_authLayout/admin/series/add-a-chapter'
-      path: '/add-a-chapter'
-      fullPath: '/admin/series/add-a-chapter'
-      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesAddAChapterRouteImport
-      parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
-    }
     '/_navigationLayout/_authLayout/admin/series/add': {
       id: '/_navigationLayout/_authLayout/admin/series/add'
       path: '/add'
@@ -533,11 +536,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSlugEditRouteImport
       parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
     }
-    '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume': {
-      id: '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume'
-      path: '/$serieSlug/volume'
-      fullPath: '/admin/series/$serieSlug/volume'
-      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRouteImport
+    '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume/add': {
+      id: '/_navigationLayout/_authLayout/admin/series/$serieSlug/volume/add'
+      path: '/$serieSlug/volume/add'
+      fullPath: '/admin/series/$serieSlug/volume/add'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
+    }
+    '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/edit': {
+      id: '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/edit'
+      path: '/$serieSlug/$volume/edit'
+      fullPath: '/admin/series/$serieSlug/$volume/edit'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
+    }
+    '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/chapter/add': {
+      id: '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/chapter/add'
+      path: '/$serieSlug/$volume/chapter/add'
+      fullPath: '/admin/series/$serieSlug/$volume/chapter/add'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRouteImport
+      parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
+    }
+    '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/$chapter/edit': {
+      id: '/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/$chapter/edit'
+      path: '/$serieSlug/$volume/$chapter/edit'
+      fullPath: '/admin/series/$serieSlug/$volume/$chapter/edit'
+      preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRouteImport
       parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
     }
   }
@@ -584,24 +608,27 @@ const NavigationLayoutAuthLayoutProfileRouteRouteWithChildren =
 
 interface NavigationLayoutAuthLayoutAdminSeriesRouteRouteChildren {
   NavigationLayoutAuthLayoutAdminSeriesAddRoute: typeof NavigationLayoutAuthLayoutAdminSeriesAddRoute
-  NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute: typeof NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute
-  NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute: typeof NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute
-  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute
   NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute
+  NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute
 }
 
 const NavigationLayoutAuthLayoutAdminSeriesRouteRouteChildren: NavigationLayoutAuthLayoutAdminSeriesRouteRouteChildren =
   {
     NavigationLayoutAuthLayoutAdminSeriesAddRoute:
       NavigationLayoutAuthLayoutAdminSeriesAddRoute,
-    NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute:
-      NavigationLayoutAuthLayoutAdminSeriesAddAChapterRoute,
-    NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute:
-      NavigationLayoutAuthLayoutAdminSeriesAddAVolumeRoute,
-    NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute:
-      NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute,
     NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute:
       NavigationLayoutAuthLayoutAdminSeriesSlugEditRoute,
+    NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute:
+      NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeEditRoute,
+    NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute:
+      NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeAddRoute,
+    NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute:
+      NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterEditRoute,
+    NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute:
+      NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeChapterAddRoute,
   }
 
 const NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren =

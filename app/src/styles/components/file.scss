@@ -1,6 +1,7 @@
 @use "../mixins.scss" as *;
 @use "../variables.scss" as *;
 .file-input {
+  display: block;
   & .drop-zone-container {
     display: flex;
     gap: 0.5rem;

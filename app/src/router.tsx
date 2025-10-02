@@ -92,7 +92,7 @@ export function getRouter() {
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
-      defaultPendingComponent: () => <div>LOADING</div>,
+      // defaultPendingComponent: () => <div>LOADING</div>,
       Wrap: function WrapComponent({ children }) {
         return (
           <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
