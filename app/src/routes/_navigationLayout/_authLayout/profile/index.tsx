@@ -43,8 +43,8 @@ function RouteComponent() {
     trpc.auth.logout.mutationOptions({
       onSuccess: async () => {
         queryClient.clear();
-        router.invalidate();
         navigate({ to: "/auth/login" });
+        router.invalidate();
       },
     })
   );
@@ -63,7 +63,7 @@ function RouteComponent() {
                   Gérer mon abonnement
                 </Link>
               ) : (
-                <Link to="/admin">
+                <Link to="/admin/series">
                   <MdAdminPanelSettings size={24} /> Panneau d'administration
                 </Link>
               )}

@@ -10,12 +10,14 @@ export const Route = createFileRoute(
   component: RouteComponent,
 });
 
-export function RouteComponent() {
+function RouteComponent() {
   const trpc = useTRPC();
   const { serieSlug } = Route.useParams();
 
   const { data: volumes } = useSuspenseQuery(
-    trpc.chapters.getAll.queryOptions({ serie: serieSlug })
+    trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+      serie: serieSlug,
+    })
   );
 
   return (
@@ -54,10 +56,7 @@ export function RouteComponent() {
                     </div>
                     <PiCaretDown className="volume-caret" size={24} />
                   </Ariakit.Disclosure>
-                  <Ariakit.DisclosureContent
-                    className="chapters"
-                    render={<div />}
-                  >
+                  <Ariakit.DisclosureContent className="chapters">
                     <Ariakit.HeadingLevel>
                       <ul>
                         {volume.chapters.length

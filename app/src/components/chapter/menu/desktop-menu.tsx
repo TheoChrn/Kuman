@@ -16,8 +16,10 @@ import { ReadingMode } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 
 export interface DesktopMenuProps {
   serieSlug: string;
-  chapter: RouterOutputs["chapters"]["get"];
-  chapterList: RouterOutputs["chapters"]["getAll"];
+  chapter:
+    | RouterOutputs["chapters"]["get"]
+    | RouterOutputs["chapters"]["getFreeChapter"];
+  chapterList: RouterOutputs["chapters"]["getAllFromSerieGrouppedByVolume"];
   currentPage: number;
   currentChapter: number;
   blockObserver: RefObject<boolean>;

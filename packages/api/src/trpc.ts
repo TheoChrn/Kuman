@@ -12,6 +12,7 @@ import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
 import { db } from "@kuman/db/client";
+import { role, roleValues } from "@kuman/db/enums";
 import { createSupabaseClient } from "@kuman/db/supabase";
 
 import type { Session } from "./auth/session";
@@ -38,7 +39,9 @@ export const createTRPCContext = async ({
   resHeaders: Headers;
 }) => {
   const session: Session = await validateSessionCookies(req.headers);
-  const supabase = createSupabaseClient("");
+  const supabase = createSupabaseClient({
+    admin: session?.user?.role === role.ADMINISTRATOR,
+  });
 
   return {
     session,
@@ -124,12 +127,23 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   });
 });
 
-export const subscriberProtectedProcedure = protectedProcedure.use(
+export const protectedSubscriberProcedure = protectedProcedure.use(
   ({ ctx, next }) => {
-    if (ctx.session.user.role === "user") {
+    if (ctx.session.user.role === role.SUBSCRIBER) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Seul les membres premium ont accès à cette ressource",
+      });
+    }
+    return next();
+  },
+);
+export const protectedAdminProcedure = protectedProcedure.use(
+  ({ ctx, next }) => {
+    if (ctx.session.user.role !== role.ADMINISTRATOR) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Seuls les administrateurs accès à cette ressource",
       });
     }
     return next();

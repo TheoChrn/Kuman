@@ -1,10 +1,10 @@
 @use "../mixins.scss" as *;
 @use "../variables.scss" as *;
 
-#add-a-volume {
-  padding: 1.5rem;
-  & form {
+.form-wrapper {
+  & .dialog-content {
     max-width: 1024px;
+    padding-bottom: 0;
     margin: 0 auto;
     @include space-y-6;
 
@@ -12,8 +12,20 @@
       text-align: center;
     }
 
-    & .container {
-      @include space-y-6;
+    & .fields {
+      @include space-y-4;
+
+      @at-root .form-wrapper#serie-form & {
+        @include responsive(md) {
+          gap: 0.5rem;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+
+          label:nth-child(7) {
+            grid-column: 1 / span 2;
+          }
+        }
+      }
 
       & .custom-file-input {
         display: flex;
@@ -67,48 +79,26 @@
         min-height: 10rem;
         resize: none;
       }
-    }
-  }
 
-  .button {
-    padding: 0.625rem 1rem;
-    border-radius: 4px;
-    margin: 0 auto;
-    transition-duration: 100ms;
-
-    &:hover {
-      opacity: 0.7;
-    }
-
-    &-primary {
-      background-color: $primary;
-      border: solid 1px $primary;
-      color: $neutral-foreground;
-    }
-
-    &-outline {
-      border: solid 1px $primary;
-    }
-
-    &-full {
-      width: 100%;
-    }
-  }
-}
-@media screen and (min-width: 768px) {
-  #add-a-manga {
-    & form {
-      & .container {
-        & .fields {
-          gap: 0.5rem;
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-
-          & label:nth-child(7) {
-            grid-column: 1 / span 2;
-          }
-        }
+      & .select:disabled {
+        opacity: 0.5;
       }
+    }
+  }
+
+  & .button-container {
+    position: sticky;
+    bottom: 0;
+    background-color: $background;
+    padding: 1rem 0;
+
+    .button {
+      display: inline-flex;
+      gap: 0.25rem;
+      padding: 0.625rem 1rem;
+      border-radius: 4px;
+      margin: 0 auto;
+      transition-duration: 100ms;
     }
   }
 }

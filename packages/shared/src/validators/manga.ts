@@ -13,7 +13,7 @@ import {
   baseInputRequiredTextField,
 } from "./utils";
 
-export const createMangaForm = z.object({
+export const createOrUpdateSerieForm = z.object({
   title: baseInputRequiredTextField(),
   originalTitle: baseInputRequiredTextField(),
   romajiTitle: baseInputRequiredTextField(),
@@ -22,7 +22,7 @@ export const createMangaForm = z.object({
     .transform((val) => (val.length ? val : null)),
   author: baseInputRequiredTextField(),
   synopsis: baseInputRequiredTextField(),
-  cover: z.file(),
+  cover: z.file().nullable(),
   tomeCount: baseInputRequiredNumberField(z.number().min(1)),
   releaseDate: baseInputRequiredTextField(z.iso.date()),
   status: baseInputRequiredTextField(z.enum(statusValues)),
@@ -32,7 +32,7 @@ export const createMangaForm = z.object({
   publisherFr: baseInputRequiredTextField(z.enum(publisherFrValues)),
 });
 
-export const createManga = z
+export const createOrUpdateSerie = z
   .instanceof(FormData)
   .transform((formData) => {
     const json = formData.get("json")!.toString();
@@ -40,7 +40,7 @@ export const createManga = z
     const cover = formData.get("cover");
     return { ...data, cover };
   })
-  .pipe(createMangaForm);
+  .pipe(createOrUpdateSerieForm.extend({ slug: z.string(), id: z.string() }));
 
 export const searchParamsSchema = z.object({
   types: z.array(z.enum(typeValues)).optional(),

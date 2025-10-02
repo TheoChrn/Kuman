@@ -31,8 +31,6 @@ function RouteComponent() {
   const { caller } = Route.useRouteContext();
   const { user } = Route.useRouteContext();
 
-  const navigate = useNavigate();
-
   if (user!.role === role.ADMINISTRATOR) {
     return (
       <section id="abonnement">

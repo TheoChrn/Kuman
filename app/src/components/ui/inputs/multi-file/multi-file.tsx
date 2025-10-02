@@ -1,5 +1,8 @@
 import * as Ariakit from "@ariakit/react";
+import { ImageSchema } from "@kuman/shared/validators";
 import { InputHTMLAttributes, useEffect, useRef } from "react";
+import { PiPlus } from "react-icons/pi";
+import { Button } from "~/components/ui/buttons/button";
 import { ErrorMessage } from "~/components/ui/inputs/error-message/error-message";
 import { InputProps } from "~/components/ui/inputs/text";
 import { useFieldContext } from "~/hooks/form-composition";
@@ -22,7 +25,7 @@ export function MultiFileInput({
   className,
   ...props
 }: MultiFileInputProps) {
-  const field = useFieldContext<File[]>();
+  const field = useFieldContext<ImageSchema[]>();
   const currentUrlRef = useRef<string[]>([]);
 
   useEffect(() => {
@@ -42,6 +45,7 @@ export function MultiFileInput({
           <input
             id={field.name}
             name={field.name}
+            multiple
             type="file"
             onBlur={field.handleBlur}
             accept="image/jpeg, image/jpg, image/webp"
@@ -56,7 +60,14 @@ export function MultiFileInput({
                   if (url) URL.revokeObjectURL(url);
                 });
 
-              field.handleChange(validFiles);
+              field.handleChange([
+                ...field.state.value,
+                ...validFiles.map((file) => ({
+                  file,
+                  status: "new",
+                  url: URL.createObjectURL(file),
+                })),
+              ]);
             }}
             {...props}
           />
@@ -77,11 +88,15 @@ export function MultiFileInput({
                 currentUrlRef.current.forEach((url) => {
                   if (url) URL.revokeObjectURL(url);
                 });
-              currentUrlRef.current = validFiles.map((file) =>
-                URL.createObjectURL(file)
-              );
 
-              field.handleChange(validFiles);
+              field.handleChange([
+                ...field.state.value,
+                ...validFiles.map((file) => ({
+                  file,
+                  status: "new",
+                  url: URL.createObjectURL(file),
+                })),
+              ]);
             }}
           >
             {label}
@@ -91,13 +106,25 @@ export function MultiFileInput({
 
       {!!field.state.value.length && (
         <div className="files-container">
-          {field.state.value.map((_, index) => (
-            <img
-              key={index}
-              src={currentUrlRef.current?.[index] || undefined}
-              alt="Preview"
-            />
-          ))}
+          {field.state.value.map((image, index) =>
+            image.status === "deleted" ? null : (
+              <div key={image.path ?? index}>
+                <img src={image.url || undefined} alt="Preview" />
+                <Button
+                  onClick={() =>
+                    field.handleChange(
+                      field.state.value.map((val, idx) =>
+                        idx === index ? { ...val, status: "deleted" } : val
+                      )
+                    )
+                  }
+                  className="button"
+                >
+                  <PiPlus />
+                </Button>
+              </div>
+            )
+          )}
         </div>
       )}
 

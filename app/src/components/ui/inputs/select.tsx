@@ -24,9 +24,9 @@ export function SelectInput({
         }}
         {...props}
       />
-      {field.state.meta.isTouched && !field.state.meta.isValid ? (
-        <ErrorMessage>{field.state.meta.errors[0]?.message}</ErrorMessage>
-      ) : null}
+      {field.state.meta.errors[0]?.message && (
+        <ErrorMessage>{field.state.meta.errors[0].message}</ErrorMessage>
+      )}
     </label>
   );
 }

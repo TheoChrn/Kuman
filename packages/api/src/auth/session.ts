@@ -1,6 +1,6 @@
 import { db } from "@kuman/db/client";
+import { generateUserId } from "@kuman/shared/ids";
 
-import { generateUserId } from "../../../db/src/generate-ids";
 import { schema } from "../../../db/src/schema";
 import { lucia } from "./lucia";
 
@@ -78,4 +78,3 @@ export async function validateSessionCookies(headers: Headers) {
 }
 
 export type Session = Awaited<ReturnType<typeof validateSessionCookies>>;
-

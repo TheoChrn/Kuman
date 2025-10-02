@@ -1,6 +1,11 @@
 {
   "extends": "@kuman/tsconfig/internal-package.json",
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/routes/_navigationLayout/_authLayout/admin/$serieSlug/route.tsx",
+    "src/routes/_navigationLayout/_authLayout/admin/series/add.tsx"
+  ],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "strict": true,

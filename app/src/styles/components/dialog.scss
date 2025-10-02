@@ -1,0 +1,40 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+.dialog {
+  position: fixed;
+  max-width: 768px;
+  max-height: 95vh;
+  overflow: auto;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  border: solid 2px $stroke;
+  border-radius: 8px;
+  background-color: $background;
+  @include space-y-4;
+
+  & .dialog-heading {
+    position: sticky;
+    top: 0;
+    @include flex-between;
+    background-color: $background;
+    padding: 1rem;
+  }
+
+  & .dialog-content {
+    padding: 1rem;
+  }
+
+  & .dialog-dismiss {
+    display: block;
+    margin-left: auto;
+  }
+}
+
+.backdrop {
+  background-color: hsla(0, 0%, 0%, 0.4);
+  z-index: 2;
+}

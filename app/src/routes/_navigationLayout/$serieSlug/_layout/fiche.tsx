@@ -13,7 +13,7 @@ export const Route = createFileRoute(
   component: RouteComponent,
 });
 
-export function RouteComponent() {
+function RouteComponent() {
   const trpc = useTRPC();
   const { serieSlug } = Route.useParams();
   const { data: manga } = useSuspenseQuery(

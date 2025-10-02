@@ -1,21 +1,15 @@
 import * as Ariakit from "@ariakit/react";
 import { roleLabelFrench } from "@kuman/db/enums";
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Link,
   Outlet,
   useLocation,
   useMatches,
-  useNavigate,
   useRouter,
-  useRouterState,
 } from "@tanstack/react-router";
-import { PiArrowArcLeft, PiArrowLeft, PiArrowLeftBold } from "react-icons/pi";
+import { PiArrowLeftBold } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_navigationLayout/_authLayout/profile")({
@@ -24,16 +18,12 @@ export const Route = createFileRoute("/_navigationLayout/_authLayout/profile")({
 
 function RouteComponent() {
   const trpc = useTRPC();
-  const matches = useMatches();
-  const router = useRouter();
+
   const location = useLocation();
 
   const { data: user } = useSuspenseQuery(
     trpc.user.getCurrentUser.queryOptions()
   );
-
-  console.log(Route.fullPath);
-  console.log(location.pathname);
 
   return (
     <div id="profile">

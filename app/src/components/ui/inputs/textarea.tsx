@@ -20,9 +20,9 @@ export function TextareaInput({ label, ...props }: TextareaProps) {
         onChange={(e) => field.handleChange(e.target.value)}
         {...props}
       />
-      {field.state.meta.isTouched && !field.state.meta.isValid ? (
-        <ErrorMessage>{field.state.meta.errors[0]?.message}</ErrorMessage>
-      ) : null}
+      {field.state.meta.errors[0]?.message && (
+        <ErrorMessage>{field.state.meta.errors[0].message}</ErrorMessage>
+      )}
     </label>
   );
 }

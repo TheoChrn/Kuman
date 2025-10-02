@@ -46,7 +46,6 @@ function RouteComponent() {
       },
       onSuccess: () => form.reset(),
       onError: (error, _, context) => {
-        console.log(error);
         queryClient.setQueryData(
           trpc.user.getCurrentUser.queryKey(),
           () => context?.userOldData

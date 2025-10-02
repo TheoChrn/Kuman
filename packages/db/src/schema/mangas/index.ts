@@ -1,20 +1,20 @@
 import { relations } from "drizzle-orm";
 import {
   date,
-  pgEnum,
   pgTable,
   smallint,
   text,
   timestamp,
-  unique,
+  unique
 } from "drizzle-orm/pg-core";
+
+import { generateMangaId } from "@kuman/shared/ids";
 
 import { genreValues, statusValues, typeValues } from "../../enums";
 import {
   publisherFrValues,
   publisherJpValues,
 } from "../../enums/mangas/publisher";
-import { generateMangaId } from "../../generate-ids";
 import { volumes } from "../volumes";
 
 // export const statusEnum = pgEnum("status", statusValues);
