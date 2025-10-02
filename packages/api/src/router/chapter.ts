@@ -6,10 +6,11 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod/v4";
 
-import { and, eq, generateChapterId, jsonAgg, schema } from "@kuman/db";
+import { and, eq, jsonAgg, schema } from "@kuman/db";
 import { createChapter } from "@kuman/shared/validators";
 
 import { publicProcedure, subscriberProtectedProcedure } from "../trpc";
+import { generateChapterId } from "@kuman/shared/ids";
 
 export const chapterRouter = {
   getFreeChapter: publicProcedure

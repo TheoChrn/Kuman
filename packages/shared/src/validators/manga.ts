@@ -32,7 +32,7 @@ export const createOrUpdateSerieForm = z.object({
   publisherFr: baseInputRequiredTextField(z.enum(publisherFrValues)),
 });
 
-export const createManga = z
+export const createOrUpdateSerie = z
   .instanceof(FormData)
   .transform((formData) => {
     const json = formData.get("json")!.toString();
@@ -40,7 +40,7 @@ export const createManga = z
     const cover = formData.get("cover");
     return { ...data, cover };
   })
-  .pipe(createOrUpdateSerieForm.extend({ slug: z.string() }));
+  .pipe(createOrUpdateSerieForm.extend({ slug: z.string(), id: z.string() }));
 
 export const searchParamsSchema = z.object({
   types: z.array(z.enum(typeValues)).optional(),

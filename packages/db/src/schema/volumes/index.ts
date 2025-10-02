@@ -8,7 +8,8 @@ import {
   unique,
 } from "drizzle-orm/pg-core";
 
-import { generateTomeId } from "../../generate-ids";
+import { generateTomeId } from "@kuman/shared/ids";
+
 import { chapters } from "../chapters";
 import { mangas } from "../mangas";
 

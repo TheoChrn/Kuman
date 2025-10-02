@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
-import { getHeaders } from "@tanstack/react-start/server";
+
 import {
   createTRPCClient,
   httpBatchLink,
@@ -17,8 +17,11 @@ import { TRPCProvider } from "~/trpc/react";
 import { DefaultCatchBoundary } from "./components/default-catch-boundary";
 import { NotFound } from "./components/not-found";
 import { routeTree } from "./routeTree.gen";
+import { getRequestHeaders } from "@tanstack/react-start/server";
 
-const getIncomingHeaders = createIsomorphicFn().server(() => getHeaders());
+const getIncomingHeaders = createIsomorphicFn().server(() =>
+  getRequestHeaders()
+);
 
 function getUrl() {
   const base = (() => {
@@ -28,18 +31,7 @@ function getUrl() {
   return base + "/api/trpc";
 }
 
-// export const createContext = () => {
-//   const resHeaders = new Headers(
-//     Object.entries(getIncomingHeaders() ?? {}).filter(
-//       ([_, v]) => v !== undefined
-//     ) as [string, string][]
-//   );
-//   const req = getWebRequest();
-
-//   return createTRPCContext({ req, resHeaders });
-// };
-
-export function createRouter() {
+export function getRouter() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { staleTime: 30 * 1000 },
@@ -47,8 +39,6 @@ export function createRouter() {
       hydrate: { deserializeData: superjson.deserialize },
     },
   });
-
-  // const caller = appRouter.createCaller(createContext);
 
   const trpcClient = createTRPCClient<AppRouter>({
     links: [
@@ -121,6 +111,6 @@ export function createRouter() {
 
 declare module "@tanstack/react-router" {
   interface Register {
-    router: ReturnType<typeof createRouter>;
+    router: ReturnType<typeof getRouter>;
   }
 }

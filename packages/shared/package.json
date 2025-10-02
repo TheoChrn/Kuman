@@ -11,6 +11,10 @@
     "./format": {
       "types": "./dist/format.d.ts",
       "default": "./src/format.ts"
+    },
+    "./ids": {
+      "types": "./dist/generate-ids.d.ts",
+      "default": "./src/generate-ids.ts"
     }
   },
   "license": "MIT",

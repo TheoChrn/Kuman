@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { createFileRoute } from '@tanstack/react-router'
-import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as NavigationLayoutRouteRouteImport } from './routes/_navigationLayout/route'
@@ -17,6 +16,7 @@ import { Route as NavigationLayoutIndexRouteImport } from './routes/_navigationL
 import { Route as NavigationLayoutCatalogueRouteImport } from './routes/_navigationLayout/catalogue'
 import { Route as NavigationLayoutAuthRouteRouteImport } from './routes/_navigationLayout/auth/route'
 import { Route as NavigationLayoutAuthLayoutRouteRouteImport } from './routes/_navigationLayout/_authLayout/route'
+import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
 import { Route as NavigationLayoutAuthRegisterRouteImport } from './routes/_navigationLayout/auth/register'
 import { Route as NavigationLayoutAuthLoginRouteImport } from './routes/_navigationLayout/auth/login'
 import { Route as NavigationLayoutAuthLayoutProfileRouteRouteImport } from './routes/_navigationLayout/_authLayout/profile/route'
@@ -36,12 +36,10 @@ import { Route as NavigationLayoutAuthLayoutAdminSeriesAddAChapterRouteImport } 
 import { Route as NavigationLayoutAuthLayoutAdminSeriesAddRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/add'
 import { Route as NavigationLayoutAuthLayoutAdminSeriesSlugEditRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$slug.edit'
 import { Route as NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/$serieSlug.volume'
-import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc.$'
 
 const NavigationLayoutSerieSlugRouteImport = createFileRoute(
   '/_navigationLayout/$serieSlug',
 )()
-const rootServerRouteImport = createServerRootRoute()
 
 const NavigationLayoutRouteRoute = NavigationLayoutRouteRouteImport.update({
   id: '/_navigationLayout',
@@ -75,6 +73,11 @@ const NavigationLayoutAuthLayoutRouteRoute =
     id: '/_authLayout',
     getParentRoute: () => NavigationLayoutRouteRoute,
   } as any)
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NavigationLayoutAuthRegisterRoute =
   NavigationLayoutAuthRegisterRouteImport.update({
     id: '/register',
@@ -188,11 +191,6 @@ const NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRoute =
     path: '/$serieSlug/volume',
     getParentRoute: () => NavigationLayoutAuthLayoutAdminSeriesRouteRoute,
   } as any)
-const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
-  id: '/api/trpc/$',
-  path: '/api/trpc/$',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof NavigationLayoutAuthRouteRouteWithChildren
@@ -202,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof NavigationLayoutAuthLayoutProfileRouteRouteWithChildren
   '/auth/login': typeof NavigationLayoutAuthLoginRoute
   '/auth/register': typeof NavigationLayoutAuthRegisterRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/admin/series': typeof NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
   '/$serieSlug/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
@@ -225,6 +224,7 @@ export interface FileRoutesByTo {
   '/$serieSlug': typeof NavigationLayoutSerieSlugLayoutRouteRouteWithChildren
   '/auth/login': typeof NavigationLayoutAuthLoginRoute
   '/auth/register': typeof NavigationLayoutAuthRegisterRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/admin/series': typeof NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
   '/$serieSlug/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
@@ -253,6 +253,7 @@ export interface FileRoutesById {
   '/_navigationLayout/_authLayout/profile': typeof NavigationLayoutAuthLayoutProfileRouteRouteWithChildren
   '/_navigationLayout/auth/login': typeof NavigationLayoutAuthLoginRoute
   '/_navigationLayout/auth/register': typeof NavigationLayoutAuthRegisterRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/_navigationLayout/_authLayout/admin/series': typeof NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
   '/_navigationLayout/$serieSlug/_layout/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
@@ -279,6 +280,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/auth/login'
     | '/auth/register'
+    | '/api/trpc/$'
     | '/admin/series'
     | '/$serieSlug/chapter/$chapterNumber/$page'
     | '/$serieSlug/fiche'
@@ -302,6 +304,7 @@ export interface FileRouteTypes {
     | '/$serieSlug'
     | '/auth/login'
     | '/auth/register'
+    | '/api/trpc/$'
     | '/admin/series'
     | '/$serieSlug/chapter/$chapterNumber/$page'
     | '/$serieSlug/fiche'
@@ -329,6 +332,7 @@ export interface FileRouteTypes {
     | '/_navigationLayout/_authLayout/profile'
     | '/_navigationLayout/auth/login'
     | '/_navigationLayout/auth/register'
+    | '/api/trpc/$'
     | '/_navigationLayout/_authLayout/admin/series'
     | '/$serieSlug/chapter/$chapterNumber/$page'
     | '/_navigationLayout/$serieSlug/_layout/fiche'
@@ -348,28 +352,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   NavigationLayoutRouteRoute: typeof NavigationLayoutRouteRouteWithChildren
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
   SerieSlugChapterChapterNumberPageRoute: typeof SerieSlugChapterChapterNumberPageRoute
-}
-export interface FileServerRoutesByFullPath {
-  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/trpc/$'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/trpc/$'
-  id: '__root__' | '/api/trpc/$'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -415,6 +399,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof NavigationLayoutAuthLayoutRouteRouteImport
       parentRoute: typeof NavigationLayoutRouteRoute
+    }
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_navigationLayout/auth/register': {
       id: '/_navigationLayout/auth/register'
@@ -548,17 +539,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/series/$serieSlug/volume'
       preLoaderRoute: typeof NavigationLayoutAuthLayoutAdminSeriesSerieSlugVolumeRouteImport
       parentRoute: typeof NavigationLayoutAuthLayoutAdminSeriesRouteRoute
-    }
-  }
-}
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/trpc/$': {
-      id: '/api/trpc/$'
-      path: '/api/trpc/$'
-      fullPath: '/api/trpc/$'
-      preLoaderRoute: typeof ApiTrpcSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
     }
   }
 }
@@ -723,15 +703,19 @@ const NavigationLayoutRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   NavigationLayoutRouteRoute: NavigationLayoutRouteRouteWithChildren,
+  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   SerieSlugChapterChapterNumberPageRoute:
     SerieSlugChapterChapterNumberPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

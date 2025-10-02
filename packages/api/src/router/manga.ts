@@ -1,9 +1,10 @@
+import { normalize } from "path";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { TRPCError } from "@trpc/server";
 import { getTableColumns } from "drizzle-orm";
-import { normalize } from "path";
 import z from "zod/v4";
 
+import type { PublisherFr, PublisherJp, Status, Type } from "@kuman/db/enums";
 import {
   and,
   arrayContainsPartial,
@@ -15,14 +16,16 @@ import {
   schema,
   sql,
 } from "@kuman/db";
-import type { PublisherFr, PublisherJp, Status, Type } from "@kuman/db/enums";
-import { createManga, searchParamsSchema } from "@kuman/shared/validators";
+import {
+  createOrUpdateSerie,
+  searchParamsSchema,
+} from "@kuman/shared/validators";
 
 import { publicProcedure } from "../trpc";
 
 export const mangaRouter = {
   create: publicProcedure
-    .input(createManga)
+    .input(createOrUpdateSerie)
     .mutation(async ({ ctx, input }) => {
       const { cover, ...restinput } = input;
       const slug = input.slug;
@@ -70,7 +73,7 @@ export const mangaRouter = {
     }),
 
   update: publicProcedure
-    .input(createManga)
+    .input(createOrUpdateSerie)
     .mutation(async ({ ctx, input }) => {
       const { cover, ...restinput } = input;
       const slug = input.slug;
@@ -177,7 +180,7 @@ export const mangaRouter = {
   get: publicProcedure
     .input(z.object({ slug: z.string() }))
     .query(async ({ ctx, input }) => {
-      const { createdAt, updatedAt, id, ...baseColumns } = getTableColumns(
+      const { createdAt, updatedAt, ...baseColumns } = getTableColumns(
         schema.mangas,
       );
 

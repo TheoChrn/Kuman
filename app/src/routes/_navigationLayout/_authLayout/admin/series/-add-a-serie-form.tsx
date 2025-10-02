@@ -1,31 +1,36 @@
-import * as Ariakit from "@ariakit/react";
 import { RouterOutputs } from "@kuman/api";
-import { z } from "zod/v4";
+import { generateMangaId } from "@kuman/shared/ids";
 import {
+  Genre,
   genreValues,
   publisherFrLabelFrench,
   publisherFrValues,
   publisherJpLabelFrench,
   publisherJpValues,
+  Status,
   statusLabelFrench,
   statusValues,
+  Type,
   typeValues,
 } from "@kuman/db/enums";
-import { toSlug } from "@kuman/shared/format";
-import { createManga, createOrUpdateSerieForm } from "@kuman/shared/validators";
+import {
+  createOrUpdateSerie,
+  createOrUpdateSerieForm,
+} from "@kuman/shared/validators";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { useTRPC } from "~/trpc/react";
+import { toSlug } from "@kuman/shared/format";
+import { useAppForm } from "~/hooks/form-composition";
+import { SelectItem } from "~/components/ui/inputs/select/select";
+import * as Ariakit from "@ariakit/react";
 import { useStore } from "@tanstack/react-store";
 import { useEffect } from "react";
 import { PiUploadBold } from "react-icons/pi";
 import { Button } from "~/components/ui/buttons/button";
-import { SelectItem } from "~/components/ui/inputs/select/select";
-import { useAppForm } from "~/hooks/form-composition";
-import { useTRPC } from "~/trpc/react";
-import { useNavigate } from "@tanstack/react-router";
 
 export function AddSerieFormModal(props: {
   serie?: RouterOutputs["mangas"]["get"];
-  cover?: File;
 }) {
   const trpc = useTRPC();
 
@@ -33,14 +38,91 @@ export function AddSerieFormModal(props: {
 
   const createMutation = useMutation(
     trpc.mangas.create.mutationOptions({
-      onMutate: async () => {},
+      onMutate: async (_variables, context) => {
+        const json = _variables.get("json")!.toString();
+        const variables = createOrUpdateSerie.parse(JSON.parse(json));
+
+        await context.client.cancelQueries(
+          trpc.mangas.get.queryOptions({ slug: variables.slug })
+        );
+
+        const initialSeries = context.client.getQueryData(
+          trpc.mangas.getAll.queryKey()
+        );
+
+        context.client.setQueryData(trpc.mangas.getAll.queryKey(), [
+          ...(initialSeries ?? []),
+          {
+            author: variables.author,
+            id: variables.id,
+            slug: variables.slug,
+            genres: variables.genres as Genre[],
+            status: variables.status as Status,
+            title: variables.title,
+            type: variables.type as Type,
+            coverUrl: variables.cover
+              ? URL.createObjectURL(variables.cover)
+              : null,
+          },
+        ]);
+
+        return { initialSeries };
+      },
       onSuccess: () => form.reset(),
+      onError: (_, __, results, context) =>
+        context.client.setQueryData(
+          trpc.mangas.getAll.queryKey(),
+          results?.initialSeries
+        ),
+      onSettled: (_, __, ___, ____, context) =>
+        context.client.invalidateQueries(trpc.mangas.getAll.queryFilter()),
     })
   );
 
   const updateMutation = useMutation(
     trpc.mangas.update.mutationOptions({
+      onMutate: async (_variables, context) => {
+        const json = _variables.get("json")!.toString();
+        const variables = createOrUpdateSerie.parse(JSON.parse(json));
+
+        await context.client.cancelQueries(
+          trpc.mangas.get.queryOptions({ slug: variables.slug })
+        );
+
+        const initialSeries = context.client.getQueryData(
+          trpc.mangas.getAll.queryKey()
+        );
+
+        context.client.setQueryData(
+          trpc.mangas.getAll.queryKey(),
+          initialSeries?.map((serie) =>
+            serie.slug === variables.slug
+              ? {
+                  ...serie,
+                  author: variables.author,
+                  slug: variables.slug,
+                  genres: variables.genres as Genre[],
+                  status: variables.status as Status,
+                  title: variables.title,
+                  type: variables.type as Type,
+                  coverUrl: variables.cover
+                    ? URL.createObjectURL(variables.cover)
+                    : null,
+                }
+              : serie
+          )
+        );
+
+        return { initialSeries };
+      },
       onSuccess: () => navigate({ to: "/admin/series" }),
+      onError: (_, __, results, context) =>
+        context.client.setQueryData(
+          trpc.mangas.getAll.queryKey(),
+          results?.initialSeries
+        ),
+      onSettled: (_, __, ___, ____, context) =>
+        context.client.invalidateQueries(trpc.mangas.getAll.queryFilter()),
     })
   );
 
@@ -78,6 +160,7 @@ export function AddSerieFormModal(props: {
         "json",
         JSON.stringify({
           ...restValue,
+          id: props.serie?.id ?? generateMangaId(),
           slug: props.serie?.slug ?? toSlug(value.romajiTitle),
         })
       );
