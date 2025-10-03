@@ -1,10 +1,12 @@
 import * as Ariakit from "@ariakit/react";
+import { role } from "@kuman/db/enums";
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { TRPCClientError } from "@trpc/client";
 import { PiBookmarkSimpleDuotone, PiMagnifyingGlassBold } from "react-icons/pi";
 import { Button } from "~/components/ui/buttons/button";
 import { useTRPC } from "~/trpc/react";
@@ -14,6 +16,13 @@ export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/bookmarks/"
 )({
   component: RouteComponent,
+  beforeLoad: async ({ context: { user } }) => {
+    if (user!.role === role.USER) {
+      throw new TRPCClientError(
+        "Vous devez être abonné pour suivre vos mangas"
+      );
+    }
+  },
   loader: ({ context: { trpc, queryClient } }) => {
     queryClient.prefetchQuery(trpc.bookmarks.getMany.queryOptions());
   },

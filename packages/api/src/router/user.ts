@@ -10,8 +10,11 @@ import { updateUserSchema } from "@kuman/shared/validators";
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const userRouter = {
-  getCurrentUser: publicProcedure.query(({ ctx }) => ctx.session?.user ?? null),
-  
+  getCurrentUser: publicProcedure.query(({ ctx }) => {
+    console.log(ctx.session?.user);
+    return ctx.session?.user ?? null;
+  }),
+
   updateRole: protectedProcedure
     .input(z.object({ role: z.enum(roleValues) }))
     .mutation(({ input, ctx }) =>

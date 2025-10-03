@@ -4,12 +4,13 @@ import * as Ariakit from "@ariakit/react";
 import { ChapterForm } from "~/components/chapter-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "~/trpc/react";
+import { LoadingSpinner } from "~/components/loading-spinner";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/$chapter/edit"
 )({
   component: RouteComponent,
-  loader: async ({ context: { queryClient, trpc }, params }) => {
+  loader: ({ context: { queryClient, trpc }, params }) => {
     queryClient.prefetchQuery(
       trpc.chapters.getChapterAdminProcedure.queryOptions({
         chapterNumber: Number(params.chapter),

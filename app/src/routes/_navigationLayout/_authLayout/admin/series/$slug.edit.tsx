@@ -1,11 +1,9 @@
+import * as Ariakit from "@ariakit/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Dialog, DialogHeading } from "~/components/ui/dialog";
 import { AddSerieFormModal } from "~/components/serie-form";
+import { Dialog, DialogHeading } from "~/components/ui/dialog";
 import { useTRPC } from "~/trpc/react";
-import * as Ariakit from "@ariakit/react";
-import { use, useMemo } from "react";
-import { Await } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series/$slug/edit"

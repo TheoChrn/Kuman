@@ -4,6 +4,7 @@ import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
 
+import { getRequestHeaders } from "@tanstack/react-start/server";
 import {
   createTRPCClient,
   httpBatchLink,
@@ -17,7 +18,8 @@ import { TRPCProvider } from "~/trpc/react";
 import { DefaultCatchBoundary } from "./components/default-catch-boundary";
 import { NotFound } from "./components/not-found";
 import { routeTree } from "./routeTree.gen";
-import { getRequestHeaders } from "@tanstack/react-start/server";
+import { PiSpinner } from "react-icons/pi";
+import { LoadingSpinner } from "~/components/loading-spinner";
 
 const getIncomingHeaders = createIsomorphicFn().server(() =>
   getRequestHeaders()
@@ -88,11 +90,13 @@ export function getRouter() {
     createTanStackRouter({
       scrollRestoration: true,
       routeTree,
-      context: { trpc, queryClient, caller: trpcClient },
+      context: { trpc, queryClient, trpcClient },
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
-      // defaultPendingComponent: () => <div>LOADING</div>,
+      defaultPendingComponent: () => (
+        <LoadingSpinner className="loading-spinner-absolute" />
+      ),
       Wrap: function WrapComponent({ children }) {
         return (
           <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>

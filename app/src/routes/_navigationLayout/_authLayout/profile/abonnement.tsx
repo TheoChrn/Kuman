@@ -8,27 +8,30 @@ export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/profile/abonnement"
 )({
   component: RouteComponent,
-  loader: async ({ context: { user, trpc, queryClient, caller } }) => {
-    const status = await queryClient.ensureQueryData(
-      trpc.stripe.getStripeCustomer.queryOptions()
-    );
+  loader: async ({ context: { user, trpc, queryClient, trpcClient } }) => {
+    if (user?.stripeCustomerId) {
+      const status = await queryClient.ensureQueryData(
+        trpc.stripe.getStripeCustomer.queryOptions()
+      );
+      const isSubscribed = status === "active" || status === "trialing";
 
-    const isSubscribed = status === "active" || status === "trialing";
-
-    if (!isSubscribed && user!.role === "subscriber") {
-      caller.user.updateRole.mutate({ role: "user" });
-      queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), (prev) => {
-        const prevData = prev!;
-        return { ...prevData, role: "user" as Role };
-      });
-      queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
+      if (!isSubscribed && user!.role === "subscriber") {
+        trpcClient.user.updateRole.mutate({ role: "user" });
+        queryClient.setQueryData(
+          trpc.user.getCurrentUser.queryKey(),
+          (prev) => {
+            const prevData = prev!;
+            return { ...prevData, role: "user" as Role };
+          }
+        );
+        queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
+      }
     }
-    return { role: user!.role };
   },
 });
 
 function RouteComponent() {
-  const { caller } = Route.useRouteContext();
+  const { trpcClient } = Route.useRouteContext();
   const { user } = Route.useRouteContext();
 
   if (user!.role === role.ADMINISTRATOR) {
@@ -67,7 +70,7 @@ function RouteComponent() {
           Votre abonnement est inactif
         </Ariakit.Heading>
         <div>
-          <Tabs caller={caller} />
+          <Tabs caller={trpcClient} />
           <Outlet />
         </div>
       </Ariakit.HeadingLevel>

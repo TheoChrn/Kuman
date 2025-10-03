@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Dialog, DialogHeading } from "~/components/ui/dialog";
-import { AddSerieFormModal } from "~/components/serie-form";
 import * as Ariakit from "@ariakit/react";
+import { createFileRoute } from "@tanstack/react-router";
+import { LoadingSpinner } from "~/components/loading-spinner";
+import { AddSerieFormModal } from "~/components/serie-form";
+import { Dialog, DialogHeading } from "~/components/ui/dialog";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series/add"

@@ -43,7 +43,7 @@ function RouteComponent() {
         </Ariakit.VisuallyHidden>
         {device === "desktop" ? (
           <Ariakit.HeadingLevel>
-            <div className="quick-filters">
+            <section className="quick-filters">
               <div className="quick-filters-heading">
                 <Ariakit.Heading>Filtres rapides</Ariakit.Heading>
                 <Link className="reset" to="/catalogue" search={{}}>
@@ -51,7 +51,7 @@ function RouteComponent() {
                 </Link>
               </div>
               <div className="quick-filters-wrapper">
-                <div className="quick-filters-genres">
+                <section className="quick-filters-genres">
                   <div className="quick-filters-genres-heading">
                     <Ariakit.HeadingLevel>
                       <Ariakit.Heading>Genres</Ariakit.Heading>
@@ -85,8 +85,8 @@ function RouteComponent() {
                       );
                     })}
                   </section>
-                </div>
-                <div className="quick-filters-types">
+                </section>
+                <section className="quick-filters-types">
                   <div className="quick-filters-types-heading">
                     <Ariakit.HeadingLevel>
                       <Ariakit.Heading>Types</Ariakit.Heading>
@@ -120,9 +120,9 @@ function RouteComponent() {
                       );
                     })}
                   </div>
-                </div>
+                </section>
               </div>
-            </div>
+            </section>
           </Ariakit.HeadingLevel>
         ) : (
           <Ariakit.PopoverProvider>

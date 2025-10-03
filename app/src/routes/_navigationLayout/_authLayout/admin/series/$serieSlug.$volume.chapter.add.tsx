@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Dialog, DialogHeading } from "~/components/ui/dialog";
 import * as Ariakit from "@ariakit/react";
+import { createFileRoute } from "@tanstack/react-router";
 import { ChapterForm } from "~/components/chapter-form";
+import { LoadingSpinner } from "~/components/loading-spinner";
+import { Dialog, DialogHeading } from "~/components/ui/dialog";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series/$serieSlug/$volume/chapter/add"

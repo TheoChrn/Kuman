@@ -2,7 +2,20 @@
 @use "../variables.scss" as *;
 
 #catalogue {
-  header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 1rem;
+
+  & .empty-catalogue-state {
+    height: 100%;
+    place-content: center;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.25rem;
+  }
+
+  & header {
     position: fixed;
     top: 0;
     right: 0;
@@ -92,6 +105,11 @@
         @include flex-between;
         top: 0;
         background-color: $background;
+
+        @include responsive(md) {
+          padding: 1rem;
+        }
+
         & a {
           font-size: 0.875rem;
         }
@@ -144,7 +162,16 @@
     }
   }
 
-  main {
+  & main {
+    flex: 1;
+    padding: 1rem;
+
+    @include responsive(md) {
+      max-width: 1284px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
     & ul {
       @include flex-center;
       flex-wrap: wrap;
@@ -152,11 +179,17 @@
     }
 
     .mangas {
-      padding: 1rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, 125px);
       justify-content: center;
       gap: 1rem;
+
+      @include responsive(md) {
+        grid-template-columns: repeat(auto-fit, 165px);
+      }
+      @include responsive(lg) {
+        grid-template-columns: repeat(auto-fit, 235px);
+      }
 
       &[data-pending="true"] {
         animation: pulse 1.5s ease-in-out infinite;
@@ -181,32 +214,6 @@
             text-transform: capitalize;
           }
         }
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #catalogue {
-    .quick-filters {
-      padding: 1rem;
-    }
-
-    main {
-      max-width: 1284px;
-      margin: 0 auto;
-      .mangas {
-        grid-template-columns: repeat(auto-fit, 165px);
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  #catalogue {
-    main {
-      .mangas {
-        grid-template-columns: repeat(auto-fit, 235px);
       }
     }
   }

@@ -13,6 +13,8 @@
 @use "./components/dialog.scss" as *;
 @use "./components/chapter-menu.scss" as *;
 @use "./components/search-results.scss" as *;
+@use "./components/loading-spinner.scss" as *;
+@use "./components/error-component.scss" as *;
 @use "./components/heading.scss" as *;
 @use "./page/serie.scss" as *;
 @use "./page/catalogue.scss" as *;
@@ -148,4 +150,9 @@ button {
   & > div:first-child {
     flex: 1;
   }
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

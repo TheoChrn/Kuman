@@ -13,6 +13,10 @@
   & > header {
     @include space-y-4;
 
+    & > a {
+      position: absolute;
+    }
+
     @include responsive(lg) {
       overflow: auto;
       flex: 1;

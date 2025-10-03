@@ -6,8 +6,9 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
+import { Suspense } from "react";
 import { PiCaretDown, PiPencil, PiPlus } from "react-icons/pi";
-import { Dialog } from "~/components/ui/dialog";
+import { LoadingSpinner } from "~/components/loading-spinner";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute(
@@ -78,7 +79,12 @@ function RouteComponent() {
           </div>
         ))}
       </div>
-      <Outlet />
+
+      <Suspense
+        fallback={<LoadingSpinner className="loading-spinner-absolute" />}
+      >
+        <Outlet />
+      </Suspense>
     </>
   );
 }

@@ -6,8 +6,6 @@ import {
   Link,
   Outlet,
   useLocation,
-  useMatches,
-  useRouter,
 } from "@tanstack/react-router";
 import { PiArrowLeftBold } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";

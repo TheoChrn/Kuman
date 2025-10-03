@@ -1,4 +1,5 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import type { User } from "lucia";
 import { getCookie } from "@tanstack/react-start/server";
 import { TRPCError } from "@trpc/server";
 import { hash, verify } from "argon2";
@@ -16,13 +17,7 @@ export const authRouter = {
     .input(loginFormSchema)
     .mutation(async ({ input, ctx }) => {
       const existingUserByEmail = await ctx.db
-        .select({
-          id: schema.users.id,
-          userName: schema.users.userName,
-          password: schema.users.password,
-          role: schema.users.role,
-          email: schema.users.email,
-        })
+        .select()
         .from(schema.users)
         .where(eq(schema.users.email, input.email))
         .then((res) => res[0]);
@@ -58,12 +53,9 @@ export const authRouter = {
 
       ctx.resHeaders.set("Set-Cookie", cookie.serialize());
 
-      return {
-        id: existingUserByEmail.id,
-        email: existingUserByEmail.email,
-        role: existingUserByEmail.role,
-      };
+      return existingUserByEmail;
     }),
+
   register: publicProcedure
     .input(registerFormSchema)
     .mutation(async ({ input, ctx }) => {
@@ -97,7 +89,11 @@ export const authRouter = {
         id: session.userId,
         email: input.email,
         role: role.USER,
-      };
+        firstName: null,
+        lastName: null,
+        stripeCustomerId: null,
+        userName: input.userName,
+      } as User;
     }),
 
   logout: protectedProcedure.mutation(async ({ ctx }) => {

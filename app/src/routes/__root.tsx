@@ -21,7 +21,7 @@ import { seo } from "~/utils/seo";
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
-  caller: TRPCClient<AppRouter>;
+  trpcClient: TRPCClient<AppRouter>;
   user?: User | null;
 }
 
@@ -84,7 +84,6 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 
     return { user: context.user };
   },
-  loader: ({ context }) => ({ user: context.user }),
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
 });

@@ -16,6 +16,7 @@ import { role, roleValues } from "@kuman/db/enums";
 import { createSupabaseClient } from "@kuman/db/supabase";
 
 import type { Session } from "./auth/session";
+import { sessions } from "../../db/src/schema/sessions";
 import { validateSessionCookies } from "./auth/session";
 
 /**
@@ -39,9 +40,7 @@ export const createTRPCContext = async ({
   resHeaders: Headers;
 }) => {
   const session: Session = await validateSessionCookies(req.headers);
-  const supabase = createSupabaseClient({
-    admin: session?.user?.role === role.ADMINISTRATOR,
-  });
+  const supabase = createSupabaseClient();
 
   return {
     session,
@@ -129,7 +128,10 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 
 export const protectedSubscriberProcedure = protectedProcedure.use(
   ({ ctx, next }) => {
-    if (ctx.session.user.role === role.SUBSCRIBER) {
+    if (
+      ctx.session.user.role !== role.SUBSCRIBER &&
+      ctx.session.user.stripeCustomerId === null
+    ) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Seul les membres premium ont accès à cette ressource",

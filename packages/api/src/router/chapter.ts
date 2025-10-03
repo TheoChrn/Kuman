@@ -45,18 +45,20 @@ export const chapterRouter = {
           `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}`,
         );
 
-      const images = list?.map(
+      if (!list?.length) {
+        return { ...chapter, pages: [] };
+      }
+
+      const paths = list.map(
         (l) =>
           `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}/${l.name}`,
       );
 
-      const { data } = await ctx.supabase.storage
-        .from("public-bucket")
-        .createSignedUrls(images ?? [], 60)
-        .then((rows) => ({
-          ...rows,
-          data: rows.data?.map(({ path, ...row }) => row.signedUrl),
-        }));
+      const data = await Promise.all(
+        paths.map((path) =>
+          ctx.supabase.storage.from("public-bucket").getPublicUrl(path),
+        ),
+      ).then((res) => res.map(({ data }) => data.publicUrl));
 
       return { ...chapter, pages: data };
     }),
@@ -82,31 +84,34 @@ export const chapterRouter = {
         )
         .then((rows) => rows[0]!);
 
-      const { data: list } = await ctx.supabase.storage
+      const path = `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}`;
+      const { data: files, error } = await ctx.supabase.storage
         .from("private")
-        .list(
-          `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}`,
-        );
+        .list(path);
 
-      const images = list?.map(
-        (l) =>
-          `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}/${l.name}`,
+      if (error)
+        return {
+          ...chapter,
+          pages: [],
+        };
+
+      const urls = await Promise.all(
+        files.map(async (file) => {
+          const { data, error } = await ctx.supabase.storage
+            .from("private")
+            .createSignedUrl(`${path}/${file.name}`, 3600);
+          if (error) throw new Error(error.message);
+          return data.signedUrl;
+        }),
       );
 
-      const { data } = await ctx.supabase.storage
-        .from("private")
-        .createSignedUrls(images ?? [], 60)
-        .then((rows) => ({
-          ...rows,
-          data: rows.data?.map(({ path, ...row }) => row.signedUrl),
-        }));
-
-      return { ...chapter, pages: data };
+      return { ...chapter, pages: urls };
     }),
 
   getChapterAdminProcedure: protectedAdminProcedure
     .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
     .query(async ({ input, ctx }) => {
+      await new Promise((resolve) => setTimeout(resolve, 10000));
       const chapter = await ctx.db
         .select({
           id: schema.chapters.id,
@@ -140,7 +145,7 @@ export const chapterRouter = {
 
       const { data: signedUrls } = await ctx.supabase.storage
         .from("private")
-        .createSignedUrls(images ?? [], 60); // URL valides 60s
+        .createSignedUrls(images ?? [], 3600);
 
       const pages = signedUrls?.map(({ path, signedUrl }) => ({
         path,
