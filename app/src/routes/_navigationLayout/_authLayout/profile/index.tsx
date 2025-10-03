@@ -42,9 +42,9 @@ function RouteComponent() {
   const logoutMutation = useMutation(
     trpc.auth.logout.mutationOptions({
       onSuccess: async () => {
+        router.invalidate();
         queryClient.clear();
         navigate({ to: "/auth/login" });
-        router.invalidate();
       },
     })
   );
@@ -72,9 +72,15 @@ function RouteComponent() {
                 <Link to="/profile/account">
                   <PiPencil size={24} /> Modifier mes informations
                 </Link>
-                <Link to="/bookmarks">
-                  <PiBookBookmarkBold size={24} /> Ma librairie
-                </Link>
+                {user!.role === role.USER ? (
+                  <Link to="." className="disabled">
+                    <PiBookBookmarkBold size={24} /> Ma librairie
+                  </Link>
+                ) : (
+                  <Link to="/bookmarks">
+                    <PiBookBookmarkBold size={24} /> Ma librairie
+                  </Link>
+                )}
               </div>
             </nav>
           </section>

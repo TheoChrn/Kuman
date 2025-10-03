@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_navigationLayout/")({
 });
 
 function Home() {
-  const { caller } = Route.useRouteContext();
+  const { trpcClient } = Route.useRouteContext();
 
   return (
     <Ariakit.HeadingLevel>
@@ -28,7 +28,12 @@ function Home() {
                 <Link to="/catalogue" className="button button-outline">
                   Voir le catalogue
                 </Link>
-                <Link to="/" hash="plans" hashScrollIntoView className="button button-primary">
+                <Link
+                  to="/"
+                  hash="plans"
+                  hashScrollIntoView
+                  className="button button-primary"
+                >
                   S'abonner
                 </Link>
               </div>
@@ -63,7 +68,7 @@ function Home() {
           <section id="plans" className="plans">
             <Ariakit.HeadingLevel>
               <Ariakit.Heading>Découvrez notre abonnement</Ariakit.Heading>
-              <Tabs caller={caller} />
+              <Tabs caller={trpcClient} />
             </Ariakit.HeadingLevel>
           </section>
         </main>

@@ -19,7 +19,11 @@ export function Catalogue(props: {
   );
 
   if (!collection?.length) {
-    return "Aucun résultat";
+    return (
+      <p className="empty-catalogue-state heading-5">
+        Aucun résultat ne correspond à votre recherche
+      </p>
+    );
   }
 
   return (

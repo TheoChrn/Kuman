@@ -1,0 +1,26 @@
+.loading-spinner {
+  flex: 1;
+  width: 100%;
+
+  &-absolute {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  & svg {
+    margin: auto;
+    height: 100%;
+    animation: spin 1000ms linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

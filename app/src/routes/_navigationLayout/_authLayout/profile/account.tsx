@@ -18,37 +18,40 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const trpc = useTRPC();
+
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { data: user } = useSuspenseQuery(
     trpc.user.getCurrentUser.queryOptions()
   );
   const updateUserMutation = useMutation(
     trpc.user.updatePersonalData.mutationOptions({
-      onMutate: async (_variables) => {
-        await queryClient.cancelQueries(
+      onMutate: async (_variables, context) => {
+        await context.client.cancelQueries(
           trpc.user.getCurrentUser.queryOptions()
         );
 
         const { currentPassword, password, ...variables } = _variables;
 
-        const userOldData = queryClient.getQueryData(
+        const userOldData = context.client.getQueryData(
           trpc.user.getCurrentUser.queryKey()
         );
 
-        queryClient.setQueryData(trpc.user.getCurrentUser.queryKey(), {
+        context.client.setQueryData(trpc.user.getCurrentUser.queryKey(), {
           ...userOldData!,
           ...variables,
         });
 
         return { userOldData };
       },
-      onSuccess: () => form.reset(),
-      onError: (error, _, context) => {
-        queryClient.setQueryData(
+      onSuccess: () => {
+        form.reset();
+        router.invalidate();
+      },
+      onError: (error, _, results, context) => {
+        context.client.setQueryData(
           trpc.user.getCurrentUser.queryKey(),
-          () => context?.userOldData
+          () => results?.userOldData
         );
         form.setErrorMap({
           onDynamic: {
@@ -57,8 +60,8 @@ function RouteComponent() {
           },
         });
       },
-      onSettled: () => {
-        queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
+      onSettled: (_, __, ___, ____, context) => {
+        context.client.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
       },
     })
   );

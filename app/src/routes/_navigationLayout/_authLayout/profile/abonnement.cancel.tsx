@@ -11,7 +11,7 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { caller } = Route.useRouteContext();
+  const { trpcClient: caller } = Route.useRouteContext();
   const navigate = useNavigate();
 
   return (

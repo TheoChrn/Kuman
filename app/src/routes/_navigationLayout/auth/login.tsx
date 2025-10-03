@@ -25,8 +25,8 @@ function RouteComponent() {
   const trpc = useTRPC();
   const loginMutation = useMutation(
     trpc.auth.login.mutationOptions({
-      onSuccess: async (user) => {
-        queryClient.clear();
+      onSuccess: (user) => {
+        console.log(user);
         queryClient.setQueryData(
           trpc.user.getCurrentUser.queryKey(),
           user as User

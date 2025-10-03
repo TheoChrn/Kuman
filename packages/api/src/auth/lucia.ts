@@ -32,11 +32,11 @@ declare module "lucia" {
     Lucia: typeof lucia;
     DatabaseUserAttributes: {
       userName: string;
-      firstName: string;
-      lastName: string;
+      firstName: string | null;
+      lastName: string | null;
       email: string;
       role: Role;
-      stripeCustomerId: string;
+      stripeCustomerId: string | null;
     };
   }
 }

@@ -11,9 +11,10 @@ export const Route = createFileRoute(
       sessionId: session_id,
     };
   },
-  beforeLoad: async ({ context: { caller, user, queryClient, trpc } }) => {
-    if (user?.role === "subscriber")
-      redirect({ to: "/profile/abonnement" });
+  beforeLoad: async ({
+    context: { trpcClient: caller, user, queryClient, trpc },
+  }) => {
+    if (user?.role === "subscriber") redirect({ to: "/profile/abonnement" });
 
     await queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
 

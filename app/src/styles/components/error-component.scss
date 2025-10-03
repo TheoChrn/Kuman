@@ -1,0 +1,26 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+.error-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+
+  & .heading-1 {
+    font-weight: 600;
+    color: $primary;
+  }
+
+  & .button-actions {
+    display: flex;
+    gap: 1rem;
+
+    & > button,
+    .button-primary {
+      border-radius: 4px;
+    }
+  }
+}

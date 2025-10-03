@@ -1,5 +1,5 @@
 import * as Ariakit from "@ariakit/react";
-import { statusLabelFrench } from "@kuman/db/enums";
+import { role, statusLabelFrench } from "@kuman/db/enums";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import {
   PiMagnifyingGlassBold,
   PiUser,
 } from "react-icons/pi";
+import { LoadingSpinner } from "~/components/loading-spinner";
 import { useDebounce } from "~/hooks/use-debounce";
 import { useDevice } from "~/hooks/use-device";
 import { useTRPC } from "~/trpc/react";
@@ -77,7 +78,7 @@ function RouteComponent() {
                   className="search-results"
                   shift={-48}
                 >
-                  {isLoading && "pending"}
+                  {isLoading && <LoadingSpinner />}
                   {data?.length
                     ? data.map((serie) => {
                         const StatusIcon = statusIcons[serie.status];
@@ -114,14 +115,16 @@ function RouteComponent() {
             <div>
               {user ? (
                 <>
-                  <Link
-                    className="nav-link"
-                    to="/bookmarks"
-                    activeProps={{ className: "active" }}
-                  >
-                    <Ariakit.VisuallyHidden>Favoris</Ariakit.VisuallyHidden>
-                    <PiBookmarkSimpleBold size={24} />
-                  </Link>
+                  {user.role !== role.USER && (
+                    <Link
+                      className="nav-link"
+                      to="/bookmarks"
+                      activeProps={{ className: "active" }}
+                    >
+                      <Ariakit.VisuallyHidden>Favoris</Ariakit.VisuallyHidden>
+                      <PiBookmarkSimpleBold size={24} />
+                    </Link>
+                  )}
                   <Link className="nav-link" to="/profile">
                     <Ariakit.VisuallyHidden>Profile</Ariakit.VisuallyHidden>
                     <img
