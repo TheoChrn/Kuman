@@ -27,6 +27,7 @@ import { Route as NavigationLayoutAuthLayoutProfileAccountRouteImport } from './
 import { Route as NavigationLayoutAuthLayoutProfileAbonnementRouteImport } from './routes/_navigationLayout/_authLayout/profile/abonnement'
 import { Route as NavigationLayoutSerieSlugLayoutVolumesRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/volumes'
 import { Route as NavigationLayoutSerieSlugLayoutFicheRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/fiche'
+import { Route as NavigationLayoutSerieSlugLayoutAvisRouteImport } from './routes/_navigationLayout/$serieSlug/_layout/avis'
 import { Route as SerieSlugChapterChapterNumberPageRouteImport } from './routes/$serieSlug.chapter.$chapterNumber.$page'
 import { Route as NavigationLayoutAuthLayoutAdminSeriesRouteRouteImport } from './routes/_navigationLayout/_authLayout/admin/series/route'
 import { Route as NavigationLayoutAuthLayoutProfileAbonnementSuccessRouteImport } from './routes/_navigationLayout/_authLayout/profile/abonnement.success'
@@ -138,6 +139,12 @@ const NavigationLayoutSerieSlugLayoutFicheRoute =
     path: '/fiche',
     getParentRoute: () => NavigationLayoutSerieSlugLayoutRouteRoute,
   } as any)
+const NavigationLayoutSerieSlugLayoutAvisRoute =
+  NavigationLayoutSerieSlugLayoutAvisRouteImport.update({
+    id: '/avis',
+    path: '/avis',
+    getParentRoute: () => NavigationLayoutSerieSlugLayoutRouteRoute,
+  } as any)
 const SerieSlugChapterChapterNumberPageRoute =
   SerieSlugChapterChapterNumberPageRouteImport.update({
     id: '/$serieSlug/chapter/$chapterNumber/$page',
@@ -214,6 +221,7 @@ export interface FileRoutesByFullPath {
   '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/admin/series': typeof NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
+  '/$serieSlug/avis': typeof NavigationLayoutSerieSlugLayoutAvisRoute
   '/$serieSlug/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
   '/$serieSlug/volumes': typeof NavigationLayoutSerieSlugLayoutVolumesRoute
   '/profile/abonnement': typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
@@ -239,6 +247,7 @@ export interface FileRoutesByTo {
   '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/admin/series': typeof NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
+  '/$serieSlug/avis': typeof NavigationLayoutSerieSlugLayoutAvisRoute
   '/$serieSlug/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
   '/$serieSlug/volumes': typeof NavigationLayoutSerieSlugLayoutVolumesRoute
   '/profile/abonnement': typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
@@ -269,6 +278,7 @@ export interface FileRoutesById {
   '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/_navigationLayout/_authLayout/admin/series': typeof NavigationLayoutAuthLayoutAdminSeriesRouteRouteWithChildren
   '/$serieSlug/chapter/$chapterNumber/$page': typeof SerieSlugChapterChapterNumberPageRoute
+  '/_navigationLayout/$serieSlug/_layout/avis': typeof NavigationLayoutSerieSlugLayoutAvisRoute
   '/_navigationLayout/$serieSlug/_layout/fiche': typeof NavigationLayoutSerieSlugLayoutFicheRoute
   '/_navigationLayout/$serieSlug/_layout/volumes': typeof NavigationLayoutSerieSlugLayoutVolumesRoute
   '/_navigationLayout/_authLayout/profile/abonnement': typeof NavigationLayoutAuthLayoutProfileAbonnementRouteWithChildren
@@ -297,6 +307,7 @@ export interface FileRouteTypes {
     | '/api/trpc/$'
     | '/admin/series'
     | '/$serieSlug/chapter/$chapterNumber/$page'
+    | '/$serieSlug/avis'
     | '/$serieSlug/fiche'
     | '/$serieSlug/volumes'
     | '/profile/abonnement'
@@ -322,6 +333,7 @@ export interface FileRouteTypes {
     | '/api/trpc/$'
     | '/admin/series'
     | '/$serieSlug/chapter/$chapterNumber/$page'
+    | '/$serieSlug/avis'
     | '/$serieSlug/fiche'
     | '/$serieSlug/volumes'
     | '/profile/abonnement'
@@ -351,6 +363,7 @@ export interface FileRouteTypes {
     | '/api/trpc/$'
     | '/_navigationLayout/_authLayout/admin/series'
     | '/$serieSlug/chapter/$chapterNumber/$page'
+    | '/_navigationLayout/$serieSlug/_layout/avis'
     | '/_navigationLayout/$serieSlug/_layout/fiche'
     | '/_navigationLayout/$serieSlug/_layout/volumes'
     | '/_navigationLayout/_authLayout/profile/abonnement'
@@ -492,6 +505,13 @@ declare module '@tanstack/react-router' {
       path: '/fiche'
       fullPath: '/$serieSlug/fiche'
       preLoaderRoute: typeof NavigationLayoutSerieSlugLayoutFicheRouteImport
+      parentRoute: typeof NavigationLayoutSerieSlugLayoutRouteRoute
+    }
+    '/_navigationLayout/$serieSlug/_layout/avis': {
+      id: '/_navigationLayout/$serieSlug/_layout/avis'
+      path: '/avis'
+      fullPath: '/$serieSlug/avis'
+      preLoaderRoute: typeof NavigationLayoutSerieSlugLayoutAvisRouteImport
       parentRoute: typeof NavigationLayoutSerieSlugLayoutRouteRoute
     }
     '/$serieSlug/chapter/$chapterNumber/$page': {
@@ -674,12 +694,15 @@ const NavigationLayoutAuthRouteRouteWithChildren =
   )
 
 interface NavigationLayoutSerieSlugLayoutRouteRouteChildren {
+  NavigationLayoutSerieSlugLayoutAvisRoute: typeof NavigationLayoutSerieSlugLayoutAvisRoute
   NavigationLayoutSerieSlugLayoutFicheRoute: typeof NavigationLayoutSerieSlugLayoutFicheRoute
   NavigationLayoutSerieSlugLayoutVolumesRoute: typeof NavigationLayoutSerieSlugLayoutVolumesRoute
 }
 
 const NavigationLayoutSerieSlugLayoutRouteRouteChildren: NavigationLayoutSerieSlugLayoutRouteRouteChildren =
   {
+    NavigationLayoutSerieSlugLayoutAvisRoute:
+      NavigationLayoutSerieSlugLayoutAvisRoute,
     NavigationLayoutSerieSlugLayoutFicheRoute:
       NavigationLayoutSerieSlugLayoutFicheRoute,
     NavigationLayoutSerieSlugLayoutVolumesRoute:

@@ -1,6 +1,14 @@
 @use "../mixins.scss" as *;
 @use "../variables.scss" as *;
 
+#fiche,
+#volumes,
+#avis {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0.75rem;
+  @include space-y-6;
+}
 #serie {
   & header {
     background-image: url("/shingeki-no-kyojin-wallpaper.jpg");
@@ -37,26 +45,41 @@
     }
   }
 
-  & main {
-    & .button-container {
-      display: flex;
-      width: 100%;
+  & > .button-container {
+    background-color: $background;
+    display: flex;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    @include shadow;
 
-      & > * {
-        flex: 1;
-        text-align: center;
-      }
+    @include responsive(lg) {
+      top: 51px;
     }
 
-    & .fiche {
-      @include space-y-6;
-      padding: 0.75rem;
+    & > * {
+      flex: 1;
+      text-align: center;
+    }
+  }
 
+  & main {
+    padding: 1rem;
+    background-color: $background-100;
+    & #fiche {
+      background-color: $background;
+      border: solid 1px $stroke;
+      padding: 1rem;
+      border-radius: 8px;
       section {
         @include space-y-2;
 
         & h2 {
           font-size: 1.25rem;
+        }
+
+        & .tag {
+          background-color: $background;
         }
 
         &.genres {
@@ -87,10 +110,11 @@
       }
     }
 
-    & .volumes {
-      @include space-y-6;
-      padding: 0.75rem;
-
+    & #volumes {
+      background-color: $background;
+      border: solid 1px $stroke;
+      padding: 1rem;
+      border-radius: 8px;
       ul {
         @include space-y-2;
         & .volume-group {

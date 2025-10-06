@@ -11,7 +11,6 @@ import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const userRouter = {
   getCurrentUser: publicProcedure.query(({ ctx }) => {
-    console.log(ctx.session?.user);
     return ctx.session?.user ?? null;
   }),
 

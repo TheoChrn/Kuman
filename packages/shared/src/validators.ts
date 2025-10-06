@@ -4,3 +4,4 @@ export * from "./validators/utils";
 export * from "./validators/chapter";
 export * from "./validators/auth";
 export * from "./validators/user";
+export * from "./validators/comment";

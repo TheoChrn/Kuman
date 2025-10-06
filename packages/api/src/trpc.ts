@@ -12,11 +12,10 @@ import superjson from "superjson";
 import { z, ZodError } from "zod/v4";
 
 import { db } from "@kuman/db/client";
-import { role, roleValues } from "@kuman/db/enums";
+import { role } from "@kuman/db/enums";
 import { createSupabaseClient } from "@kuman/db/supabase";
 
 import type { Session } from "./auth/session";
-import { sessions } from "../../db/src/schema/sessions";
 import { validateSessionCookies } from "./auth/session";
 
 /**
@@ -129,8 +128,11 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 export const protectedSubscriberProcedure = protectedProcedure.use(
   ({ ctx, next }) => {
     if (
-      ctx.session.user.role !== role.SUBSCRIBER &&
-      ctx.session.user.stripeCustomerId === null
+      !(
+        ctx.session.user.role === role.ADMINISTRATOR ||
+        (ctx.session.user.role === role.SUBSCRIBER &&
+          ctx.session.user.stripeCustomerId !== null)
+      )
     ) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
@@ -145,7 +147,7 @@ export const protectedAdminProcedure = protectedProcedure.use(
     if (ctx.session.user.role !== role.ADMINISTRATOR) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "Seuls les administrateurs accès à cette ressource",
+        message: "Seuls les administrateurs ont accès à cette ressource",
       });
     }
     return next();

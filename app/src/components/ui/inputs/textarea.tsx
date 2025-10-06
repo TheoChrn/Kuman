@@ -1,18 +1,21 @@
-import { ComponentPropsWithRef } from "react";
+import TextareaAutosize, {
+  TextareaAutosizeProps,
+} from "react-textarea-autosize";
 import { ErrorMessage } from "~/components/ui/inputs/error-message/error-message";
 import { useFieldContext } from "~/hooks/form-composition";
 
-export interface TextareaProps extends ComponentPropsWithRef<"textarea"> {
+export interface TextareaProps extends TextareaAutosizeProps {
   label?: string;
 }
 
-export function TextareaInput({ label, ...props }: TextareaProps) {
+export function TextareaInput({ label, maxRows = 1, ...props }: TextareaProps) {
   const field = useFieldContext<string>();
 
   return (
-    <label>
+    <label className="textarea">
       {label}
-      <textarea
+      <TextareaAutosize
+        maxRows={maxRows}
         id={field.name}
         name={field.name}
         value={field.state.value}

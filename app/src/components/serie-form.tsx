@@ -143,8 +143,6 @@ export function AddSerieFormModal(props: {
       onChange: createOrUpdateSerieForm,
     },
     onSubmit: async ({ value }) => {
-      console.log("submit");
-
       const { cover, ...restValue } = value;
       const formData = new FormData();
 

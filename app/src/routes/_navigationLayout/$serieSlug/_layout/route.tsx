@@ -59,25 +59,33 @@ function RouteComponent() {
             </ul>
           </div>
         </header>
+        <nav className="button-container">
+          <Link
+            className="button button-link"
+            activeProps={{ className: "button-link-active" }}
+            to="/$serieSlug/fiche"
+            params={{ serieSlug }}
+          >
+            Fiche
+          </Link>
+          <Link
+            className="button button-link"
+            activeProps={{ className: "button-link-active" }}
+            to="/$serieSlug/volumes"
+            params={{ serieSlug }}
+          >
+            Volumes
+          </Link>
+          <Link
+            className="button button-link"
+            activeProps={{ className: "button-link-active" }}
+            to="/$serieSlug/avis"
+            params={{ serieSlug }}
+          >
+            Avis
+          </Link>
+        </nav>
         <main>
-          <nav className="button-container">
-            <Link
-              className="button button-link"
-              activeProps={{ className: "button-link-active" }}
-              to="/$serieSlug/fiche"
-              params={{ serieSlug }}
-            >
-              Fiche
-            </Link>
-            <Link
-              className="button button-link"
-              activeProps={{ className: "button-link-active" }}
-              to="/$serieSlug/volumes"
-              params={{ serieSlug }}
-            >
-              Volumes
-            </Link>
-          </nav>
           <Outlet />
         </main>
         <Footer />

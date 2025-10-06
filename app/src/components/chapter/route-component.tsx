@@ -15,6 +15,7 @@ import { Route } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
 import { useTRPC } from "~/trpc/react";
 import { appStore } from "~/utils/stores/chapter-store";
 import { ChapterImage } from "~/components/chapter-image";
+import { role } from "@kuman/db/enums";
 
 export function Chapter({
   chapter,
@@ -27,6 +28,7 @@ export function Chapter({
   const queryClient = useQueryClient();
   const { device } = useDevice();
   const params = Route.useParams();
+  const { user } = Route.useRouteContext();
 
   const [chapterNumber, page, serieSlug] = [
     Number(params.chapterNumber),
@@ -97,7 +99,8 @@ export function Chapter({
         current.routeId !== next.routeId ||
         (current.routeId === next.routeId &&
           (current.params as typeof params).chapterNumber !==
-            (next.params as typeof params).chapterNumber)
+            (next.params as typeof params).chapterNumber &&
+          user?.role !== role.USER)
       ) {
         upsertBookmark.mutate({
           currentChapter: chapterNumber,

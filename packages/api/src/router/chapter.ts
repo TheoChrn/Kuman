@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -111,7 +110,6 @@ export const chapterRouter = {
   getChapterAdminProcedure: protectedAdminProcedure
     .input(z.object({ chapterNumber: z.number(), serie: z.string() }))
     .query(async ({ input, ctx }) => {
-      await new Promise((resolve) => setTimeout(resolve, 10000));
       const chapter = await ctx.db
         .select({
           id: schema.chapters.id,
@@ -160,7 +158,7 @@ export const chapterRouter = {
   getAllFromSerieGrouppedByVolume: publicProcedure
     .input(z.object({ serie: z.string() }))
     .query(async ({ ctx, input }) => {
-      const res = await ctx.db
+      return ctx.db
         .select({
           volumeNumber: schema.volumes.volumeNumber,
           title: schema.volumes.title,
@@ -182,8 +180,6 @@ export const chapterRouter = {
         )
         .where(eq(schema.volumes.mangaSlug, input.serie))
         .groupBy(schema.volumes.id);
-
-      return res;
     }),
 
   create: protectedAdminProcedure
@@ -273,8 +269,6 @@ export const chapterRouter = {
           code: "NOT_FOUND",
           message: "Ce volume n'existe pas",
         });
-
-      console.log("toto");
 
       await ctx.db
         .update(schema.chapters)

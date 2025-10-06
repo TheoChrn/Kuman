@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
@@ -96,8 +97,6 @@ export const stripeRouter = {
       status: "all",
       expand: ["data.default_payment_method"],
     });
-
-    console.log(subscriptions);
 
     const activeSubscription = subscriptions.data.find(
       (sub) => sub.status === "active",

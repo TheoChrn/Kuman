@@ -1,4 +1,5 @@
 import * as Ariakit from "@ariakit/react";
+import { role } from "@kuman/db/enums";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -15,7 +16,7 @@ export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series"
 )({
   beforeLoad: ({ context: { user } }) => {
-    if (user!.role !== "administrator") {
+    if (user!.role !== role.ADMINISTRATOR) {
       throw redirect({ to: "/" });
     }
   },

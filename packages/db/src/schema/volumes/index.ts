@@ -21,8 +21,7 @@ export const volumes = pgTable(
       .$defaultFn(() => generateTomeId()),
     mangaSlug: text("manga_slug")
       .references(() => mangas.slug)
-      .notNull()
-      .default("test"),
+      .notNull(),
     volumeNumber: smallint("volume_number").notNull(),
     title: text("title"),
     releaseDate: date("release_date", { mode: "string" }).notNull(),

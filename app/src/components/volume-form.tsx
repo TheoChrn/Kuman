@@ -15,7 +15,6 @@ import { useTRPC } from "~/trpc/react";
 
 export function VolumeForm(props: {
   volume?: RouterOutputs["volumes"]["get"];
-  
 }) {
   const trpc = useTRPC();
 
@@ -90,7 +89,6 @@ export function VolumeForm(props: {
           })
         );
 
-
         context.client.setQueryData(
           trpc.chapters.getAllFromSerieGrouppedByVolume.queryKey(),
           initialVolumes!.map((volume) =>
@@ -123,7 +121,6 @@ export function VolumeForm(props: {
         );
       },
       onError: (_, __, results, context) => {
-        console.log(_);
         context.client.setQueryData(
           trpc.chapters.getAllFromSerieGrouppedByVolume.queryKey(),
           results?.initialVolumes
@@ -159,8 +156,6 @@ export function VolumeForm(props: {
       }
 
       formData.append("json", JSON.stringify(restValue));
-
-      console.log("test");
 
       props.volume
         ? updateMutation.mutate(formData)
