@@ -33,6 +33,15 @@
     }
   }
 
+  &-destructive {
+    color: $destructive;
+    border-radius: 0;
+
+    &:hover {
+      background-color: $destructive-hover;
+    }
+  }
+
   &-primary {
     background-color: $primary;
     border: solid 1px $primary;

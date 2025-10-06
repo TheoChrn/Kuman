@@ -1,0 +1,206 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#avis {
+  padding: 0.75rem;
+  & .required-state {
+    @include flex-col-center;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  & > form {
+    @include space-y-4;
+  }
+  .textarea {
+    textarea {
+      min-height: auto;
+      background-color: $background;
+    }
+  }
+
+  & .button-container {
+    justify-content: end;
+    display: flex;
+    gap: 0.5rem;
+
+    & > * {
+      flex: none;
+
+      &:first-child {
+        border: transparent;
+      }
+    }
+  }
+
+  @include space-y-6;
+  & > ul {
+    background-color: $background;
+    border: solid 1px $stroke;
+    border-radius: 8px;
+    padding: 1rem;
+
+    & textarea {
+      background-color: $background-100;
+    }
+
+    @include space-y-3;
+    & .comment {
+      @include flex-between;
+      gap: 1rem;
+      align-items: start;
+      &,
+      div:not(.actions),
+      form {
+        width: 100%;
+      }
+
+      & form {
+        @include space-y-2;
+      }
+
+      & > div:first-child {
+        display: flex;
+        gap: 0.75rem;
+
+        & > .avatar {
+          width: 25px;
+          height: fit-content;
+          aspect-ratio: 1/1;
+          border-radius: 100%;
+
+          @include responsive(md) {
+            width: 50px;
+          }
+        }
+
+        & > div {
+          @include space-y-1;
+
+          & > div {
+            @include space-y-1;
+            & > .comment-user-role {
+              display: inline-block;
+              font-weight: 600;
+              padding: 0.125rem 0.375rem;
+              border-radius: 1000px;
+              &::first-letter {
+                text-transform: uppercase;
+              }
+
+              &-user {
+                background-color: #a3cef1;
+                color: #2b7afc;
+              }
+
+              &-subscriber {
+                background-color: #c7f9cc;
+                color: #38a169;
+              }
+
+              &-administrator {
+                background-color: #e3c6f0;
+                color: #7b2cbf;
+              }
+            }
+
+            & > .comment-user {
+              display: flex;
+              align-items: center;
+              gap: 0.25rem;
+              font-size: 0.8125rem;
+
+              & > span:first-child {
+                font-weight: 600;
+              }
+
+              & > span:last-child {
+                color: $foreground-100;
+                font-size: 0.75rem;
+
+                @include responsive(sm) {
+                  font-size: 0.8125rem;
+                }
+              }
+            }
+          }
+
+          & .comment-content-deleted {
+            font-style: italic;
+          }
+
+          & .answer-button {
+            border-color: transparent;
+            padding: 0.25rem;
+          }
+
+          & .disclosure {
+            display: flex;
+            gap: 0.25rem;
+
+            &[aria-expanded="true"] {
+              padding-bottom: 1rem;
+              & .caret {
+                transform: rotate(180deg);
+              }
+            }
+            & .caret {
+              transition-duration: 150ms;
+              flex-shrink: 0;
+            }
+          }
+
+          & .disclosure-content {
+            padding-top: 0.5rem;
+          }
+        }
+      }
+
+      & > .actions {
+        & > .button {
+          border-radius: 4px;
+          padding: 0.5rem;
+          border-color: transparent;
+          &[aria-expanded="true"] {
+            border-color: $primary;
+          }
+        }
+
+        & menu {
+          border: solid 1px $primary;
+          border-radius: 4px;
+          overflow: hidden;
+          & > .button {
+            display: flex;
+            justify-content: start;
+            gap: 0.5rem;
+            border-radius: 0;
+            width: 100%;
+            padding: 0.5rem;
+
+            &:nth-child(odd) {
+              background-color: $background;
+              &.button-destructive:hover {
+                background-color: $destructive-hover;
+              }
+
+              &:hover {
+                background-color: $hover;
+              }
+            }
+            &:nth-child(even) {
+              background-color: $background-100;
+              &.button-destructive:hover {
+                background-color: $destructive-hover;
+              }
+
+              &:hover {
+                background-color: $hover;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

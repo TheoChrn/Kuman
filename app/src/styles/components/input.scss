@@ -1,8 +1,7 @@
 @use "../mixins.scss" as *;
 @use "../variables.scss" as *;
 
-.text-input,
-.textarea {
+.text-input {
   border: solid 1px $stroke;
   padding: 0.5rem;
   background-color: $background-100;
@@ -15,8 +14,22 @@
 }
 
 .textarea {
-  min-height: 10rem;
-  resize: none;
+  @include flex-col;
+  gap: 0.5rem;
+
+  & textarea {
+    border: solid 1px $stroke;
+    padding: 0.5rem;
+    background-color: $background-100;
+    border-radius: 8px;
+    width: 100%;
+    min-height: 10rem;
+    resize: none;
+
+    &:focus {
+      border: solid 1px $primary;
+    }
+  }
 }
 
 .password-input {
@@ -37,4 +50,3 @@
     border: solid 1px $primary;
   }
 }
-

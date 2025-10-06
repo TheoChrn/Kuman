@@ -21,7 +21,7 @@ function RouteComponent() {
   );
 
   return (
-    <section className="fiche">
+    <section id="fiche">
       <Ariakit.HeadingLevel>
         <section>
           <Ariakit.Heading>Synopsis</Ariakit.Heading>

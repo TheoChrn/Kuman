@@ -120,6 +120,27 @@
       "when": 1755709762083,
       "tag": "0016_slippery_absorbing_man",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1759483224233,
+      "tag": "0017_wealthy_karnak",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1759485122550,
+      "tag": "0018_lowly_typhoid_mary",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1759492340308,
+      "tag": "0019_open_elektra",
+      "breakpoints": true
     }
   ]
 }

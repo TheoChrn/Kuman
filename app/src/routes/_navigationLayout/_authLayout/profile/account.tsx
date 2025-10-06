@@ -44,9 +44,10 @@ function RouteComponent() {
 
         return { userOldData };
       },
-      onSuccess: () => {
+      onSuccess: (_, __, ___, context) => {
         form.reset();
         router.invalidate();
+        context.client.invalidateQueries(trpc.comments.getAll.queryFilter());
       },
       onError: (error, _, results, context) => {
         context.client.setQueryData(

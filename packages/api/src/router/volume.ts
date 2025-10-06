@@ -55,7 +55,6 @@ export const volumeRouter = {
     .mutation(async ({ ctx, input }) => {
       const { cover, ...restInput } = input;
 
-      console.log(restInput);
       let publicUrl: string | null = null;
 
       if (input.cover) {
@@ -67,8 +66,6 @@ export const volumeRouter = {
             cacheControl: "31536000",
             upsert: true,
           });
-
-        console.log(error);
 
         if (data) {
           publicUrl = ctx.supabase.storage

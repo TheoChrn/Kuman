@@ -50,13 +50,9 @@ export function ChapterForm(props: {
       const { images, ...restValue } = value;
       const formData = new FormData();
       for (const image of images) {
-        console.log(image);
         if (!image.file) continue;
-        console.log(image);
         formData.append("images", image.file);
       }
-
-      console.log(formData.getAll("images"));
 
       formData.append(
         "json",
@@ -72,8 +68,6 @@ export function ChapterForm(props: {
           ...(props.chapter?.id && { id: props.chapter.id }),
         })
       );
-
-      // console.log(value);
 
       props.chapter
         ? updateChapterMutation.mutate(formData)
