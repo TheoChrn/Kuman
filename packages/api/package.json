@@ -5,11 +5,9 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
     },
     "./root": {
-      "types": "./dist/root.d.ts",
       "default": "./src/root.ts"
     }
   },

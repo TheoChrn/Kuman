@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@ariakit/react": "^0.4.17",
-    "@kuman/api": "workspace:^",
-    "@kuman/db": "workspace:^",
-    "@kuman/shared": "workspace:^",
+    "@kuman/api": "workspace:*",
+    "@kuman/db": "workspace:*",
+    "@kuman/shared": "workspace:*",
     "@netlify/vite-plugin-tanstack-start": "^1.0.2",
+    "@tanstack/nitro-v2-vite-plugin": "^1.132.40",
     "@tanstack/react-form": "^1.23.5",
     "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-devtools": "^5.90.2",
@@ -35,6 +36,7 @@
     "superjson": "^2.2.2"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.13.10",
     "@kuman/eslint-config": "workspace:^",
     "@kuman/prettier-config": "workspace:^",
     "@kuman/tsconfig": "workspace:*",
@@ -47,6 +49,7 @@
     "sass-embedded": "^1.90.0",
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "wrangler": "^4.42.0"
   }
 }

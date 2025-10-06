@@ -1,0 +1,8 @@
+[build]
+  command = "pnpm --filter @kuman/app run build"
+  publish = "app/dist/client"
+  functions = "app/.netlify/v1/functions"
+
+[build.environment]
+  NPM_FLAGS="--version"
+  NETLIFY_USE_PNPM = "true"

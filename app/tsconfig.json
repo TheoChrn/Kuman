@@ -22,7 +22,10 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@kuman/shared/*": ["../packages/shared/src/*"],
+      "@kuman/db/*": ["../packages/db/src/*"],
+      "@kuman/api/*": ["../packages/api/src/*"]
     },
     "noEmit": true
   }

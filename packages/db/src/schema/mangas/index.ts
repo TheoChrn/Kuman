@@ -5,10 +5,10 @@ import {
   smallint,
   text,
   timestamp,
-  unique
+  unique,
 } from "drizzle-orm/pg-core";
 
-import { generateMangaId } from "@kuman/shared/ids";
+import { generateMangaId } from "@kuman/shared/generate-ids";
 
 import { genreValues, statusValues, typeValues } from "../../enums";
 import {

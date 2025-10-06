@@ -7,7 +7,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod/v4";
 
 import { and, asc, eq, jsonAgg, schema } from "@kuman/db";
-import { generateChapterId } from "@kuman/shared/ids";
+import { generateChapterId } from "@kuman/shared/generate-ids";
 import { createChapter, updateChapter } from "@kuman/shared/validators";
 
 import {

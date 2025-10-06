@@ -1,12 +1,8 @@
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
-import type { Config } from "drizzle-kit";
 import { config } from "dotenv";
+import type { Config } from "drizzle-kit";
+import { resolve } from "path";
 
-const _filename = fileURLToPath(import.meta.url);
-const _dirname = dirname(_filename);
-
-config({ path: resolve(_dirname, "../../.env") });
+config({ path: resolve(process.cwd(), ".env") });
 
 if (!process.env.POSTGRES_URL) {
   throw new Error("Missing POSTGRES_URL");

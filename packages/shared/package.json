@@ -12,7 +12,7 @@
       "types": "./dist/format.d.ts",
       "default": "./src/format.ts"
     },
-    "./ids": {
+    "./generate-ids": {
       "types": "./dist/generate-ids.d.ts",
       "default": "./src/generate-ids.ts"
     }

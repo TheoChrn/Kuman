@@ -5,27 +5,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
     },
     "./client": {
-      "types": "./dist/client.d.ts",
       "default": "./src/client.ts"
     },
     "./schema": {
-      "types": "./dist/schema.d.ts",
       "default": "./src/schema.ts"
     },
     "./supabase": {
-      "types": "./dist/supabase.d.ts",
       "default": "./src/supabase.ts"
     },
     "./enums": {
-      "types": "./dist/enums/index.d.ts",
       "default": "./src/enums/index.ts"
     },
     "./utils": {
-      "types": "./dist/utils/index.d.ts",
       "default": "./src/utils/index.ts"
     }
   },

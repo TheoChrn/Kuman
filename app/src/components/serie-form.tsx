@@ -1,5 +1,5 @@
 import { RouterOutputs } from "@kuman/api";
-import { generateMangaId } from "@kuman/shared/ids";
+import { generateMangaId } from "@kuman/shared/generate-ids";
 import {
   Genre,
   genreValues,

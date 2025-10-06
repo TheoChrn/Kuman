@@ -7,7 +7,7 @@ import {
   unique,
 } from "drizzle-orm/pg-core";
 
-import { generateBookmarkId } from "@kuman/shared/ids";
+import { generateBookmarkId } from "@kuman/shared/generate-ids";
 
 import { mangas } from "../mangas";
 import { users } from "../users";

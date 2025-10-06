@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-import { generateCommentId } from "@kuman/shared/ids";
+import { generateCommentId } from "@kuman/shared/generate-ids";
 
 import { mangas } from "../mangas";
 import { users } from "../users";

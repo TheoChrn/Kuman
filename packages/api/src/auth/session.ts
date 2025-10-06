@@ -1,5 +1,5 @@
 import { db } from "@kuman/db/client";
-import { generateUserId } from "@kuman/shared/ids";
+import { generateUserId } from "@kuman/shared/generate-ids";
 
 import { schema } from "../../../db/src/schema";
 import { lucia } from "./lucia";
