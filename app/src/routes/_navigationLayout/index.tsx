@@ -12,9 +12,10 @@ function Home() {
 
   return (
     <Ariakit.HeadingLevel>
-      <Ariakit.VisuallyHidden>
-        <Ariakit.Heading>Page d'accueil</Ariakit.Heading>
-      </Ariakit.VisuallyHidden>
+      <Ariakit.Heading>
+        <Ariakit.VisuallyHidden>Page d'accueil</Ariakit.VisuallyHidden>
+      </Ariakit.Heading>
+
       <div id="home">
         <Ariakit.HeadingLevel>
           <header>

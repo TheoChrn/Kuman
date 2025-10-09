@@ -11,10 +11,18 @@ import { PiBookmarkSimpleDuotone, PiMagnifyingGlassBold } from "react-icons/pi";
 import { Button } from "~/components/ui/buttons/button";
 import { useTRPC } from "~/trpc/react";
 import { typeIcons } from "~/utils/icons/typeIcons";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/bookmarks/"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Favoris",
+      }),
+    ],
+  }),
   component: RouteComponent,
   beforeLoad: async ({ context: { user } }) => {
     if (user!.role === role.USER) {

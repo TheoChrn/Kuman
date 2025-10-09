@@ -21,9 +21,17 @@ import {
 } from "react-icons/pi";
 import { Button } from "~/components/ui/buttons/button";
 import { useTRPC } from "~/trpc/react";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute("/_navigationLayout/_authLayout/profile/")(
   {
+    head: () => ({
+      meta: [
+        ...seo({
+          title: "Kuman | Profil",
+        }),
+      ],
+    }),
     component: RouteComponent,
   }
 );

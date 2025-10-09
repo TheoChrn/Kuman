@@ -11,9 +11,6 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { trpcClient: caller } = Route.useRouteContext();
-  const navigate = useNavigate();
-
   return (
     <Ariakit.DialogProvider>
       <Ariakit.Dialog>

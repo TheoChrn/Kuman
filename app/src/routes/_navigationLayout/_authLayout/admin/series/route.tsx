@@ -11,10 +11,18 @@ import { Suspense } from "react";
 import { PiCaretDown, PiPencil, PiPlus } from "react-icons/pi";
 import { LoadingSpinner } from "~/components/loading-spinner";
 import { useTRPC } from "~/trpc/react";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/admin/series"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Administration - Séries",
+      }),
+    ],
+  }),
   beforeLoad: ({ context: { user } }) => {
     if (user!.role !== role.ADMINISTRATOR) {
       throw redirect({ to: "/" });

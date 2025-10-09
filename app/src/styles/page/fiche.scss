@@ -1,0 +1,46 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#fiche {
+  background-color: $background;
+  border: solid 1px $stroke;
+  padding: 1rem;
+  border-radius: 8px;
+  section {
+    @include space-y-2;
+
+    & h2 {
+      font-size: 1.25rem;
+    }
+
+    & .tag {
+      background-color: $background;
+    }
+
+    &.genres {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+
+        & > li::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    &.type {
+      & span {
+        text-transform: capitalize;
+      }
+    }
+
+    &.other-names {
+      ul {
+        display: flex;
+        gap: 0.25rem;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

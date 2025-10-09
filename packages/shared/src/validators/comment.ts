@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 
-import { baseInputRequiredTextField, passwordSchema } from "./utils";
+import { baseInputRequiredTextField } from "./utils";
 
 export const commentFormSchema = z.object({
   content: baseInputRequiredTextField(),

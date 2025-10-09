@@ -6,10 +6,18 @@ import {
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useTRPC } from "~/trpc/react";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute(
   "/_navigationLayout/$serieSlug/_layout/fiche"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Fiche",
+      }),
+    ],
+  }),
   component: RouteComponent,
 });
 

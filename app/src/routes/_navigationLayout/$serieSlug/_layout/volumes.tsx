@@ -3,10 +3,18 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PiCaretDown } from "react-icons/pi";
 import { useTRPC } from "~/trpc/react";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute(
   "/_navigationLayout/$serieSlug/_layout/volumes"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Volumes",
+      }),
+    ],
+  }),
   component: RouteComponent,
 });
 

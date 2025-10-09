@@ -11,8 +11,7 @@ function usePrevious<T>(value: T) {
 
 export function TabPanel(props: Ariakit.TabPanelProps) {
   const tab = Ariakit.useTabContext();
-  const defaultId = "month";
-  const id = props.id ?? defaultId;
+  const id = props.id ?? useId();
   const tabId = Ariakit.useStoreState(
     tab,
     () => props.tabId ?? tab?.panels.item(id)?.tabId

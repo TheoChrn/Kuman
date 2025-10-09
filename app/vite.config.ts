@@ -1,11 +1,9 @@
+import netlify from "@netlify/vite-plugin-tanstack-start";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import viteReact from "@vitejs/plugin-react";
-import netlify from "@netlify/vite-plugin-tanstack-start";
-// import { nitroV2Plugin } from "@tanstack/nitro-v2-vite-plugin";
-import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
   server: {
@@ -18,15 +16,8 @@ export default defineConfig({
       "@kuman/api": path.resolve(__dirname, "../packages/api/src"),
     },
   },
-  // ssr: {
-  //   noExternal: ["@kuman/shared", "@kuman/db", "@kuman/api"],
-  // },
-  // build: {
-  //   rollupOptions: {
-  //     external: ["pg", "pg-cloudflare", "cloudflare:sockets"],
-  //   },
-  // },
   envDir: path.resolve(__dirname, "../"),
+
   plugins: [
     tsconfigPaths({
       projects: ["./tsconfig.json"],
