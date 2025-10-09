@@ -1,4 +1,5 @@
 @use "./variables.scss" as *;
+
 @use "./components/button.scss" as *;
 @use "./components/tag.scss" as *;
 @use "./components/footer.scss" as *;
@@ -16,8 +17,11 @@
 @use "./components/loading-spinner.scss" as *;
 @use "./components/error-component.scss" as *;
 @use "./components/heading.scss" as *;
+
 @use "./page/serie.scss" as *;
 @use "./page/avis.scss" as *;
+@use "./page/volumes.scss" as *;
+@use "./page/fiche.scss" as *;
 @use "./page/catalogue.scss" as *;
 @use "./page/bookmarks.scss" as *;
 @use "./page/register.scss" as *;
@@ -61,6 +65,16 @@ h6 {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+
+  & > #app-wrapper {
+    flex: 1;
+  }
 }
 
 html,

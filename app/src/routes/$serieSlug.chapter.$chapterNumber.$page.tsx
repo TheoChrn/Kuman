@@ -36,7 +36,7 @@ export const Route = createFileRoute(
       throw redirect({ to: "/auth/login" });
     }
 
-    if (user?.role === role.USER) {
+    if (num > 1 && user?.role === role.USER) {
       throw redirect({ to: "/profile/abonnement" });
     }
   },

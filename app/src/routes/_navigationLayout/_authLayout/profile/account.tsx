@@ -9,10 +9,18 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { Button } from "~/components/ui/buttons/button";
 import { useAppForm } from "~/hooks/form-composition";
 import { useTRPC } from "~/trpc/react";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/profile/account"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Mon Compte",
+      }),
+    ],
+  }),
   component: RouteComponent,
 });
 

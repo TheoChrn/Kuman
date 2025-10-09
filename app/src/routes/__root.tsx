@@ -15,7 +15,7 @@ import { User } from "lucia";
 import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/default-catch-boundary";
 import { NotFound } from "~/components/not-found";
-import "~/styles/global.scss";
+import styleUrl from "../styles/global.scss?url";
 import { seo } from "~/utils/seo";
 
 export interface RouterAppContext {
@@ -29,22 +29,20 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
       {
-        charSet: "utf-8",
-      },
-      {
         name: "viewport",
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title: "Kuman | Type-Safe, Client-First, Full-Stack React Framework",
-        description: `TanStack Start is a type-safe, client-first, full-stack React framework. `,
+        title: "Kuman | Lire des mangas en ligne gratuitement",
+        description:
+          "Kuman est une plateforme de lecture de manga en ligne, fluide, rapide et sans publicité. Découvrez les derniers chapitres traduits en français.",
       }),
     ],
     links: [
-      // {
-      //   rel: "stylesheet",
-      //   href: styleUrl,
-      // },
+      {
+        rel: "stylesheet",
+        href: styleUrl,
+      },
       {
         rel: "apple-touch-icon",
         sizes: "180x180",
@@ -62,7 +60,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         sizes: "16x16",
         href: "/favicon-16x16.png",
       },
-      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
+      { rel: "manifest", href: "/site.webmanifest" },
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
@@ -98,8 +96,9 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="fr-FR">
       <head>
+        <meta charSet="utf-8" />
         <HeadContent />
       </head>
       <body>

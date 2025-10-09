@@ -11,8 +11,16 @@ import { Button } from "~/components/ui/buttons/button";
 import { useDevice } from "~/hooks/use-device";
 import { genreIcons } from "~/utils/icons/genreIcons";
 import { typeIcons } from "~/utils/icons/typeIcons";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute("/_navigationLayout/catalogue")({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Catalogue",
+      }),
+    ],
+  }),
   component: RouteComponent,
   loaderDeps: ({ search: { genres, types } }) => ({
     genres,
@@ -139,7 +147,7 @@ function RouteComponent() {
               preventBodyScroll
               fitViewport
               fixed
-              gutter={8}
+              gutter={6}
               getPersistentElements={() =>
                 document.querySelectorAll("#popover-trigger, .searchInput")
               }

@@ -46,6 +46,7 @@ function RouteComponent() {
               <li className="status">{statusLabelFrench[manga.status]}</li>
               <li>De {manga.author}</li>
               <Link
+                resetScroll={false}
                 to="/$serieSlug/chapter/$chapterNumber/$page"
                 params={{
                   chapterNumber: manga.currentChapter?.toString() ?? "1",
@@ -61,6 +62,7 @@ function RouteComponent() {
         </header>
         <nav className="button-container">
           <Link
+            resetScroll={false}
             className="button button-link"
             activeProps={{ className: "button-link-active" }}
             to="/$serieSlug/fiche"
@@ -69,6 +71,7 @@ function RouteComponent() {
             Fiche
           </Link>
           <Link
+            resetScroll={false}
             className="button button-link"
             activeProps={{ className: "button-link-active" }}
             to="/$serieSlug/volumes"
@@ -77,6 +80,7 @@ function RouteComponent() {
             Volumes
           </Link>
           <Link
+            resetScroll={false}
             className="button button-link"
             activeProps={{ className: "button-link-active" }}
             to="/$serieSlug/avis"

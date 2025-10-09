@@ -15,6 +15,10 @@
     "./generate-ids": {
       "types": "./dist/generate-ids.d.ts",
       "default": "./src/generate-ids.ts"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "default": "./src/env.ts"
     }
   },
   "license": "MIT",
@@ -36,5 +40,8 @@
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@kuman/prettier-config"
+  "prettier": "@kuman/prettier-config",
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  }
 }

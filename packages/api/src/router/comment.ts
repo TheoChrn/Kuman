@@ -4,10 +4,25 @@ import { z } from "zod/v4";
 import { and, desc, eq, schema, sql } from "@kuman/db";
 import { role } from "@kuman/db/enums";
 
-import { protectedProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const commentRouter = {
-  getAll: protectedProcedure
+  // Get tous les commentaires pour une série
+  // SELECT
+  //   comments.id,
+  //   CASE WHEN comments.deleted = true THEN 'Ce commentaire a été supprimé' ELSE comments.content END AS content,
+  //   comments.updatedAt,
+  //   comments.createdAt,
+  //   comments.parentId,
+  //   comments.userId,
+  //   comments.deleted,
+  //   users.userName,
+  //   users.role
+  // FROM comments
+  // LEFT JOIN users ON users.id = comments.userId
+  // WHERE comments.mangaSlug = $1
+  // ORDER BY comments.createdAt DESC;
+  getAll: publicProcedure
     .input(
       z.object({
         serieSlug: z.string(),
@@ -33,15 +48,17 @@ export const commentRouter = {
         .leftJoin(schema.users, eq(schema.users.id, schema.comments.userId))
         .where(eq(schema.comments.mangaSlug, input.serieSlug))
         .orderBy(desc(schema.comments.createdAt))
-        .then((rows) => {
-          console.log(rows);
-          return rows.map(({ userName, role, ...row }) => ({
+        .then((rows) =>
+          rows.map(({ userName, role, ...row }) => ({
             ...row,
             user: { userName: userName!, role: role! },
-          }));
-        });
+          })),
+        );
     }),
 
+  // Create un commentaire
+  // INSERT INTO comments (content, mangaSlug, parentId, userId)
+  // VALUES ($1, $2, $3, $4);
   create: protectedProcedure
     .input(
       z.object({
@@ -59,6 +76,15 @@ export const commentRouter = {
       });
     }),
 
+  // Update un commentaire
+  // Si admin :
+  // UPDATE comments
+  // SET content = $1, updatedAt = CURRENT_TIMESTAMP
+  // WHERE id = $2;
+  // Sinon :
+  // UPDATE comments
+  // SET content = $1, updatedAt = CURRENT_TIMESTAMP
+  // WHERE userId = $2 AND id = $3;
   update: protectedProcedure
     .input(
       z.object({
@@ -90,6 +116,16 @@ export const commentRouter = {
           );
       }
     }),
+
+  // Soft delete d'un commentaire
+  // Si admin :
+  // UPDATE comments
+  // SET deleted = true
+  // WHERE id = $1;
+  // Sinon :
+  // UPDATE comments
+  // SET deleted = true
+  // WHERE userId = $1 AND id = $2;
   softDelete: protectedProcedure
     .input(
       z.object({

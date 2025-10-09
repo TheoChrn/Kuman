@@ -1,0 +1,88 @@
+@use "../mixins.scss" as *;
+@use "../variables.scss" as *;
+
+#volumes {
+  background-color: $background;
+  border: solid 1px $stroke;
+  padding: 1rem;
+  border-radius: 8px;
+  ul {
+    @include space-y-2;
+    & .volume-group {
+      @include space-y-6;
+
+      & .volume-card {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &[aria-expanded="true"] {
+          & .volume-caret {
+            transform: rotate(180deg);
+          }
+        }
+
+        & .volume-caret {
+          transition-duration: 150ms;
+          flex-shrink: 0;
+        }
+
+        & div {
+          text-align: start;
+          @include space-y-1;
+          & h3 {
+            font-size: 1.25rem;
+            color: $primary;
+          }
+
+          & .chapter-range {
+            font-size: 0.875rem;
+            color: $foreground-100;
+          }
+        }
+
+        & p {
+          @include line-clamp-3;
+        }
+      }
+
+      & .chapters {
+        display: grid;
+        transition: grid-template-rows 150ms;
+        grid-template-rows: 0fr;
+        @include space-y-2;
+
+        &[data-enter] {
+          grid-template-rows: 1fr;
+        }
+
+        > * {
+          overflow: hidden;
+          padding: 0;
+        }
+
+        & li {
+          &:not(:last-child) {
+            border-bottom: solid 1px $stroke;
+          }
+
+          & .chapter-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+
+            & .chapter-number {
+              font-size: 2rem;
+              color: $foreground-100;
+            }
+
+            & .chapter-page-count {
+              font-size: 0.875rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import { Lucia } from "lucia";
 import type { Role } from "@kuman/db/enums";
 import { schema } from "@kuman/db";
 import { db } from "@kuman/db/client";
+import { env } from "@kuman/shared/env";
 
 export const lucia = new Lucia(
   new DrizzlePostgreSQLAdapter(db, schema.sessions, schema.users),
@@ -11,7 +12,7 @@ export const lucia = new Lucia(
     sessionCookie: {
       expires: false,
       attributes: {
-        secure: process.env.NODE_ENV === "production",
+        secure: env.NODE_ENV === "production",
       },
     },
     getUserAttributes: (attributes) => {

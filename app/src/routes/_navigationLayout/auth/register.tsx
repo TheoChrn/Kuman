@@ -12,8 +12,16 @@ import { useAppForm } from "~/hooks/form-composition";
 import { useTRPC } from "~/trpc/react";
 import * as Ariakit from "@ariakit/react";
 import { User } from "lucia";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute("/_navigationLayout/auth/register")({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Register",
+      }),
+    ],
+  }),
   component: RouteComponent,
 });
 

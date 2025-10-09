@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
@@ -39,7 +38,8 @@ export const stripeRouter = {
         if (subscriptions.data.length > 0) {
           const portalSession = await stripe.billingPortal.sessions.create({
             customer: ctx.session.user.stripeCustomerId,
-            return_url: "http://localhost:3000/profile/abonnement",
+            return_url:
+              "http://https://theochrn-kuman.netlify.app/profile/abonnement",
           });
           return portalSession.url;
         }
@@ -53,8 +53,9 @@ export const stripeRouter = {
             userId: ctx.session.user.id,
             email: ctx.session.user.email,
           },
-          success_url: `http://localhost:3000/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: "http://localhost:3000/profile/abonnement/cancel",
+          success_url: `http://https://theochrn-kuman.netlify.app/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url:
+            "http://https://theochrn-kuman.netlify.app/profile/abonnement/cancel",
         });
         return session.url;
       }
@@ -62,11 +63,6 @@ export const stripeRouter = {
       const { id } = await stripe.customers.create({
         email: ctx.session.user.email,
       });
-
-      await ctx.db
-        .update(schema.users)
-        .set({ stripeCustomerId: id })
-        .where(eq(schema.users.id, ctx.session.user.id));
 
       const session = await stripe.checkout.sessions.create({
         customer: id,
@@ -77,9 +73,15 @@ export const stripeRouter = {
           userId: ctx.session.user.id,
           email: ctx.session.user.email,
         },
-        success_url: `http://localhost:3000/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: "http://localhost:3000/profile/abonnement/cancel",
+        success_url: `https://theochrn-kuman.netlify.app/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url:
+          "https://theochrn-kuman.netlify.app/profile/abonnement/cancel",
       });
+
+      await ctx.db
+        .update(schema.users)
+        .set({ stripeCustomerId: id })
+        .where(eq(schema.users.id, ctx.session.user.id));
 
       return session.url;
     }),

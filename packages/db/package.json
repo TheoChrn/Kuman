@@ -31,7 +31,7 @@
     "format": "pnpm --filter @kuman/prettier-config run format",
     "lint": "eslint",
     "push": "pnpm with-env drizzle-kit push",
-    "studio": "pnpm with-env drizzle-kit studio --config drizzle.config.ts",
+    "studio": "dotenv -e ../../.env -- drizzle-kit studio --config drizzle.config.ts",
     "generate": "pnpm with-env drizzle-kit generate",
     "migrate": "pnpm with-env drizzle-kit migrate",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",

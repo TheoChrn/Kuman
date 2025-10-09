@@ -3,10 +3,18 @@ import { role, Role } from "@kuman/db/enums";
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { Tabs } from "~/components/tabs";
 import { Button } from "~/components/ui/buttons/button";
+import { seo } from "~/utils/seo";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/profile/abonnement"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Abonnement",
+      }),
+    ],
+  }),
   component: RouteComponent,
   loader: async ({ context: { user, trpc, queryClient, trpcClient } }) => {
     if (user?.stripeCustomerId) {

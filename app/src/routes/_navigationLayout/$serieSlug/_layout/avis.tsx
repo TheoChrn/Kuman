@@ -19,6 +19,7 @@ import { useDevice } from "~/hooks/use-device";
 import { useTRPC } from "~/trpc/react";
 import { nestArray } from "~/utils/format";
 import { User } from "lucia";
+import { seo } from "~/utils/seo";
 
 function timeSinceDate(date: Date) {
   const diffMs = Date.now() - date.getTime();
@@ -44,6 +45,13 @@ function timeSinceDate(date: Date) {
 export const Route = createFileRoute(
   "/_navigationLayout/$serieSlug/_layout/avis"
 )({
+  head: () => ({
+    meta: [
+      ...seo({
+        title: "Kuman | Avis",
+      }),
+    ],
+  }),
   component: RouteComponent,
   loader: ({ context, params }) => {
     context.queryClient.prefetchQuery(

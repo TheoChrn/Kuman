@@ -29,15 +29,18 @@ export function Catalogue(props: {
   return (
     <section className="mangas" data-pending={isFetching}>
       <Ariakit.HeadingLevel>
-        {Array.from({ length: 20 }, (_, index) => (
+        {collection.map((serie, index) => (
           <Link
             to="/$serieSlug/fiche"
-            params={{ serieSlug: collection[0]!.slug }}
+            params={{ serieSlug: serie.slug }}
             key={index}
           >
-            <img src={collection[0]?.coverUrl ?? ""} />
+            <img
+              src={serie?.coverUrl ?? ""}
+              alt={`Couverture de ${serie.title}`}
+            />
             <div>
-              <Ariakit.Heading>{collection[0]!.title}</Ariakit.Heading>
+              <Ariakit.Heading>{serie.title}</Ariakit.Heading>
             </div>
           </Link>
         ))}

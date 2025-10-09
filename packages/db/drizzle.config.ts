@@ -1,14 +1,8 @@
-import { config } from "dotenv";
 import type { Config } from "drizzle-kit";
-import { resolve } from "path";
 
-config({ path: resolve(process.cwd(), ".env") });
+import { env } from "@kuman/shared/env";
 
-if (!process.env.POSTGRES_URL) {
-  throw new Error("Missing POSTGRES_URL");
-}
-
-const nonPoolingUrl = process.env.POSTGRES_URL.replace(":6543", ":5432");
+const nonPoolingUrl = env.POSTGRES_URL;
 
 export default {
   dialect: "postgresql",

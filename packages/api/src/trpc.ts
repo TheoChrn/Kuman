@@ -17,6 +17,7 @@ import { createSupabaseClient } from "@kuman/db/supabase";
 
 import type { Session } from "./auth/session";
 import { validateSessionCookies } from "./auth/session";
+import { stripe } from "./stripe";
 
 /**
  * 1. CONTEXT
@@ -47,6 +48,7 @@ export const createTRPCContext = async ({
     supabase,
     req: req.headers,
     resHeaders,
+    stripe,
   };
 };
 
