@@ -181,7 +181,7 @@ importers:
         specifier: ^0.43.1
         version: 0.43.1
       dotenv:
-        specifier: ^17.0.1
+        specifier: ^17.2.1
         version: 17.2.1
       lucia:
         specifier: 'catalog:'
@@ -224,7 +224,7 @@ importers:
         specifier: ^0.43.1
         version: 0.43.1
       dotenv:
-        specifier: ^17.0.1
+        specifier: ^17.2.1
         version: 17.2.1
       drizzle-orm:
         specifier: ^0.44.1

@@ -40,7 +40,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
     "argon2": "^0.43.1",
-    "dotenv": "^17.0.1",
+    "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.1",
     "pg": "^8.16.0",
     "ulidx": "^2.4.1"
