@@ -46,8 +46,8 @@ function RouteComponent() {
   return (
     <div id="catalogue">
       <Ariakit.HeadingLevel>
-        <Ariakit.VisuallyHidden>
-          <Ariakit.Heading>Catalogue</Ariakit.Heading>
+        <Ariakit.VisuallyHidden render={<Ariakit.Heading />}>
+          Catalogue
         </Ariakit.VisuallyHidden>
         {device === "desktop" ? (
           <Ariakit.HeadingLevel>

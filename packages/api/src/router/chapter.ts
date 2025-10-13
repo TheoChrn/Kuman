@@ -188,6 +188,7 @@ export const chapterRouter = {
       const { images, mangaSlug, volumeNumber, chapterNumber, ...restInput } =
         input;
 
+      console.log("toto");
       const volumeId = await ctx.db
         .select({ id: schema.volumes.id })
         .from(schema.volumes)

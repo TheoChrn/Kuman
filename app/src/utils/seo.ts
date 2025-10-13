@@ -35,7 +35,5 @@ export function seo({
     { name: "twitter:creator", content: "@tannerlinsley" },
     { name: "twitter:site", content: "@tannerlinsley" },
     ...(image ? [{ name: "twitter:image", content: image }] : []),
-
-    { rel: "canonical", href: url },
   ];
 }

@@ -5,6 +5,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 1rem;
+  overflow-x: auto;
   @include space-y-3;
 
   & .actions {
@@ -16,6 +17,10 @@
       padding: 0.5rem;
       border-radius: 4px;
     }
+  }
+
+  & > .disclosure-wrapper {
+    min-width: #{$sm};
   }
 
   & .disclosure-wrapper {

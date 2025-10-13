@@ -1,6 +1,7 @@
 import * as Ariakit from "@ariakit/react";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { PiXBold } from "react-icons/pi";
+import { Dialog, DialogHeading } from "~/components/ui/dialog";
 
 export const Route = createFileRoute(
   "/_navigationLayout/_authLayout/profile/abonnement/success"
@@ -11,39 +12,24 @@ export const Route = createFileRoute(
       sessionId: session_id,
     };
   },
-  beforeLoad: async ({
-    context: { trpcClient: caller, user, queryClient, trpc },
-  }) => {
+  beforeLoad: async ({ context: { trpcClient, user, queryClient, trpc } }) => {
     if (user?.role === "subscriber" || !user?.stripeCustomerId)
       redirect({ to: "/profile/abonnement" });
 
     await queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
 
-    caller.user.updateRole.mutate({ role: "subscriber" });
+    trpcClient.user.updateRole.mutate({ role: "subscriber" });
   },
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
-
   return (
-    <Ariakit.DialogProvider>
-      <Ariakit.Dialog
-        onClose={() => navigate({ to: "/profile/abonnement" })}
-        open={true}
-        className="dialog"
-        backdrop={<div className="backdrop"></div>}
-      >
-        <div>
-          <Ariakit.DialogHeading className="dialog-heading">
-            Paiment Réussi
-          </Ariakit.DialogHeading>
-          <Ariakit.DialogDismiss className="dialog-dismiss">
-            <PiXBold />
-          </Ariakit.DialogDismiss>
-        </div>
-        <Ariakit.DialogDescription></Ariakit.DialogDescription>
-      </Ariakit.Dialog>
-    </Ariakit.DialogProvider>
+    <Dialog backUrl="..">
+      <DialogHeading>
+        <Ariakit.DialogHeading className="dialog-heading">
+          Paiment Réussi
+        </Ariakit.DialogHeading>
+      </DialogHeading>
+    </Dialog>
   );
 }

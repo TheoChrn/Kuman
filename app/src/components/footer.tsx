@@ -1,4 +1,5 @@
 import * as Ariakit from "@ariakit/react";
+import { Link } from "@tanstack/react-router";
 import {
   PiInstagramLogoBold,
   PiTiktokLogoBold,
@@ -9,6 +10,40 @@ export function Footer() {
   return (
     <footer>
       <Ariakit.HeadingLevel>
+        <section className="footer-utility">
+          <Ariakit.HeadingLevel>
+            <section>
+              <Ariakit.Heading className="heading">Navigation</Ariakit.Heading>
+              <nav>
+                <Link to=".">Accueil</Link>
+                <Link to=".">Catalogue</Link>
+              </nav>
+            </section>
+            <section>
+              <Ariakit.Heading className="heading">Légal</Ariakit.Heading>
+              <nav>
+                <Link to=".">Conditions d'utilisation</Link>
+                <Link to=".">Politique de confidentialité</Link>
+                <Link to=".">Mentions légales</Link>
+              </nav>
+            </section>
+            <section>
+              <Ariakit.Heading className="heading">À propos</Ariakit.Heading>
+              <nav>
+                <Link to=".">Qui sommes-nous ?</Link>
+                <Link to=".">Notre mission</Link>
+              </nav>
+            </section>
+            <section>
+              <Ariakit.Heading className="heading">Aide</Ariakit.Heading>
+              <nav>
+                <Link to=".">FAQ</Link>
+                <Link to=".">Centre d'aide</Link>
+                <Link to=".">Signaler un bug</Link>
+              </nav>
+            </section>
+          </Ariakit.HeadingLevel>
+        </section>
         <section className="social-networks">
           <Ariakit.Heading className="heading">
             Retrouvez-nous sur nos réseaux

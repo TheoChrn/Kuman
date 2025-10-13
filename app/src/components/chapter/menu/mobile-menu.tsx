@@ -1,7 +1,9 @@
 import * as Ariakit from "@ariakit/react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { role } from "@kuman/db/enums";
+import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa6";
+import { PiLockKeyBold } from "react-icons/pi";
 import { DesktopMenuProps } from "~/components/chapter/menu/desktop-menu";
 import { ReadingMode } from "~/components/chapter/menu/reading-mode";
 import { Select, SelectItem } from "~/components/ui/inputs/select/select";
@@ -12,6 +14,10 @@ export interface MobileMenuProps extends DesktopMenuProps {
 export default function MobileMenu(props: MobileMenuProps) {
   const navigate = useNavigate();
   const [sliderValue, setSliderValue] = useState(props.currentPage);
+
+  const { user } = useRouteContext({
+    from: "/$serieSlug/chapter/$chapterNumber/$page",
+  });
 
   useEffect(() => {
     setSliderValue(props.currentPage);
@@ -67,10 +73,21 @@ export default function MobileMenu(props: MobileMenuProps) {
                   className="select-item"
                   disabled={props.currentChapter === chapter.number}
                   hideOnClick
+                  aria-disabled={
+                    chapter.number !== 1 &&
+                    user?.role !== role.SUBSCRIBER &&
+                    user?.role !== role.ADMINISTRATOR
+                  }
                   render={(renderProps) => (
                     <Link
                       {...renderProps}
-                      to="/$serieSlug/chapter/$chapterNumber/$page"
+                      to={
+                        chapter.number !== 1 &&
+                        user?.role !== role.SUBSCRIBER &&
+                        user?.role !== role.ADMINISTRATOR
+                          ? "."
+                          : "/$serieSlug/chapter/$chapterNumber/$page"
+                      }
                       preload="intent"
                       params={{
                         serieSlug: props.serieSlug,
@@ -80,6 +97,10 @@ export default function MobileMenu(props: MobileMenuProps) {
                     />
                   )}
                 >
+                  {chapter.number !== 1 &&
+                    user?.role !== role.SUBSCRIBER &&
+                    user?.role !== role.ADMINISTRATOR && <PiLockKeyBold />}
+
                   {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
                     chapter.name
                   }`}

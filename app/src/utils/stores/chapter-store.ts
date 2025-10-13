@@ -7,6 +7,8 @@ interface AppState {
   };
 }
 
+
+// could be stored in user table in database
 export const appStore = new Store<AppState>({
   preferences: { readingMode: "scroll" },
 });

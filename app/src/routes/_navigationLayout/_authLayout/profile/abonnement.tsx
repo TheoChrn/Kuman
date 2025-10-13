@@ -21,15 +21,17 @@ export const Route = createFileRoute(
       const status = await queryClient.ensureQueryData(
         trpc.stripe.getStripeCustomer.queryOptions()
       );
-      const isSubscribed = status === "active" || status === "trialing";
 
-      if (!isSubscribed && user!.role === "subscriber") {
+      if (
+        !(status === "active" || status === "trialing") &&
+        user!.role === "subscriber"
+      ) {
         trpcClient.user.updateRole.mutate({ role: "user" });
         queryClient.setQueryData(
           trpc.user.getCurrentUser.queryKey(),
           (prev) => {
             const prevData = prev!;
-            return { ...prevData, role: "user" as Role };
+            return { ...prevData, role: "user" as const };
           }
         );
         queryClient.invalidateQueries(trpc.user.getCurrentUser.pathFilter());
@@ -39,7 +41,6 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { trpcClient } = Route.useRouteContext();
   const { user } = Route.useRouteContext();
 
   if (user!.role === role.ADMINISTRATOR) {
@@ -61,11 +62,9 @@ function RouteComponent() {
           <Ariakit.Heading className="heading">
             Détails de votre abonnement
           </Ariakit.Heading>
-          <div>
-            <Button className="button button-primary">
-              Gérer votre abonnement
-            </Button>
-          </div>
+          <Button className="button button-primary">
+            Gérer votre abonnement
+          </Button>
         </Ariakit.HeadingLevel>
       </section>
     );
@@ -78,7 +77,7 @@ function RouteComponent() {
           Votre abonnement est inactif
         </Ariakit.Heading>
         <div>
-          <Tabs caller={trpcClient} />
+          <Tabs />
           <Outlet />
         </div>
       </Ariakit.HeadingLevel>

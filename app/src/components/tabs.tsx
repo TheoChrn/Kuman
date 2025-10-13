@@ -1,13 +1,13 @@
 import * as Ariakit from "@ariakit/react";
-import { AppRouter } from "@kuman/api";
-import { useNavigate } from "@tanstack/react-router";
-import { TRPCClient } from "@trpc/client";
+import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
 import { PiCheckBold } from "react-icons/pi";
 import { TabPanel } from "~/components/tab-panel";
 import { Button } from "~/components/ui/buttons/button";
 
-export function Tabs({ caller }: { caller: TRPCClient<AppRouter> }) {
+export function Tabs() {
+  const { trpcClient, user } = useRouteContext({ from: "__root__" });
   const navigate = useNavigate();
+
   return (
     <div className="tabs">
       <Ariakit.TabProvider defaultSelectedId="month">
@@ -28,19 +28,27 @@ export function Tabs({ caller }: { caller: TRPCClient<AppRouter> }) {
                 </Ariakit.Heading>
                 <p>Testez gratuitement pendant 14 jours</p>
               </div>
-              <Button
-                onClick={async () => {
-                  const res = await caller.stripe.createStripeSession.mutate({
-                    interval: "month",
-                  });
-                  if (res) {
-                    navigate({ href: res });
-                  }
-                }}
-                className="button button-primary"
-              >
-                Je m'abonne
-              </Button>
+              {!user ? (
+                <Link to="/auth/login" className="button button-primary">
+                  Je m'abonne
+                </Link>
+              ) : (
+                <Button
+                  onClick={async () => {
+                    const res =
+                      await trpcClient.stripe.createStripeSession.mutate({
+                        interval: "month",
+                      });
+                    if (res) {
+                      navigate({ href: res });
+                    }
+                  }}
+                  className="button button-primary"
+                >
+                  Je m'abonne
+                </Button>
+              )}
+
               <div className="separator">
                 <span>Inclus</span>
                 <div />
@@ -69,19 +77,26 @@ export function Tabs({ caller }: { caller: TRPCClient<AppRouter> }) {
                   Testez gratuitement pendant 14 jours
                 </p>
               </div>
-              <Button
-                onClick={async () => {
-                  const res = await caller.stripe.createStripeSession.mutate({
-                    interval: "year",
-                  });
-                  if (res) {
-                    navigate({ href: res });
-                  }
-                }}
-                className="button button-primary"
-              >
-                Je m'abonne
-              </Button>
+              {!user ? (
+                <Link to="/auth/login" className="button button-primary">
+                  Je m'abonne
+                </Link>
+              ) : (
+                <Button
+                  onClick={async () => {
+                    const res =
+                      await trpcClient.stripe.createStripeSession.mutate({
+                        interval: "year",
+                      });
+                    if (res) {
+                      navigate({ href: res });
+                    }
+                  }}
+                  className="button button-primary"
+                >
+                  Je m'abonne
+                </Button>
+              )}
               <div className="separator">
                 <span>Inclus</span>
                 <div />

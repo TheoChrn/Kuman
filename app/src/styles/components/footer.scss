@@ -2,6 +2,36 @@
 @use "../variables.scss" as *;
 
 footer {
+  & .footer-utility {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    background-color: $background-100;
+
+    @include responsive(md) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    & > section {
+      padding: 3rem 1rem;
+      @include space-y-2;
+      height: 100%;
+      width: fit-content;
+      margin: 0 auto;
+
+      & > nav {
+        @include space-y-1;
+        & > a {
+          display: block;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
   & .social-networks {
     background-color: $background;
     @include space-y-6;

@@ -7,6 +7,10 @@
 
 .select-item {
   padding: 0.5rem 1rem;
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
 
 .content {
@@ -18,6 +22,20 @@
   color: $neutral-foreground;
   padding: 0.5rem;
   @include space-y-3;
+
+  @include responsive(lg) {
+    @include flex-between;
+    position: static;
+
+    & > :not(:last-child) {
+      margin-block-end: 0;
+    }
+
+    & > :last-child {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
 
   & .select {
     color: $foreground;
@@ -88,6 +106,12 @@
   }
 }
 
+@include responsive(lg) {
+  .select-chapter {
+    max-width: 36rem;
+  }
+}
+
 .select-page {
   max-width: 12rem;
 }
@@ -118,25 +142,5 @@
     .close {
       display: block;
     }
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .content {
-    @include flex-between;
-    position: static;
-
-    & > :not(:last-child) {
-      margin-block-end: 0;
-    }
-
-    & > :last-child {
-      display: flex;
-      gap: 0.5rem;
-    }
-  }
-
-  .select-chapter {
-    max-width: 36rem;
   }
 }

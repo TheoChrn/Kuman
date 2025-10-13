@@ -8,8 +8,9 @@
     flex-shrink: 0;
   }
 
-  &:has(input[aria-expanded="true"]) {
-    & > label {
+  &:has(input[aria-expanded="true"]),
+  &:has(:focus-within) {
+    > label {
       border: solid 1px $primary;
     }
 

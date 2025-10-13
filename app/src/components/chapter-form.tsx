@@ -4,7 +4,7 @@ import {
   ImageSchema,
 } from "@kuman/shared/validators";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import { useRouterState } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { PiUploadBold } from "react-icons/pi";
 import { Button } from "~/components/ui/buttons/button";
@@ -17,15 +17,26 @@ export function ChapterForm(props: {
   chapter?: RouterOutputs["chapters"]["getChapterAdminProcedure"];
   serieSlug: string;
 }) {
+  const navigate = useNavigate();
   const trpc = useTRPC();
   const createChapterMutation = useMutation(
-    trpc.chapters.create.mutationOptions()
+    trpc.chapters.create.mutationOptions({
+      onSuccess: () => navigate({ to: "/admin/series" }),
+      onSettled: (_, __, ___, _____, context) =>
+        context.client.invalidateQueries(
+          trpc.chapters.getAllFromSerieGrouppedByVolume.pathFilter()
+        ),
+    })
   );
   const updateChapterMutation = useMutation(
-    trpc.chapters.update.mutationOptions()
+    trpc.chapters.update.mutationOptions({
+      onSuccess: () => navigate({ to: "/admin/series" }),
+      onSettled: (_, __, ___, _____, context) =>
+        context.client.invalidateQueries(
+          trpc.chapters.getAllFromSerieGrouppedByVolume.pathFilter()
+        ),
+    })
   );
-
-  const router = useRouterState();
 
   const { data: mangas } = useSuspenseQuery(trpc.mangas.getAll.queryOptions());
 
@@ -69,6 +80,7 @@ export function ChapterForm(props: {
         })
       );
 
+      console.log("toto");
       props.chapter
         ? updateChapterMutation.mutate(formData)
         : createChapterMutation.mutate(formData);
@@ -193,7 +205,11 @@ export function ChapterForm(props: {
                 disabled={!canSubmit}
                 className="button button-primary button-full"
               >
-                {isSubmitting ? "..." : "Créer"}
+                {isSubmitting
+                  ? "..."
+                  : props.chapter?.id
+                    ? "Enregistrer"
+                    : "Créer"}
               </Button>
             </div>
           )}

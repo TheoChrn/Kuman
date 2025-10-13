@@ -12,6 +12,11 @@
   gap: 0.25rem;
   width: fit-content;
   text-transform: capitalize;
+  transition: 200ms;
+
+  &:hover {
+    scale: 1.02;
+  }
 
   &-shônen {
     border: solid 1px hsl(220, 80%, 50%);
@@ -35,7 +40,7 @@
   }
   &-kodomo {
     border: solid 1px hsl(45, 100%, 60%);
-    color: hsl(45, 100%, 60%);
+    color: hsl(45, 100%, 32%);
     background-color: hsl(45, 100%, 60%, 10%);
   }
 
@@ -52,7 +57,7 @@
   &-comédie {
     border: solid 1px hsl(45, 90%, 55%);
     background-color: hsla(45, 90%, 55%, 0.1);
-    color: hsl(45, 90%, 55%);
+    color: hsl(45, 100%, 33%);
   }
   &-drame {
     border: solid 1px hsl(300, 30%, 40%);

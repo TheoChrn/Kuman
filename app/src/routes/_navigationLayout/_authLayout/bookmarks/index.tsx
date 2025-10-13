@@ -48,8 +48,8 @@ function RouteComponent() {
 
   const removeFromBookmarks = useMutation(
     trpc.bookmarks.delete.mutationOptions({
-      onMutate: async (variables) => {
-        await queryClient.cancelQueries(trpc.bookmarks.getMany.pathFilter());
+      onMutate: async (variables, context) => {
+        await context.client.cancelQueries(trpc.bookmarks.getMany.pathFilter());
 
         const initialBookmarks = queryClient.getQueryData(
           trpc.bookmarks.getMany.queryKey()
@@ -68,16 +68,16 @@ function RouteComponent() {
 
         return { initialBookmarks };
       },
-      onError: (_, __, context) => {
-        if (!context) return;
-        queryClient.setQueryData(
+      onError: (_, __, results, context) => {
+        if (!results) return;
+        context.client.setQueryData(
           trpc.bookmarks.getMany.queryKey(),
-          context.initialBookmarks
+          results.initialBookmarks
         );
       },
-      onSettled: (_, __, ___, context) => {
-        if (!context) return;
-        queryClient.invalidateQueries(trpc.bookmarks.getMany.pathFilter());
+      onSettled: (_, __, ___, results, context) => {
+        if (!results) return;
+        context.client.invalidateQueries(trpc.bookmarks.getMany.pathFilter());
       },
     })
   );
@@ -86,7 +86,7 @@ function RouteComponent() {
     return (
       <Ariakit.HeadingLevel>
         <Ariakit.VisuallyHidden>
-          <Ariakit.Heading>Bookmarks</Ariakit.Heading>
+          <Ariakit.Heading>Librairie</Ariakit.Heading>
         </Ariakit.VisuallyHidden>
         <div id="bookmarks" className="empty">
           <p>Vous n'avez pas encore commencer de série.</p>
@@ -101,7 +101,7 @@ function RouteComponent() {
   return (
     <Ariakit.HeadingLevel>
       <div id="bookmarks">
-        <Ariakit.Heading>Mes Favoris</Ariakit.Heading>
+        <Ariakit.Heading>Ma Librairie</Ariakit.Heading>
 
         <section className="bookmarks">
           {bookmarks.map((manga) => {
