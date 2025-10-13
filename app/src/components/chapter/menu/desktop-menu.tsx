@@ -1,10 +1,10 @@
 import * as Ariakit from "@ariakit/react";
 import { RouterOutputs } from "@kuman/api";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouteContext } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { RefObject } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import { PiGear } from "react-icons/pi";
+import { PiGear, PiLockKeyBold } from "react-icons/pi";
 import {
   readingModeMapping,
   readingModes,
@@ -13,6 +13,7 @@ import { Select, SelectItem } from "~/components/ui/inputs/select/select";
 import { appActions, appStore } from "~/utils/stores/chapter-store";
 
 import { ReadingMode } from "~/routes/$serieSlug.chapter.$chapterNumber.$page";
+import { role } from "@kuman/db/enums";
 
 export interface DesktopMenuProps {
   serieSlug: string;
@@ -29,6 +30,10 @@ export default function DesktopMenu(props: DesktopMenuProps) {
     appStore,
     (state) => state.preferences.readingMode
   );
+
+  const { user } = useRouteContext({
+    from: "/$serieSlug/chapter/$chapterNumber/$page",
+  });
   return (
     <div className="content">
       <Link
@@ -66,10 +71,21 @@ export default function DesktopMenu(props: DesktopMenuProps) {
                 className="select-item"
                 disabled={props.currentChapter === chapter.number}
                 hideOnClick
+                aria-disabled={
+                  chapter.number !== 1 &&
+                  user?.role !== role.SUBSCRIBER &&
+                  user?.role !== role.ADMINISTRATOR
+                }
                 render={(renderProps) => (
                   <Link
                     {...renderProps}
-                    to="/$serieSlug/chapter/$chapterNumber/$page"
+                    to={
+                      chapter.number !== 1 &&
+                      user?.role !== role.SUBSCRIBER &&
+                      user?.role !== role.ADMINISTRATOR
+                        ? "."
+                        : "/$serieSlug/chapter/$chapterNumber/$page"
+                    }
                     preload="intent"
                     params={{
                       serieSlug: props.serieSlug,
@@ -79,6 +95,10 @@ export default function DesktopMenu(props: DesktopMenuProps) {
                   />
                 )}
               >
+                {chapter.number !== 1 &&
+                  user?.role !== role.SUBSCRIBER &&
+                  user?.role !== role.ADMINISTRATOR && <PiLockKeyBold />}
+
                 {`Chapitre ${String(chapter.number).padStart(3, "0")} - ${
                   chapter.name
                 }`}

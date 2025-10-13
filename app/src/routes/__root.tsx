@@ -62,6 +62,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       },
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "icon", href: "/favicon.ico" },
+      { rel: "canonical", href: "https://theochrn-kuman.netlify.app/" },
     ],
   }),
   errorComponent: (props) => {

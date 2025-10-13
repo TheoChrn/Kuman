@@ -19,11 +19,12 @@
  * // ]
  */
 
+// Could be even more generic as width dynamic typed keys
 export function nestArray<T extends { id: string; parentId: string | null }>(
   array: T[]
 ): (T & { children: (T & { children: any[] })[] })[] {
   const map = new Map<string, T & { children: T[] }>();
-  const roots: (T & { children: any[] })[] = [];
+  const newArray: (T & { children: any[] })[] = [];
 
   for (const element of array) {
     map.set(element.id, { ...element, children: [] });
@@ -37,9 +38,9 @@ export function nestArray<T extends { id: string; parentId: string | null }>(
         parent.children.push(node);
       }
     } else {
-      roots.push(node);
+      newArray.push(node);
     }
   }
 
-  return roots;
+  return newArray;
 }

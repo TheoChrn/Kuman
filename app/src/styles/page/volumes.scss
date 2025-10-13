@@ -50,7 +50,7 @@
         display: grid;
         transition: grid-template-rows 150ms;
         grid-template-rows: 0fr;
-        @include space-y-2;
+        gap: 0.5rem;
 
         &[data-enter] {
           grid-template-rows: 1fr;
@@ -60,25 +60,34 @@
           overflow: hidden;
           padding: 0;
         }
+        & ul {
+          @include space-y-none;
 
-        & li {
-          &:not(:last-child) {
-            border-bottom: solid 1px $stroke;
-          }
-
-          & .chapter-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-
-            & .chapter-number {
-              font-size: 2rem;
-              color: $foreground-100;
+          & li {
+            &:not(:last-child) {
+              border-bottom: solid 1px $stroke;
             }
 
-            & .chapter-page-count {
-              font-size: 0.875rem;
+            & .chapter-link {
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              padding: 1rem;
+              transition: 200ms;
+
+              &:hover {
+                background-color: $hover;
+                transition: 0ms;
+              }
+
+              & .chapter-number {
+                font-size: 2rem;
+                color: $foreground-100;
+              }
+
+              & .chapter-page-count {
+                font-size: 0.875rem;
+              }
             }
           }
         }

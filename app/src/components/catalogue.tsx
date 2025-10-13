@@ -35,10 +35,12 @@ export function Catalogue(props: {
             params={{ serieSlug: serie.slug }}
             key={index}
           >
-            <img
-              src={serie?.coverUrl ?? ""}
-              alt={`Couverture de ${serie.title}`}
-            />
+            <figure>
+              <img
+                src={serie?.coverUrl ?? ""}
+                alt={`Couverture de ${serie.title}`}
+              />
+            </figure>
             <div>
               <Ariakit.Heading>{serie.title}</Ariakit.Heading>
             </div>

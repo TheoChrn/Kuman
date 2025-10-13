@@ -199,8 +199,23 @@
         @include space-y-2;
         flex: 0 0 100%;
 
-        & img {
+        &:hover {
+          & figure {
+            border-color: $neutral;
+            & img {
+              scale: 1.02;
+            }
+          }
+        }
+
+        & figure {
+          overflow: hidden;
           border-radius: 4px;
+          border: solid 1px $stroke;
+          transition: 200ms;
+          & img {
+            transition: 200ms;
+          }
         }
 
         & > div {
@@ -222,6 +237,7 @@
 .quick-filters {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 1rem;
   &-heading {
     @include flex-between;
     top: 0;

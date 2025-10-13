@@ -75,6 +75,11 @@
     & > .features {
       & > ul {
         @include space-y-16;
+        @include responsive(md) {
+          @include space-y-none;
+          display: flex;
+          justify-content: space-evenly;
+        }
         & > li {
           @include space-y-2;
           text-align: center;
@@ -82,16 +87,6 @@
           font-size: 1.25rem;
           font-weight: 600;
         }
-      }
-    }
-  }
-
-  @media screen and (min-width: 768px) {
-    main {
-      & > .features > ul {
-        @include space-y-none;
-        display: flex;
-        justify-content: space-evenly;
       }
     }
   }

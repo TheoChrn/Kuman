@@ -8,8 +8,6 @@
     "./react": "./react.js"
   },
   "scripts": {
-    "clean": "git clean -xdf .cache node_modules",
-    "format": "pnpm --filter @kuman/prettier-config run format",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

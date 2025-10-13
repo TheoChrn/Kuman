@@ -44,6 +44,14 @@
     & input {
       width: 100%;
     }
+
+    & button {
+      &:focus {
+        outline-style: auto;
+        outline-offset: 1px;
+        outline-color: $primary;
+      }
+    }
   }
 
   &:focus-within > div {

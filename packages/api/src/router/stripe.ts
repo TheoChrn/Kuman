@@ -2,9 +2,10 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
 import { eq, schema } from "@kuman/db";
+import { env } from "@kuman/shared/env";
 
 import { stripe } from "../stripe";
-import { protectedProcedure, protectedSubscriberProcedure } from "../trpc";
+import { protectedProcedure } from "../trpc";
 
 const intervalValues = ["month", "year"] as const;
 type IntervalValues = typeof intervalValues;
@@ -38,8 +39,7 @@ export const stripeRouter = {
         if (subscriptions.data.length > 0) {
           const portalSession = await stripe.billingPortal.sessions.create({
             customer: ctx.session.user.stripeCustomerId,
-            return_url:
-              "http://https://theochrn-kuman.netlify.app/profile/abonnement",
+            return_url: `${env.VITE_BASE_URL}/profile/abonnement`,
           });
           return portalSession.url;
         }
@@ -53,9 +53,8 @@ export const stripeRouter = {
             userId: ctx.session.user.id,
             email: ctx.session.user.email,
           },
-          success_url: `http://https://theochrn-kuman.netlify.app/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url:
-            "http://https://theochrn-kuman.netlify.app/profile/abonnement/cancel",
+          success_url: `${env.VITE_BASE_URL}/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${env.VITE_BASE_URL}/profile/abonnement/cancel`,
         });
         return session.url;
       }
@@ -73,9 +72,8 @@ export const stripeRouter = {
           userId: ctx.session.user.id,
           email: ctx.session.user.email,
         },
-        success_url: `https://theochrn-kuman.netlify.app/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url:
-          "https://theochrn-kuman.netlify.app/profile/abonnement/cancel",
+        success_url: `${env.VITE_BASE_URL}/profile/abonnement/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${env.VITE_BASE_URL}/profile/abonnement/cancel`,
       });
 
       await ctx.db
@@ -93,15 +91,17 @@ export const stripeRouter = {
       return session;
     }),
 
-  getStripeCustomer: protectedSubscriberProcedure.query(async ({ ctx }) => {
+  getStripeCustomer: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.session.user.stripeCustomerId) return;
+
     const subscriptions = await stripe.subscriptions.list({
-      customer: ctx.session.user.stripeCustomerId!,
+      customer: ctx.session.user.stripeCustomerId,
       status: "all",
       expand: ["data.default_payment_method"],
     });
 
     const activeSubscription = subscriptions.data.find(
-      (sub) => sub.status === "active",
+      (sub) => sub.status === "active" || sub.status === "trialing",
     );
 
     return activeSubscription?.status ?? null;

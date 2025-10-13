@@ -9,7 +9,7 @@ export function transformFormData(formData: FormData) {
   const data = JSON.parse(formData.get("json")!.toString());
   const files = formData.getAll("images");
 
-  const images = data.metaData.map((meta: any, i: number) => ({
+  const images = data.metaData?.map((meta: any, i: number) => ({
     ...meta,
     file: files[i] ?? null,
   }));

@@ -8,21 +8,18 @@ export const Route = createFileRoute("/_navigationLayout/")({
 });
 
 function Home() {
-  const { trpcClient } = Route.useRouteContext();
-
   return (
     <Ariakit.HeadingLevel>
-      <Ariakit.Heading>
-        <Ariakit.VisuallyHidden>Page d'accueil</Ariakit.VisuallyHidden>
-      </Ariakit.Heading>
+      <Ariakit.VisuallyHidden render={<Ariakit.Heading />}>
+        Page d'accueil
+      </Ariakit.VisuallyHidden>
 
       <div id="home">
         <Ariakit.HeadingLevel>
           <header>
             <div>
               <div className="hero-details">
-                <Ariakit.Heading>+300 titre</Ariakit.Heading>
-                <p>Une seule plateforme</p>
+                <Ariakit.Heading>Une seule plateforme</Ariakit.Heading>
                 <p>Tous vos mangas à portée de clique</p>
               </div>
               <div className="button-container">
@@ -44,9 +41,10 @@ function Home() {
         <main>
           <section className="features">
             <Ariakit.HeadingLevel>
-              <Ariakit.VisuallyHidden>
-                <Ariakit.Heading>Fonctionnalitées</Ariakit.Heading>
+              <Ariakit.VisuallyHidden render={<Ariakit.Heading />}>
+                Fonctionnalitées
               </Ariakit.VisuallyHidden>
+
               <ul>
                 {[
                   [<PiBook size={75} />, "Gère ta collection"],
@@ -69,7 +67,7 @@ function Home() {
           <section id="plans" className="plans">
             <Ariakit.HeadingLevel>
               <Ariakit.Heading>Découvrez notre abonnement</Ariakit.Heading>
-              <Tabs caller={trpcClient} />
+              <Tabs />
             </Ariakit.HeadingLevel>
           </section>
         </main>

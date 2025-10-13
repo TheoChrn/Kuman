@@ -2,7 +2,14 @@
 @use "../variables.scss" as *;
 
 #abonnement {
+  @include space-y-4;
   & > .heading {
     text-align: center;
+  }
+
+  & > button {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
   }
 }

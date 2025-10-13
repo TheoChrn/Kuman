@@ -24,10 +24,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "clean": "git clean -xdf .cache dist node_modules",
     "dev": "tsc --watch",
-    "format": "pnpm --filter @kuman/prettier-config run format",
-    "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "devDependencies": {

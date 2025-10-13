@@ -31,8 +31,8 @@ function RouteComponent() {
   return (
     <Ariakit.HeadingLevel>
       <section id="volumes">
-        <Ariakit.VisuallyHidden>
-          <Ariakit.Heading>Volumes</Ariakit.Heading>
+        <Ariakit.VisuallyHidden render={<Ariakit.Heading />}>
+          Volumes
         </Ariakit.VisuallyHidden>
         <ul>
           <Ariakit.HeadingLevel>
