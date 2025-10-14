@@ -81,7 +81,14 @@ export const chapterRouter = {
             eq(schema.chapters.volumeId, schema.volumes.id),
           ),
         )
-        .then((rows) => rows[0]!);
+        .then((rows) => rows[0]);
+
+      if (!chapter) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Ce chapitre n'existe pas",
+        });
+      }
 
       const path = `mangas/${input.serie}/volume-${chapter.volumeNumber}/chapter-${input.chapterNumber}`;
       const { data: files, error } = await ctx.supabase.storage

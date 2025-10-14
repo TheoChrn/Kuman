@@ -101,38 +101,44 @@ function RouteComponent() {
           </p>
         </div>
       )}
-      <ul>
-        {comments.map((comment) => {
-          if (comment.parentId && !("children" in comment)) {
-            const parentCommentUser = comments.find(
-              (c) => c.id === comment.parentId
-            );
+      {!!comments.length && (
+        <ul>
+          {comments.map((comment) => {
+            if (comment.parentId && !("children" in comment)) {
+              const parentCommentUser = comments.find(
+                (c) => c.id === comment.parentId
+              );
+
+              return (
+                <li key={comment.id}>
+                  <Comment
+                    parentUser={parentCommentUser!.user}
+                    user={user}
+                    comment={comment}
+                    slug={params.serieSlug}
+                  />
+                </li>
+              );
+            }
 
             return (
               <li key={comment.id}>
                 <Comment
-                  parentUser={parentCommentUser!.user}
-                  user={user!}
+                  user={user}
                   comment={comment}
                   slug={params.serieSlug}
                 />
               </li>
             );
-          }
-
-          return (
-            <li key={comment.id}>
-              <Comment user={user!} comment={comment} slug={params.serieSlug} />
-            </li>
-          );
-        })}
-      </ul>
+          })}
+        </ul>
+      )}
     </section>
   );
 }
 
 function Comment(props: {
-  user: NonNullable<User>;
+  user: User | null;
   comment:
     | ReturnType<
         typeof nestArray<RouterOutputs["comments"]["getAll"][number]>
@@ -200,12 +206,14 @@ function Comment(props: {
               {props.parentUser && <span>@{props.parentUser.userName}</span>}{" "}
               {props.comment.content}
             </p>
-            <Button
-              onClick={() => setAnswerTo(props.comment.id)}
-              className="answer-button text-sm button button-outline"
-            >
-              Répondre
-            </Button>
+            {props.user && (
+              <Button
+                onClick={() => setAnswerTo(props.comment.id)}
+                className="answer-button text-sm button button-outline"
+              >
+                Répondre
+              </Button>
+            )}
             {!!("children" in props.comment) &&
               !!props.comment.children.length && (
                 <Ariakit.DisclosureProvider>

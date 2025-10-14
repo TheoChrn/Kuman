@@ -4,8 +4,11 @@
 #volumes {
   background-color: $background;
   border: solid 1px $stroke;
-  padding: 1rem;
+  padding: 1rem; 
   border-radius: 8px;
+  & > .fallback-message {
+    text-align: center;
+  }
   ul {
     @include space-y-2;
     & .volume-group {

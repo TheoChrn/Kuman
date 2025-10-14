@@ -188,9 +188,12 @@ export const mangaRouter = {
           .from(schema.mangas)
           .leftJoin(
             schema.bookmarks,
-            eq(schema.bookmarks.userId, ctx.session.user.id),
+            and(
+              eq(schema.bookmarks.userId, ctx.session.user.id),
+              eq(schema.bookmarks.mangaSlug, schema.mangas.slug),
+            ),
           )
-          .where(and(eq(schema.mangas.slug, input.slug)))
+          .where(eq(schema.mangas.slug, input.slug))
           .then((rows) => rows[0]);
       } else {
         manga = await ctx.db

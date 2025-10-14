@@ -6,17 +6,15 @@ import { Footer } from "~/components/footer";
 import { useTRPC } from "~/trpc/react";
 
 export const Route = createFileRoute("/_navigationLayout/$serieSlug/_layout")({
-  loader: async ({ context: { trpc, queryClient }, params: { serieSlug } }) => {
-    await Promise.all([
-      queryClient.prefetchQuery(
-        trpc.mangas.get.queryOptions({ slug: serieSlug })
-      ),
-      queryClient.prefetchQuery(
-        trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
-          serie: serieSlug,
-        })
-      ),
-    ]);
+  loader: ({ context: { trpc, queryClient }, params: { serieSlug } }) => {
+    queryClient.prefetchQuery(
+      trpc.mangas.get.queryOptions({ slug: serieSlug })
+    );
+    queryClient.prefetchQuery(
+      trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+        serie: serieSlug,
+      })
+    );
   },
   component: RouteComponent,
 });
@@ -26,6 +24,11 @@ function RouteComponent() {
   const { serieSlug } = Route.useParams();
   const { data: manga } = useSuspenseQuery(
     trpc.mangas.get.queryOptions({ slug: serieSlug })
+  );
+  const { data: volumes } = useSuspenseQuery(
+    trpc.chapters.getAllFromSerieGrouppedByVolume.queryOptions({
+      serie: serieSlug,
+    })
   );
 
   return (
@@ -45,18 +48,20 @@ function RouteComponent() {
               </li>
               <li className="status">{statusLabelFrench[manga.status]}</li>
               <li>De {manga.author}</li>
-              <Link
-                resetScroll={false}
-                to="/$serieSlug/chapter/$chapterNumber/$page"
-                params={{
-                  chapterNumber: manga.currentChapter?.toString() ?? "1",
-                  page: manga.currentPage?.toString() ?? "1",
-                  serieSlug: manga.slug,
-                }}
-                className="button button-primary"
-              >
-                {manga.currentChapter ? "Continuer" : "Commencer"}
-              </Link>
+              {!!volumes[0]?.chapters.length && (
+                <Link
+                  resetScroll={false}
+                  to="/$serieSlug/chapter/$chapterNumber/$page"
+                  params={{
+                    chapterNumber: manga.currentChapter?.toString() ?? "1",
+                    page: manga.currentPage?.toString() ?? "1",
+                    serieSlug: manga.slug,
+                  }}
+                  className="button button-primary"
+                >
+                  {manga.currentChapter ? "Continuer" : "Commencer"}
+                </Link>
+              )}
             </ul>
           </div>
         </header>

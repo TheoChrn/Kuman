@@ -28,6 +28,18 @@ function RouteComponent() {
     })
   );
 
+  if (!volumes.length) {
+    return (
+      <section id="volumes">
+        <Ariakit.HeadingLevel>
+          <Ariakit.Heading className="fallback-message">
+            Aucun volume n'a encore été publié.
+          </Ariakit.Heading>
+        </Ariakit.HeadingLevel>
+      </section>
+    );
+  }
+
   return (
     <Ariakit.HeadingLevel>
       <section id="volumes">
