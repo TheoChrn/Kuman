@@ -39,6 +39,8 @@ export function Catalogue(props: {
               <img
                 src={serie?.coverUrl ?? ""}
                 alt={`Couverture de ${serie.title}`}
+                height={300}
+                width={200}
               />
             </figure>
             <div>

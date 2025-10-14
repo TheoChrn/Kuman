@@ -197,7 +197,6 @@
 
       & > a {
         @include space-y-2;
-        flex: 0 0 100%;
 
         &:hover {
           & figure {
@@ -215,6 +214,8 @@
           transition: 200ms;
           & img {
             transition: 200ms;
+            width: 100%;
+            aspect-ratio: 1/1.5;
           }
         }
 
