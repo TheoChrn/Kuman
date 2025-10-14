@@ -6,7 +6,10 @@ import {
 } from "./utils";
 
 export function transformFormData(formData: FormData) {
+  console.log("test de parse");
+  console.log(formData.get("json"));
   const data = JSON.parse(formData.get("json")!.toString());
+  console.log(data);
   const files = formData.getAll("images");
 
   const images = data.metaData?.map((meta: any, i: number) => ({

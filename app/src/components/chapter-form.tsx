@@ -22,6 +22,7 @@ export function ChapterForm(props: {
   const createChapterMutation = useMutation(
     trpc.chapters.create.mutationOptions({
       onSuccess: () => navigate({ to: "/admin/series" }),
+      onError: (error) => console.error(error),
       onSettled: (_, __, ___, _____, context) =>
         context.client.invalidateQueries(
           trpc.chapters.getAllFromSerieGrouppedByVolume.pathFilter()
@@ -80,7 +81,6 @@ export function ChapterForm(props: {
         })
       );
 
-      console.log("toto");
       props.chapter
         ? updateChapterMutation.mutate(formData)
         : createChapterMutation.mutate(formData);
