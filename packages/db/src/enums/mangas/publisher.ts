@@ -1,5 +1,6 @@
 export const publisherFrValues = [
   "kana",
+  "kaze",
   "glenat",
   "pika",
   "ki-oon",
@@ -22,6 +23,7 @@ export type PublisherFr = PublisherFrValues[number];
 export const publisherFr = {
   KANA: "kana",
   GLENAT: "glenat",
+  KAZE: "kaze",
   PIKA: "pika",
   KIOON: "ki-oon",
   KUROKAWA: "kurokawa",
@@ -40,6 +42,7 @@ export const publisherFr = {
 export const publisherFrLabelFrench = {
   [publisherFr.KANA]: "Kana",
   [publisherFr.GLENAT]: "Glénat",
+  [publisherFr.KAZE]: "Kazé",
   [publisherFr.PIKA]: "Pika",
   [publisherFr.KIOON]: "Ki-oon",
   [publisherFr.KUROKAWA]: "Kurokawa",
